@@ -6,7 +6,7 @@ set(SOURCES
     main.cpp
 )
 
-find_package(SDL3 REQUIRED CONFIG)
+find_package(SDL3 REQUIRED)
 
 add_executable(${PROJECT_NAME})
 
