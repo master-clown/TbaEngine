@@ -20,7 +20,7 @@ class guiTestProjectRecipe(ConanFile):
     generators = "CMakeDeps"
 
     def requirements(self):
-        # self.requires("sdl/3.2.20")
+        self.requires("sdl/3.2.20", options={"shared": True})
         return
 
     def config_options(self):
