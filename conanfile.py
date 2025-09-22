@@ -7,12 +7,10 @@ class guiTestProjectRecipe(ConanFile):
 
     options = {
         "enableLog": [True, False],
-        "useCcache": [True, False],
         "fPIC": [True, False],
     }
     default_options = {
         "enableLog": False,
-        "useCcache": True,
         "fPIC": True,
     }
 
