@@ -11,4 +11,4 @@ find_package(SDL3 REQUIRED)
 add_executable(${TARGET_NAME})
 
 target_sources(${TARGET_NAME} PRIVATE ${SOURCES})
-target_link_libraries(${TARGET_NAME} PRIVATE SDL3::SDL3)
+target_link_libraries(${TARGET_NAME} PRIVATE SDL3::SDL3 Framework)

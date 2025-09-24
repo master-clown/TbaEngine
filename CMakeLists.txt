@@ -7,4 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_EXPORT_COMPILE_COMMANDS On)
 
 
+add_subdirectory(src/Framework)
+
 add_subdirectory(src/GuiTest)
