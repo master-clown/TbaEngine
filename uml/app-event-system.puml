@@ -1,0 +1,48 @@
+@startuml
+
+skinparam defaultFontName monospaced
+
+
+'=======================================================================================================================
+class EventInfo<Type, Details> {
+    + getType() : Type
+    + getDetails<eventType>() : Details<eventType>
+==
+    - _type
+    - _anyEventDetails: std::any
+}
+
+'------------------------------------------------------------------------------------------------------------------------
+class WindowEvent<WindowEventKind, WindowEventDetails> extends EventInfo
+
+'------------------------------------------------------------------------------------------------------------------------
+class KeyboardEvent<KeyboardEventKind, KeyboardEventDetails> extends EventInfo
+
+'=======================================================================================================================
+class AppEvent {
+    one of
+==
+    None
+    WindowEvent
+    KeyboardEvent
+    // ...
+}
+
+'------------------------------------------------------------------------------------------------------------------------
+AppEvent "1" *-- "1" WindowEvent 
+AppEvent "1" *-- "1" KeyboardEvent 
+
+'=======================================================================================================================
+abstract class AppEventMgr {
+    + {abstract} getNextEvent() : AppEvent
+}
+
+class SdlEventMgr implements AppEventMgr
+class GlfwEventMgr implements AppEventMgr
+
+'------------------------------------------------------------------------------------------------------------------------
+AppEventMgr *-- AppEvent
+
+
+'=======================================================================================================================
+@enduml
