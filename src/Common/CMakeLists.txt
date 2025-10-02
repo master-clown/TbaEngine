@@ -9,13 +9,17 @@ set(PUBLIC_HEADERS
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
-    ${PUBLIC_HEADERS}
-    src/Memory.cpp
-    src/String.cpp
+    Memory.cpp
+    String.cpp
 )
+list(TRANSFORM SOURCES PREPEND "src/")
 
 add_library(${TARGET_NAME} STATIC)
 
-target_include_directories(${TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 target_sources(${TARGET_NAME} PRIVATE ${SOURCES})
+target_sources(${TARGET_NAME} 
+    PUBLIC 
+    FILE_SET HEADERS
+    BASE_DIRS include
+    FILES
+    ${PUBLIC_HEADERS})
