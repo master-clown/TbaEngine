@@ -29,8 +29,6 @@ find_package(SDL3 REQUIRED)
 
 add_library(${TARGET_NAME} STATIC)
 
-target_include_directories(${TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 target_sources(${TARGET_NAME} PRIVATE ${SOURCES})
 target_sources(${TARGET_NAME} 
     PUBLIC 
