@@ -9,5 +9,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS On)
 
 add_subdirectory(src/Common)
 add_subdirectory(src/Framework)
+add_subdirectory(src/Winsys)
 
 add_subdirectory(src/GuiTest)
