@@ -4,6 +4,7 @@ skinparam defaultFontName monospaced
 
 
 abstract class Framework {
+    {abstract} + getAppEventMgr()
     {abstract} + getWindowMgr()
     {abstract} + getInputMgr()
     {abstract} + getAudioMgr()
