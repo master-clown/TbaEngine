@@ -1,0 +1,1 @@
+#include <AppEvent/WindowEventDetails.h>
