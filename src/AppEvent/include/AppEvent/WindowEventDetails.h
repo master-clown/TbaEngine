@@ -6,6 +6,6 @@
 namespace app_event {
     //==================================================================================================================
     template <WindowEventKind>
-    class WindowEventDetails {
+    class WindowEventDetails final {
     };
 }
