@@ -13,22 +13,14 @@ using framework::SdlFramework;
 
 //======================================================================================================================
 SdlFramework::SdlFramework()
+    : _sdlLibraryRaiiWrapper{}
+    , _sdlWinMgr(makeUPtr<winsys::SdlWindowMgr>())
+    , _sdlAppEventMgr(makeUPtr<app_event::SdlAppEventMgr>())
 {
-    if (!SDL_Init(SDL_INIT_VIDEO))
-        throw std::runtime_error("SDL could not initialize! SDL error: " + std::string{SDL_GetError()});
-
-    _sdlWinMgr = makeUPtr<winsys::SdlWindowMgr>();
-    _sdlAppEventMgr = makeUPtr<app_event::SdlAppEventMgr>();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-SdlFramework::~SdlFramework()
-{
-    _sdlAppEventMgr.reset();
-    _sdlWinMgr.reset();
-
-    SDL_Quit();
-}
+SdlFramework::~SdlFramework() = default;
 
 //======================================================================================================================
 winsys::WindowMgr& SdlFramework::getWindowMgr()
@@ -54,4 +46,17 @@ audio::AudioMgr& SdlFramework::getAudioMgr()
 uptr<render::Renderer> SdlFramework::createRenderer()
 {
     throw std::logic_error("Not implemented");
+}
+
+//======================================================================================================================
+SdlFramework::SdlLibraryRaiiWrapper::SdlLibraryRaiiWrapper()
+{
+    if (!SDL_Init(SDL_INIT_VIDEO))
+        throw std::runtime_error("SDL could not initialize! SDL error: " + std::string{SDL_GetError()});
+}
+
+//======================================================================================================================
+SdlFramework::SdlLibraryRaiiWrapper::~SdlLibraryRaiiWrapper()
+{
+    SDL_Quit();
 }

@@ -18,6 +18,13 @@ namespace framework {
         uptr<render::Renderer> createRenderer() override;
 
     private:
+        class SdlLibraryRaiiWrapper final {
+        public:
+            SdlLibraryRaiiWrapper();
+            ~SdlLibraryRaiiWrapper();
+        };
+
+        SdlLibraryRaiiWrapper _sdlLibraryRaiiWrapper;
         uptr<winsys::WindowMgr> _sdlWinMgr;
         uptr<app_event::AppEventMgr> _sdlAppEventMgr;
     };
