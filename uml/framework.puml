@@ -1,0 +1,24 @@
+@startuml
+
+skinparam defaultFontName monospaced
+
+
+abstract class Framework {
+    {abstract} + getAppEventMgr()
+    {abstract} + getWindowMgr()
+    {abstract} + getInputMgr()
+    {abstract} + getAudioMgr()
+    {abstract} + createRenderer()
+}
+
+class SdlFramework implements Framework
+class GlfwFramework implements Framework
+
+
+abstract class Application {
+    + run()
+--
+    {abstract} + init() : Framework
+}
+
+@enduml

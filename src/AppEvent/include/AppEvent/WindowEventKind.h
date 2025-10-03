@@ -1,12 +1,8 @@
-#include "GuiTest.h"
-
-#include <iostream>
+#pragma once
 
 //======================================================================================================================
-int main()
-{
-    GuiTest guiTest;
-    guiTest.run();
-
-    return 0;
+namespace app_event {
+    enum class WindowEventKind {
+        QuitRequested,
+    };
 }

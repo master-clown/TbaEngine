@@ -1,12 +1,6 @@
-#include "GuiTest.h"
+#pragma once
 
-#include <iostream>
+#include <string>
 
 //======================================================================================================================
-int main()
-{
-    GuiTest guiTest;
-    guiTest.run();
-
-    return 0;
-}
+using String = std::string;

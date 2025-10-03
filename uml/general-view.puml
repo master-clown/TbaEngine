@@ -1,0 +1,68 @@
+@startuml
+
+skinparam defaultFontName monospaced
+
+
+package framework {
+    package winsys {
+        abstract class WindowMgr
+    }
+
+    package input {
+        abstract class InputMgr
+    }
+
+    package audio {
+        abstract class AudioMgr
+    }
+
+    abstract class Framework
+
+    - class SdlFramework implements Framework
+    - class GlfwFramework implements Framework
+
+    Framework *-- winsys.WindowMgr
+    Framework *-- input.InputMgr
+    Framework *-- audio.AudioMgr
+}
+
+package render {
+	package content {
+		abstract class Content
+
+		class Color implements Content
+		class Texture implements Content
+		class Image implements Content
+		class Gif implements Content
+		class Video implements Content
+
+		class ContentMgr {
+			+ makeColor()
+			+ makeTexture()
+			// ...
+		}
+	}
+
+    abstract class Renderable
+
+	package primitive {
+		abstract class Primitive extends Renderable
+		
+		class Line implements Primitive
+		class Triangle implements Primitive
+	}
+
+	package text {
+		abstract class Text extends Renderable
+		
+		class FontText implements Text
+	}
+
+	abstract class Renderer {
+		+ draw(Line)
+		+ draw(FontText)
+        // ...
+	}
+}
+
+@enduml
