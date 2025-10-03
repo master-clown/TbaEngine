@@ -24,6 +24,7 @@ SdlFramework::SdlFramework()
 //----------------------------------------------------------------------------------------------------------------------
 SdlFramework::~SdlFramework()
 {
+    _sdlAppEventMgr.reset();
     _sdlWinMgr.reset();
 
     SDL_Quit();
