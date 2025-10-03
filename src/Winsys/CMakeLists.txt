@@ -16,6 +16,7 @@ set(SOURCES
     SdlWindowMgr.cpp
     Window.cpp   
     WindowMgr.cpp   
+    WindowOptions.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
