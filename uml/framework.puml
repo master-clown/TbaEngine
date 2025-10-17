@@ -2,7 +2,7 @@
 
 skinparam defaultFontName monospaced
 
-
+'=======================================================================================================================
 abstract class Framework {
     {abstract} + getAppEventMgr()
     {abstract} + getWindowMgr()
@@ -11,14 +11,27 @@ abstract class Framework {
     {abstract} + createRenderer()
 }
 
+'-----------------------------------------------------------------------------------------------------------------------
+note top
+    It is guaranteed that Framework is destroyed after all objects created by it.
+    Use RAII guards for init/free of common parts of specific frameworks.
+end note
+
+'-----------------------------------------------------------------------------------------------------------------------
 class SdlFramework implements Framework
 class GlfwFramework implements Framework
 
-
+'=======================================================================================================================
 abstract class Application {
     + run()
 --
     {abstract} + init() : Framework
+--
+    - _framework
 }
 
+'-----------------------------------------------------------------------------------------------------------------------
+Application *-- Framework
+
+'=======================================================================================================================
 @enduml
