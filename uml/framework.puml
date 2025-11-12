@@ -8,8 +8,7 @@ abstract class Framework {
     {abstract} + getWindowMgr()
     {abstract} + getInputMgr()
     {abstract} + getAudioMgr()
-    {abstract} + create2dRenderer()
-    {abstract} + create3dRenderer()
+    {abstract} + createRenderer()
 }
 
 '-----------------------------------------------------------------------------------------------------------------------
