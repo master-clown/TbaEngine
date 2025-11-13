@@ -17,6 +17,9 @@ namespace render {
         SdlRenderer();
         ~SdlRenderer();
 
+        void clear() override;
+        void finalizeRender() override;
+
         render_2d::Renderer& get2dRenderer() override;
         render_3d::Renderer& get3dRenderer() override;
 

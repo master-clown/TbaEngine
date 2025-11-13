@@ -22,8 +22,11 @@ package render {
 
     '===================================================================================================================
     abstract class Renderer {
-        + {abstract} 2d() -> render_2d.Renderer&
-        + {abstract} 3d() -> render_3d.Renderer&
+        + {abstract} clear(content.Color)
+        + {abstract} finalizeRender()
+    --
+        + {abstract} get2dRenderer() -> render_2d.Renderer&
+        + {abstract} get3dRenderer() -> render_3d.Renderer&
     }
 
     '-------------------------------------------------------------------------------------------------------------------

@@ -14,6 +14,16 @@ render::SdlRenderer::SdlRenderer()
 render::SdlRenderer::~SdlRenderer() = default;
 
 //==================================================================================================================
+void render::SdlRenderer::clear()
+{
+}
+
+//==================================================================================================================
+void render::SdlRenderer::finalizeRender()
+{
+}
+
+//==================================================================================================================
 render_2d::Renderer& render::SdlRenderer::get2dRenderer()
 {
     assert(_renderer2d);

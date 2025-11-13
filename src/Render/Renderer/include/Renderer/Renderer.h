@@ -17,6 +17,9 @@ namespace render {
     public:
         virtual ~Renderer();
 
+        virtual void clear() = 0;
+        virtual void finalizeRender() = 0;
+
         virtual render_2d::Renderer& get2dRenderer() = 0;
         virtual render_3d::Renderer& get3dRenderer() = 0;
     };
