@@ -5,16 +5,12 @@ set(TARGET_NAME Content)
 set(PUBLIC_HEADERS
     Color.h
     Content.h
-    Texture.h
-    UpdatableContent.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
     Color.cpp
     Content.cpp
-    Texture.cpp
-    UpdatableContent.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
