@@ -1,16 +1,14 @@
 cmake_minimum_required(VERSION 3.12)
 
-set(TARGET_NAME Renderer)
+set(TARGET_NAME SdlRenderer)
 
 set(PUBLIC_HEADERS
-    Renderer.h
-    RendererType.h
+    SdlRenderer.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
-    Renderer.cpp
-    RendererType.cpp
+    SdlRenderer.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
@@ -24,8 +22,9 @@ target_sources(${TARGET_NAME}
     FILES
     ${PUBLIC_HEADERS})
 target_link_libraries(${TARGET_NAME} PUBLIC
-    Render2d
+    Renderer
+    SdlRender2d
 )
-target_link_libraries(${TARGET_NAME} PRIVATE 
+target_link_libraries(${TARGET_NAME} PRIVATE
     Common
 )

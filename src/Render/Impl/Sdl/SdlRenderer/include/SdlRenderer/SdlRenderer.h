@@ -10,9 +10,9 @@ namespace render_2d {
 }
 
 //======================================================================================================================
-namespace render {
+namespace sdl_render {
     //==================================================================================================================
-    class SdlRenderer final : public Renderer {
+    class SdlRenderer final : public render::Renderer {
     public:
         SdlRenderer();
         ~SdlRenderer();

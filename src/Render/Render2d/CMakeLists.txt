@@ -4,13 +4,11 @@ set(TARGET_NAME Render2d)
 
 set(PUBLIC_HEADERS
     Renderer.h
-    SdlRenderer.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
     Renderer.cpp
-    SdlRenderer.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
@@ -23,9 +21,6 @@ target_sources(${TARGET_NAME}
     BASE_DIRS include
     FILES
     ${PUBLIC_HEADERS})
-#target_link_libraries(${TARGET_NAME} PUBLIC
-#    Content
-#)
 target_link_libraries(${TARGET_NAME} PRIVATE 
     Common
 )

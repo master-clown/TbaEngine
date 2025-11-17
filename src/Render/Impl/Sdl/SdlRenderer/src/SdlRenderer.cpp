@@ -1,37 +1,37 @@
-#include <Renderer/SdlRenderer.h>
+#include <SdlRenderer/SdlRenderer.h>
 
-#include <Render2d/SdlRenderer.h>
+#include <SdlRender2d/SdlRenderer2d.h>
 
 #include <cassert>
 
 //==================================================================================================================
-render::SdlRenderer::SdlRenderer()
-    : _renderer2d(makeUPtr<render_2d::Renderer>())
+sdl_render::SdlRenderer::SdlRenderer()
+    : _renderer2d(makeUPtr<sdl_render::SdlRenderer2d>())
 {
 }
 
 //==================================================================================================================
-render::SdlRenderer::~SdlRenderer() = default;
+sdl_render::SdlRenderer::~SdlRenderer() = default;
 
 //==================================================================================================================
-void render::SdlRenderer::clear()
+void sdl_render::SdlRenderer::clear()
 {
 }
 
 //==================================================================================================================
-void render::SdlRenderer::finalizeRender()
+void sdl_render::SdlRenderer::finalizeRender()
 {
 }
 
 //==================================================================================================================
-render_2d::Renderer& render::SdlRenderer::get2dRenderer()
+render_2d::Renderer& sdl_render::SdlRenderer::get2dRenderer()
 {
     assert(_renderer2d);
     return *_renderer2d;
 }
 
 //==================================================================================================================
-render_3d::Renderer& render::SdlRenderer::get3dRenderer()
+render_3d::Renderer& sdl_render::SdlRenderer::get3dRenderer()
 {
     throw std::logic_error("Not implemented");
 }

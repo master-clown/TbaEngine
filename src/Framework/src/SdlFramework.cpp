@@ -1,7 +1,7 @@
 #include <Framework/SdlFramework.h>
 
 #include <AppEvent/SdlAppEventMgr.h>
-#include <Renderer/SdlRenderer.h>
+#include <SdlRenderer/SdlRenderer.h>
 #include <Winsys/SdlWindowMgr.h>
 
 #include <SDL3/SDL.h>
@@ -49,7 +49,7 @@ uptr<render::Renderer> SdlFramework::createRenderer(const render::RendererType r
     using Type = render::RendererType;
 
     switch (renderType) {
-    case Type::Sdl: return makeUPtr<render::SdlRenderer>();
+    case Type::Sdl: return makeUPtr<sdl_render::SdlRenderer>();
     default: break;
     }
 

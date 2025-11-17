@@ -1,7 +1,7 @@
-#include <Render2d/SdlRenderer.h>
+#include <SdlRender2d/SdlRenderer2d.h>
 
 //==================================================================================================================
-render_2d::SdlRenderer::SdlRenderer() = default;
+sdl_render::SdlRenderer2d::SdlRenderer2d() = default;
 
 //==================================================================================================================
-render_2d::SdlRenderer::~SdlRenderer() = default;
+sdl_render::SdlRenderer2d::~SdlRenderer2d() = default;

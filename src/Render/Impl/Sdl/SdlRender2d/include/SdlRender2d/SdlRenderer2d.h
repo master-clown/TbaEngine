@@ -3,11 +3,11 @@
 #include <Render2d/Renderer.h>
 
 //======================================================================================================================
-namespace render_2d {
+namespace sdl_render {
     //==================================================================================================================
-    class SdlRenderer final : public Renderer {
+    class SdlRenderer2d final : public render_2d::Renderer {
     public:
-        SdlRenderer();
-        ~SdlRenderer();
+        SdlRenderer2d();
+        ~SdlRenderer2d();
     };
 }
