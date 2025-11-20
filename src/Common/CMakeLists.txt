@@ -5,6 +5,7 @@ set(TARGET_NAME Common)
 set(PUBLIC_HEADERS
     Integers.h
     Memory.h
+    NumericCast.hpp
     String.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
@@ -12,6 +13,7 @@ list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 set(SOURCES
     Integers.cpp
     Memory.cpp
+    NumericCast.cpp
     String.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
