@@ -6,6 +6,7 @@ set(PUBLIC_HEADERS
     Integers.h
     Memory.h
     NumericCast.hpp
+    Stl/Array.h
     String.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
@@ -14,6 +15,7 @@ set(SOURCES
     Integers.cpp
     Memory.cpp
     NumericCast.cpp
+    Stl/Array.cpp
     String.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
