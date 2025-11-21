@@ -1,6 +1,7 @@
 #include <SdlRender2d/SdlRenderer2d.h>
 
 #include <Common/NumericCast.hpp>
+#include <Common/OverloadMultiplexor.h>
 #include <Common/Stl/Array.h>
 #include <Common/String.h>
 #include <Content/Color.h>
@@ -14,14 +15,34 @@
 //==================================================================================================================
 // TODO: move to separate private headers
 namespace {
-    struct SdlTriangleRenderCache final {
+    struct SdlTriangle final {
         Array<SDL_Vertex, 3> sdlVertexes;
+
+        SdlTriangle()
+        {
+            sdlVertexes.fill(SDL_Vertex{0});
+        }
+
+        void setFromTriangle(const geometry_2d::Triangle& triangle)
+        {
+            const auto makeSdlPoint = [](const geometry_2d::Point2d& pt) noexcept {
+                return SDL_FPoint{
+                    .x = numericCast<float>(pt.x),
+                    .y = numericCast<float>(pt.y),
+                };
+            };
+
+            sdlVertexes[0].position = makeSdlPoint(triangle.pt1);
+            sdlVertexes[1].position = makeSdlPoint(triangle.pt2);
+            sdlVertexes[2].position = makeSdlPoint(triangle.pt3);
+        }
     };
 }
 
 //==================================================================================================================
 struct sdl_render::SdlRenderer2d::Pimpl final {
     SDL_Renderer* renderer = nullptr;
+    SdlTriangle sdlTriangle;
 
     Pimpl(winsys::SdlWindow& sdlWindow)
     {
@@ -96,4 +117,21 @@ void sdl_render::SdlRenderer2d::render(const render_2d::RenderableGeometry<geome
 //==================================================================================================================
 void sdl_render::SdlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Triangle>& triangle)
 {
+    std::visit(
+        OverloadMultiplexor{
+            [this](const content::Color& color) {
+                SDL_SetRenderDrawColor(_pimpl->renderer, color.r, color.g, color.b, color.a);
+            },
+            [](const auto&) { throw std::runtime_error("Unsupported kind of Content for geometry_2d::Triangle"); },
+        },
+        triangle.contentTraits.faceContent);
+
+    _pimpl->sdlTriangle.setFromTriangle(triangle.primitive);
+
+    SDL_RenderGeometry(_pimpl->renderer,
+                       (SDL_Texture*)nullptr,
+                       &_pimpl->sdlTriangle.sdlVertexes[0],
+                       _pimpl->sdlTriangle.sdlVertexes.size(),
+                       (int*)nullptr,
+                       0);
 }
