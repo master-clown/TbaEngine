@@ -6,6 +6,7 @@ set(PUBLIC_HEADERS
     Integers.h
     Memory.h
     NumericCast.hpp
+    OverloadMultiplexor.h
     Stl/Array.h
     String.h
 )
@@ -15,6 +16,7 @@ set(SOURCES
     Integers.cpp
     Memory.cpp
     NumericCast.cpp
+    OverloadMultiplexor.cpp
     Stl/Array.cpp
     String.cpp
 )
