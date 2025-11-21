@@ -5,6 +5,7 @@
 
 //======================================================================================================================
 namespace winsys {
+    class Window;
     class WindowMgr;
 }
 
@@ -32,6 +33,8 @@ namespace framework {
         virtual winsys::WindowMgr& getWindowMgr() = 0;
         virtual app_event::AppEventMgr& getAppEventMgr() = 0;
         virtual audio::AudioMgr& getAudioMgr() = 0;
-        virtual uptr<render::Renderer> createRenderer(render::RendererType) = 0;
+
+        using TargetWindow = winsys::Window;
+        virtual uptr<render::Renderer> createRenderer(render::RendererType, TargetWindow&) = 0;
     };
 }
