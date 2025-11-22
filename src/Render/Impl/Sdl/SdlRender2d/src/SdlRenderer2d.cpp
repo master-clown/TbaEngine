@@ -12,34 +12,56 @@
 
 #include <SDL3/SDL.h>
 
-//==================================================================================================================
+//======================================================================================================================
 // TODO: move to separate private headers
 namespace {
+    //==================================================================================================================
+    auto makeSdlFColor(const content::Color& color) noexcept
+    {
+        static constexpr auto maxColorIntensity = content::Color::maxColorIntensity;
+
+        return SDL_FColor{
+            .r = numericCast<float>(color.r) / maxColorIntensity,
+            .g = numericCast<float>(color.g) / maxColorIntensity,
+            .b = numericCast<float>(color.b) / maxColorIntensity,
+            .a = numericCast<float>(color.a) / maxColorIntensity,
+        };
+    }
+
+    //==================================================================================================================
     struct SdlTriangle final {
         Array<SDL_Vertex, 3> sdlVertexes;
 
-        SdlTriangle()
+        void setFromTriangle(const render_2d::RenderableGeometry<geometry_2d::Triangle>& triangle)
         {
-            sdlVertexes.fill(SDL_Vertex{0});
-        }
+            const auto faceSdlFColor = makeSdlFColor(std::visit(
+                OverloadMultiplexor{
+                    [this](const content::Color& color) { return color; },
+                    [](const auto&) {
+                        throw std::runtime_error("Unsupported kind of Content for geometry_2d::Triangle");
+                    },
+                },
+                triangle.contentTraits.faceContent));
 
-        void setFromTriangle(const geometry_2d::Triangle& triangle)
-        {
-            const auto makeSdlPoint = [](const geometry_2d::Point2d& pt) noexcept {
-                return SDL_FPoint{
-                    .x = numericCast<float>(pt.x),
-                    .y = numericCast<float>(pt.y),
+            const auto makeSdlVertex = [&faceSdlFColor](const geometry_2d::Point2d& pt) noexcept {
+                return SDL_Vertex{
+                    .position = SDL_FPoint{
+                        .x = numericCast<float>(pt.x),
+                        .y = numericCast<float>(pt.y),
+                    },
+                    .color = faceSdlFColor,
+                    .tex_coord = {0},
                 };
             };
 
-            sdlVertexes[0].position = makeSdlPoint(triangle.pt1);
-            sdlVertexes[1].position = makeSdlPoint(triangle.pt2);
-            sdlVertexes[2].position = makeSdlPoint(triangle.pt3);
+            sdlVertexes[0] = makeSdlVertex(triangle.primitive.pt1);
+            sdlVertexes[1] = makeSdlVertex(triangle.primitive.pt2);
+            sdlVertexes[2] = makeSdlVertex(triangle.primitive.pt3);
         }
     };
 }
 
-//==================================================================================================================
+//=====================================================================================================================
 struct sdl_render::SdlRenderer2d::Pimpl final {
     SDL_Renderer* renderer = nullptr;
     SdlTriangle sdlTriangle;
@@ -57,29 +79,29 @@ struct sdl_render::SdlRenderer2d::Pimpl final {
     }
 };
 
-//==================================================================================================================
+//=====================================================================================================================
 sdl_render::SdlRenderer2d::SdlRenderer2d(winsys::SdlWindow& sdlWindow)
     : _pimpl(makeUPtr<Pimpl>(sdlWindow))
 {
 }
 
-//==================================================================================================================
+//=====================================================================================================================
 sdl_render::SdlRenderer2d::~SdlRenderer2d() = default;
 
-//==================================================================================================================
+//=====================================================================================================================
 void sdl_render::SdlRenderer2d::clear(const content::Color& color)
 {
     SDL_SetRenderDrawColor(_pimpl->renderer, color.r, color.g, color.b, color.a);
     SDL_RenderClear(_pimpl->renderer);
 }
 
-//==================================================================================================================
+//=====================================================================================================================
 void sdl_render::SdlRenderer2d::finalizeRender()
 {
     SDL_RenderPresent(_pimpl->renderer);
 }
 
-//==================================================================================================================
+//=====================================================================================================================
 void sdl_render::SdlRenderer2d::setBaseRenderResolution(const geometry_2d::ScreenCoordinate width,
                                                         const geometry_2d::ScreenCoordinate height)
 {
@@ -94,7 +116,7 @@ void sdl_render::SdlRenderer2d::setBaseRenderResolution(const geometry_2d::Scree
             SDL_GetError()));
 }
 
-//==================================================================================================================
+//=====================================================================================================================
 void sdl_render::SdlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Point2d>& pt)
 {
     const auto& color = pt.contentTraits.color;
@@ -102,7 +124,7 @@ void sdl_render::SdlRenderer2d::render(const render_2d::RenderableGeometry<geome
     SDL_RenderPoint(_pimpl->renderer, numericCast<float>(pt.primitive.x), numericCast<float>(pt.primitive.y));
 }
 
-//==================================================================================================================
+//=====================================================================================================================
 void sdl_render::SdlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Line>& line)
 {
     const auto& color = line.contentTraits.lineColor;
@@ -114,19 +136,10 @@ void sdl_render::SdlRenderer2d::render(const render_2d::RenderableGeometry<geome
                    numericCast<float>(line.primitive.finalPt.y));
 }
 
-//==================================================================================================================
+//=====================================================================================================================
 void sdl_render::SdlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Triangle>& triangle)
 {
-    std::visit(
-        OverloadMultiplexor{
-            [this](const content::Color& color) {
-                SDL_SetRenderDrawColor(_pimpl->renderer, color.r, color.g, color.b, color.a);
-            },
-            [](const auto&) { throw std::runtime_error("Unsupported kind of Content for geometry_2d::Triangle"); },
-        },
-        triangle.contentTraits.faceContent);
-
-    _pimpl->sdlTriangle.setFromTriangle(triangle.primitive);
+    _pimpl->sdlTriangle.setFromTriangle(triangle);
 
     SDL_RenderGeometry(_pimpl->renderer,
                        (SDL_Texture*)nullptr,
