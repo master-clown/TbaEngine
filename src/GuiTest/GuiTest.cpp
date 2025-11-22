@@ -20,13 +20,9 @@ GuiTest::~GuiTest() = default;
 uptr<framework::Framework> GuiTest::_init()
 {
     auto fr = makeUPtr<framework::SdlFramework>();
-    _appWindow = fr->getWindowMgr().createWindow(winsys::WindowOptions{
-        .wndTitle = "Hello!",
-        .wndWidth = 640,
-        .wndHeight = 480,
-    });
 
-    _renderer = fr->createRenderer(render::RendererType::Sdl, *_appWindow);
+    _initWindow(*fr);
+    _initRenderer(*fr);
 
     return fr;
 }
@@ -39,6 +35,24 @@ auto GuiTest::_iterate(const app_event::AppEvent& appEventVariant) -> ShouldQuit
     _render();
 
     return shouldQuit;
+}
+
+//======================================================================================================================
+void GuiTest::_initWindow(framework::Framework& fr)
+{
+    _appWindow = fr.getWindowMgr().createWindow(winsys::WindowOptions{
+        .wndTitle = "Hello!",
+        .wndWidth = _graphicsOptions._renderTargetLogicalWidth,
+        .wndHeight = _graphicsOptions._renderTargetLogicalHeigth,
+    });
+}
+
+//======================================================================================================================
+void GuiTest::_initRenderer(framework::Framework& fr)
+{
+    _renderer = fr.createRenderer(render::RendererType::Sdl, *_appWindow);
+    _renderer->get2dRenderer().setBaseRenderResolution(_graphicsOptions._renderTargetLogicalWidth,
+                                                       _graphicsOptions._renderTargetLogicalHeigth);
 }
 
 //======================================================================================================================
