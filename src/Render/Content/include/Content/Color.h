@@ -2,16 +2,22 @@
 
 #include <Common/Integers.h>
 
+#include <numeric>
+
 //======================================================================================================================
 namespace content {
     struct Color final {
-        uint8 r = 0;
-        uint8 g = 0;
-        uint8 b = 0;
-        uint8 a = 0;
+        using ColorIntensity = uint8;
+
+        ColorIntensity r = 0;
+        ColorIntensity g = 0;
+        ColorIntensity b = 0;
+        ColorIntensity a = 0;
 
         static const Color transparent;
         static const Color black;
         static const Color white;
+
+        static constexpr auto maxColorIntensity = std::numeric_limits<ColorIntensity>::max();
     };
 }
