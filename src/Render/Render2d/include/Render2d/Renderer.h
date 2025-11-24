@@ -28,6 +28,12 @@ namespace render_2d {
         virtual void finalizeRender() = 0;
         // end of TODO
 
+        // Set device-independent render viewport.
+        // The client of `Renderer` assumes it is the viewport for his geometry,
+        // while `Renderer` must properly scale this viewport to the actual render target size.
+        virtual void setBaseRenderResolution(geometry_2d::ScreenCoordinate width,
+                                             geometry_2d::ScreenCoordinate height) = 0;
+
         //--------------------------------------------------------------------------------------------------------------
         virtual void render(const RenderableGeometry<geometry_2d::Point2d>&) = 0;
         virtual void render(const RenderableGeometry<geometry_2d::Line>&) = 0;

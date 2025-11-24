@@ -59,6 +59,21 @@ void sdl_render::SdlRenderer2d::finalizeRender()
 }
 
 //==================================================================================================================
+void sdl_render::SdlRenderer2d::setBaseRenderResolution(const geometry_2d::ScreenCoordinate width,
+                                                        const geometry_2d::ScreenCoordinate height)
+{
+    if (!SDL_SetRenderLogicalPresentation(_pimpl->renderer,
+                                          numericCast<int>(width),
+                                          numericCast<int>(height),
+                                          SDL_LOGICAL_PRESENTATION_STRETCH))
+        throw std::runtime_error(strFormat(
+            "Failed to set SDL renderer logical presentation (width={}, height={}): {}",
+            width,
+            height,
+            SDL_GetError()));
+}
+
+//==================================================================================================================
 void sdl_render::SdlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Point2d>& pt)
 {
     const auto& color = pt.contentTraits.color;

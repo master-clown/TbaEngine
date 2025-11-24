@@ -20,6 +20,9 @@ namespace sdl_render {
         void clear(const content::Color&) override;
         void finalizeRender() override;
 
+        void setBaseRenderResolution(geometry_2d::ScreenCoordinate width,
+                                     geometry_2d::ScreenCoordinate height) override;
+
         //--------------------------------------------------------------------------------------------------------------
         void render(const render_2d::RenderableGeometry<geometry_2d::Point2d>&) override;
         void render(const render_2d::RenderableGeometry<geometry_2d::Line>&) override;
