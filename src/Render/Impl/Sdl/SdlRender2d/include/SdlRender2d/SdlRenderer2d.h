@@ -5,11 +5,16 @@
 #include <Common/Memory.h>
 
 //======================================================================================================================
+namespace winsys {
+    class SdlWindow;
+}
+
+//======================================================================================================================
 namespace sdl_render {
     //==================================================================================================================
     class SdlRenderer2d final : public render_2d::Renderer {
     public:
-        SdlRenderer2d();
+        explicit SdlRenderer2d(winsys::SdlWindow&);
         ~SdlRenderer2d();
 
         void render(const render_2d::RenderableGeometry<geometry_2d::Point2d>&) override;

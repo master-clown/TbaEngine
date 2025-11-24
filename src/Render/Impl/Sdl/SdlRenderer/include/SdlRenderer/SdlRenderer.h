@@ -5,6 +5,11 @@
 #include <Common/Memory.h>
 
 //======================================================================================================================
+namespace winsys {
+    class SdlWindow;
+}
+
+//======================================================================================================================
 namespace render_2d {
     class Renderer;
 }
@@ -14,7 +19,7 @@ namespace sdl_render {
     //==================================================================================================================
     class SdlRenderer final : public render::Renderer {
     public:
-        SdlRenderer();
+        explicit SdlRenderer(winsys::SdlWindow&);
         ~SdlRenderer();
 
         void clear() override;

@@ -5,8 +5,8 @@
 #include <cassert>
 
 //==================================================================================================================
-sdl_render::SdlRenderer::SdlRenderer()
-    : _renderer2d(makeUPtr<sdl_render::SdlRenderer2d>())
+sdl_render::SdlRenderer::SdlRenderer(winsys::SdlWindow& sdlWindow)
+    : _renderer2d(makeUPtr<sdl_render::SdlRenderer2d>(sdlWindow))
 {
 }
 
