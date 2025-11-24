@@ -11,6 +11,7 @@ namespace framework {
     //==================================================================================================================
     class Application {
     public:
+        Application();
         virtual ~Application();
 
         void run();
@@ -21,5 +22,8 @@ namespace framework {
     private:
         virtual uptr<Framework> _init() = 0;
         virtual ShouldQuit _iterate(const app_event::AppEvent&) = 0;
+
+    private:
+        uptr<Framework> _framework;
     };
 }

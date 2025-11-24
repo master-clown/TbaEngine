@@ -27,42 +27,42 @@ package framework {
 }
 
 package render {
-	package content {
-		abstract class Content
+    package content {
+        abstract class Content
 
-		class Color implements Content
-		class Texture implements Content
-		class Image implements Content
-		class Gif implements Content
-		class Video implements Content
+        class Color implements Content
+        class Texture implements Content
+        class Image implements Content
+        class Gif implements Content
+        class Video implements Content
 
-		class ContentMgr {
-			+ makeColor()
-			+ makeTexture()
-			// ...
-		}
-	}
+        class ContentMgr {
+            + makeColor()
+            + makeTexture()
+            // ...
+        }
+    }
 
     abstract class Renderable
 
-	package primitive {
-		abstract class Primitive extends Renderable
-		
-		class Line implements Primitive
-		class Triangle implements Primitive
-	}
+    package primitive {
+        abstract class Primitive extends Renderable
 
-	package text {
-		abstract class Text extends Renderable
-		
-		class FontText implements Text
-	}
+        class Line implements Primitive
+        class Triangle implements Primitive
+    }
 
-	abstract class Renderer {
-		+ draw(Line)
-		+ draw(FontText)
+    package text {
+        abstract class Text extends Renderable
+
+        class FontText implements Text
+    }
+
+    abstract class Renderer {
+        + draw(Line)
+        + draw(FontText)
         // ...
-	}
+    }
 }
 
 @enduml

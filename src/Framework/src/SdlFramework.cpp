@@ -1,6 +1,8 @@
 #include <Framework/SdlFramework.h>
 
 #include <AppEvent/SdlAppEventMgr.h>
+#include <SdlRenderer/SdlRenderer.h>
+#include <Winsys/SdlWindow.h>
 #include <Winsys/SdlWindowMgr.h>
 
 #include <SDL3/SDL.h>
@@ -43,9 +45,27 @@ audio::AudioMgr& SdlFramework::getAudioMgr()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-uptr<render::Renderer> SdlFramework::createRenderer()
+uptr<render::Renderer> SdlFramework::createRenderer(const render::RendererType renderType,
+                                                    TargetWindow& targetWindow)
 {
-    throw std::logic_error("Not implemented");
+    using Type = render::RendererType;
+
+    switch (renderType) {
+    case Type::Sdl: return SdlFramework::_createSdlRenderer(targetWindow);
+    default: break;
+    }
+
+    throw std::runtime_error("Unsupported renderer type is passed: " + str(renderType));
+}
+
+//======================================================================================================================
+uptr<render::Renderer> SdlFramework::_createSdlRenderer(TargetWindow& targetWindow)
+{
+    auto* sdlWindow = dynamic_cast<winsys::SdlWindow*>(&targetWindow);
+    if (!sdlWindow)
+        throw std::runtime_error("SdlRenderer can be created only for target window of type 'SdlWindow'");
+
+    return makeUPtr<sdl_render::SdlRenderer>(*sdlWindow);
 }
 
 //======================================================================================================================

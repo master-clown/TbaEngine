@@ -29,9 +29,11 @@ target_sources(${TARGET_NAME}
     ${PUBLIC_HEADERS})
 target_link_libraries(${TARGET_NAME} PUBLIC
     AppEvent
+    Renderer
     Winsys
 )
 target_link_libraries(${TARGET_NAME} PRIVATE 
     Common
+    SdlRenderer
     SDL3::SDL3
 )

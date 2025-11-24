@@ -8,14 +8,17 @@
 using namespace framework;
 
 //======================================================================================================================
+Application::Application() = default;
+
+//======================================================================================================================
 Application::~Application() = default;
 
 //======================================================================================================================
 void Application::run()
 {
-    auto framework = _init();
+    _framework = _init();
 
-    auto& appEventMgr = framework->getAppEventMgr();
+    auto& appEventMgr = _framework->getAppEventMgr();
     while (true) {
         const auto appEventVariant = appEventMgr.getNextEvent();
 
