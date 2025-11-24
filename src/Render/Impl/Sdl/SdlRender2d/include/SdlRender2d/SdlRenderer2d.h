@@ -17,6 +17,10 @@ namespace sdl_render {
         explicit SdlRenderer2d(winsys::SdlWindow&);
         ~SdlRenderer2d();
 
+        void clear(const content::Color&) override;
+        void finalizeRender() override;
+
+        //--------------------------------------------------------------------------------------------------------------
         void render(const render_2d::RenderableGeometry<geometry_2d::Point2d>&) override;
         void render(const render_2d::RenderableGeometry<geometry_2d::Line>&) override;
         void render(const render_2d::RenderableGeometry<geometry_2d::Triangle>&) override;

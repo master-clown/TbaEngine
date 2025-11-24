@@ -22,7 +22,7 @@ namespace sdl_render {
         explicit SdlRenderer(winsys::SdlWindow&);
         ~SdlRenderer();
 
-        void clear() override;
+        void clear(const content::Color&) override;
         void finalizeRender() override;
 
         render_2d::Renderer& get2dRenderer() override;

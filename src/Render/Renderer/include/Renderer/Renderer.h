@@ -1,6 +1,11 @@
 #pragma once
 
 //======================================================================================================================
+namespace content {
+    struct Color;
+}
+
+//======================================================================================================================
 namespace render_2d {
     class Renderer;
 }
@@ -17,9 +22,11 @@ namespace render {
     public:
         virtual ~Renderer();
 
-        virtual void clear() = 0;
+        // TODO: to separate interface? For both 2D and 3D, and here too
+        virtual void clear(const content::Color&) = 0;
         virtual void finalizeRender() = 0;
 
+        //--------------------------------------------------------------------------------------------------------------
         virtual render_2d::Renderer& get2dRenderer() = 0;
         virtual render_3d::Renderer& get3dRenderer() = 0;
     };

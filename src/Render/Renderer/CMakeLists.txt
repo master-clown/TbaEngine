@@ -28,4 +28,5 @@ target_link_libraries(${TARGET_NAME} PUBLIC
 )
 target_link_libraries(${TARGET_NAME} PRIVATE 
     Common
+    Content
 )

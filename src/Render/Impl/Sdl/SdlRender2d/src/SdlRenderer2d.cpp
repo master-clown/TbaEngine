@@ -46,6 +46,19 @@ sdl_render::SdlRenderer2d::SdlRenderer2d(winsys::SdlWindow& sdlWindow)
 sdl_render::SdlRenderer2d::~SdlRenderer2d() = default;
 
 //==================================================================================================================
+void sdl_render::SdlRenderer2d::clear(const content::Color& color)
+{
+    SDL_SetRenderDrawColor(_pimpl->renderer, color.r, color.g, color.b, color.a);
+    SDL_RenderClear(_pimpl->renderer);
+}
+
+//==================================================================================================================
+void sdl_render::SdlRenderer2d::finalizeRender()
+{
+    SDL_RenderPresent(_pimpl->renderer);
+}
+
+//==================================================================================================================
 void sdl_render::SdlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Point2d>& pt)
 {
     const auto& color = pt.contentTraits.color;

@@ -14,8 +14,9 @@ sdl_render::SdlRenderer::SdlRenderer(winsys::SdlWindow& sdlWindow)
 sdl_render::SdlRenderer::~SdlRenderer() = default;
 
 //==================================================================================================================
-void sdl_render::SdlRenderer::clear()
+void sdl_render::SdlRenderer::clear(const content::Color& color)
 {
+    get2dRenderer().clear(color);
 }
 
 //==================================================================================================================
