@@ -12,6 +12,8 @@ set(SOURCES
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
+find_package(SDL3 REQUIRED)
+
 add_library(${TARGET_NAME} STATIC)
 
 target_sources(${TARGET_NAME} PRIVATE ${SOURCES})
@@ -23,4 +25,8 @@ target_sources(${TARGET_NAME}
     ${PUBLIC_HEADERS})
 target_link_libraries(${TARGET_NAME} PUBLIC
     Render2d
+)
+target_link_libraries(${TARGET_NAME} PRIVATE
+    Common
+    SDL3::SDL3
 )

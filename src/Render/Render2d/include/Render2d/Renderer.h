@@ -1,10 +1,23 @@
 #pragma once
 
+#include <Render2d/RenderableGeometry.h>
+
+//======================================================================================================================
+namespace geometry_2d {
+    struct Point2d;
+    struct Line;
+    struct Triangle;
+}
+
 //======================================================================================================================
 namespace render_2d {
     //==================================================================================================================
     class Renderer {
     public:
         virtual ~Renderer();
+
+        virtual void render(const RenderableGeometry<geometry_2d::Point2d>&) = 0;
+        virtual void render(const RenderableGeometry<geometry_2d::Line>&) = 0;
+        virtual void render(const RenderableGeometry<geometry_2d::Triangle>&) = 0;
     };
 }
