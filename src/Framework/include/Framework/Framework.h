@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Common/Memory.h>
+#include <Renderer/RendererType.h>
 
 //======================================================================================================================
 namespace winsys {
@@ -31,6 +32,6 @@ namespace framework {
         virtual winsys::WindowMgr& getWindowMgr() = 0;
         virtual app_event::AppEventMgr& getAppEventMgr() = 0;
         virtual audio::AudioMgr& getAudioMgr() = 0;
-        virtual uptr<render::Renderer> createRenderer() = 0;
+        virtual uptr<render::Renderer> createRenderer(render::RendererType) = 0;
     };
 }

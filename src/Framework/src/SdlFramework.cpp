@@ -1,6 +1,7 @@
 #include <Framework/SdlFramework.h>
 
 #include <AppEvent/SdlAppEventMgr.h>
+#include <Renderer/SdlRenderer.h>
 #include <Winsys/SdlWindowMgr.h>
 
 #include <SDL3/SDL.h>
@@ -43,9 +44,16 @@ audio::AudioMgr& SdlFramework::getAudioMgr()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-uptr<render::Renderer> SdlFramework::createRenderer()
+uptr<render::Renderer> SdlFramework::createRenderer(const render::RendererType renderType)
 {
-    throw std::logic_error("Not implemented");
+    using Type = render::RendererType;
+
+    switch (renderType) {
+    case Type::Sdl: return makeUPtr<render::SdlRenderer>();
+    default: break;
+    }
+
+    throw std::runtime_error("Unsupported renderer type is passed: " + str(renderType));
 }
 
 //======================================================================================================================

@@ -15,7 +15,7 @@ namespace framework {
         winsys::WindowMgr& getWindowMgr() override;
         app_event::AppEventMgr& getAppEventMgr() override;
         audio::AudioMgr& getAudioMgr() override;
-        uptr<render::Renderer> createRenderer() override;
+        uptr<render::Renderer> createRenderer(render::RendererType) override;
 
     private:
         class SdlLibraryRaiiWrapper final {
