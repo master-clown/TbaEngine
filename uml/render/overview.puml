@@ -37,7 +37,7 @@ package content {
         For media reusage 
         TODO: different renderers require 
           different ways of creating content. 
-          How to incorporate Storage and 
+          How to befriend Storage and 
           content creators? 
     end note
 }
