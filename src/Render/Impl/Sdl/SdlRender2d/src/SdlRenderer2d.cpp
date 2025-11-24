@@ -3,7 +3,6 @@
 #include "Details/SdlTriangle.h"
 
 #include <Common/NumericCast.hpp>
-#include <Common/Stl/Array.h>
 #include <Common/String.h>
 #include <Content/Color.h>
 #include <Geometry2d/Line.h>
