@@ -4,19 +4,42 @@ skinparam defaultFontName monospaced
 
 '=======================================================================================================================
 package content {
-    abstract class Content
+    '===================================================================================================================
+    class Color 
 
-    class Color implements Content
-    class Texture implements Content
-    class Image implements Content
-    class Gif implements Content
-    class Video implements Content
+    '===================================================================================================================
+    abstract class UpdatableContent {
+        + {abstract} update()
+    }
 
-    class ContentMgr {
-        + makeColor()
-        + makeTexture()
+    abstract class Texture extends UpdatableContent 
+    abstract class Image extends UpdatableContent
+    abstract class Gif extends UpdatableContent
+    abstract class Video extends UpdatableContent
+
+    '===================================================================================================================
+    class Content {
+        Color
+        uptr<Texture>
         // ...
     }
+
+    note left : std::variant
+
+    '-------------------------------------------------------------------------------------------------------------------
+    Content *-- Color 
+    Content *-- UpdatableContent  
+
+    '===================================================================================================================
+    class ContentStorage
+
+    note top
+        For media reusage 
+        TODO: different renderers require 
+          different ways of creating content. 
+          How to incorporate Storage and 
+          content creators? 
+    end note
 }
 
 '=======================================================================================================================
@@ -28,7 +51,7 @@ package render_2d {
     }
 
     '-------------------------------------------------------------------------------------------------------------------
-    geom_prim o-- content
+    geom_prim o-- content.Content
 
     '===================================================================================================================
     package text {
@@ -36,7 +59,7 @@ package render_2d {
     }
 
     '-------------------------------------------------------------------------------------------------------------------
-    text o-- content
+    text o-- content.Content
     
     '===================================================================================================================
     abstract class Renderer {
@@ -62,7 +85,7 @@ package render_3d {
     }
 
     '-------------------------------------------------------------------------------------------------------------------
-    geom_prim o-- content
+    geom_prim o-- content.Content
     
     '===================================================================================================================
     abstract class Renderer {
@@ -90,8 +113,8 @@ package render {
     Renderable2D --> render_2d.Renderer
 
     '-------------------------------------------------------------------------------------------------------------------
-    Renderable2D "1" *-- "0.." render_2d.geom_prim
-    Renderable2D "1" *-- "0.." render_2d.text
+    Renderable2D *-- render_2d.geom_prim
+    Renderable2D *-- render_2d.text
 
     '===================================================================================================================
     abstract class Renderable3D extends Renderable {
@@ -102,7 +125,7 @@ package render {
     Renderable3D --> render_3d.Renderer
 
     '-------------------------------------------------------------------------------------------------------------------
-    Renderable3D "1" *-- "0.." render_3d.geom_prim
+    Renderable3D *-- render_3d.geom_prim
 
     '===================================================================================================================
     abstract class RenderableObject
@@ -110,8 +133,6 @@ package render {
     '-------------------------------------------------------------------------------------------------------------------
     RenderableObject --> Renderable : "factory for"
 }
-
-
 
 '=======================================================================================================================
 @enduml
