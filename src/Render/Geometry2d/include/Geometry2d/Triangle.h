@@ -1,11 +1,8 @@
 #pragma once
 
-#include <Geometry2d/Line.h>
 #include <Geometry2d/Point2d.h>
 
 #include <Content/Content.h>
-
-#include <optional>
 
 //======================================================================================================================
 namespace geometry_2d {
@@ -20,9 +17,5 @@ namespace geometry_2d {
     template <>
     struct ContentTraits<Triangle> final {
         content::Content faceContent = content::Color::white;
-
-        std::optional<ContentTraits<Line>> edge12Traits;
-        std::optional<ContentTraits<Line>> edge23Traits;
-        std::optional<ContentTraits<Line>> edge31Traits;
     };
 }

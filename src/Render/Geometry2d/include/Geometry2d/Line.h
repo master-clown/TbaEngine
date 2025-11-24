@@ -4,8 +4,6 @@
 
 #include <Content/Color.h>
 
-#include <optional>
-
 //======================================================================================================================
 namespace geometry_2d {
     //==================================================================================================================
@@ -18,8 +16,5 @@ namespace geometry_2d {
     template <>
     struct ContentTraits<Line> final {
         content::Color lineColor = content::Color::white;
-
-        std::optional<ContentTraits<Point2d>> startPtTraits;
-        std::optional<ContentTraits<Point2d>> finalPtTraits;
     };
 }
