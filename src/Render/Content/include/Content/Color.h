@@ -14,10 +14,12 @@ namespace content {
         ColorIntensity b = 0;
         ColorIntensity a = 0;
 
+        //==============================================================================================================
         static const Color transparent;
         static const Color black;
         static const Color white;
 
+        //==============================================================================================================
         static constexpr auto maxColorIntensity = std::numeric_limits<ColorIntensity>::max();
     };
 }
