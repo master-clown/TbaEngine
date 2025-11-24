@@ -15,7 +15,7 @@
 //=====================================================================================================================
 struct sdl_render::SdlRenderer2d::Pimpl final {
     SDL_Renderer* renderer = nullptr;
-    details::SdlTriangle sdlTriangle;
+    details::SdlTriangle sdlTriangle; // not thread-safe
 
     Pimpl(winsys::SdlWindow& sdlWindow)
     {
