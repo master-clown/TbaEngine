@@ -24,10 +24,10 @@ target_sources(${TARGET_NAME}
     FILES
     ${PUBLIC_HEADERS})
 target_link_libraries(${TARGET_NAME} PUBLIC
+    Common
     Render2d
 )
 target_link_libraries(${TARGET_NAME} PRIVATE
-    Common
     Content
     Winsys
     SDL3::SDL3
