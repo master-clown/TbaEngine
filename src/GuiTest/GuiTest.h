@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Framework/EventLoopApplication.h>
+#include <Framework/RenderableApplication.h>
 #include <Geometry2d/ScreenCoordinate.h>
 #include <Winsys/Window.h>
 
@@ -10,7 +10,7 @@ namespace render {
 }
 
 //======================================================================================================================
-class GuiTest final : public framework::EventLoopApplication {
+class GuiTest final : public framework::RenderableApplication {
 public:
     GuiTest();
     ~GuiTest();

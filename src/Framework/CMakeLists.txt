@@ -7,6 +7,7 @@ set(PUBLIC_HEADERS
     EventLoopApplication.h
     Framework.h
     RefreshRateOptions.h
+    RenderableApplication.h
     SdlFramework.h   
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
@@ -16,6 +17,7 @@ set(SOURCES
     EventLoopApplication.cpp
     Framework.cpp    
     RefreshRateOptions.cpp
+    RenderableApplication.cpp
     SdlFramework.cpp 
 )
 list(TRANSFORM SOURCES PREPEND "src/")
