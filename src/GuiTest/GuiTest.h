@@ -18,12 +18,12 @@ public:
 private:
     uptr<framework::Framework> _init() override;
     ShouldQuit _iterate(const app_event::AppEvent&) override;
+    void _render() override;
 
 private:
     void _initWindow(framework::Framework&);
     void _initRenderer(framework::Framework&);
     ShouldQuit _processEvent(const app_event::AppEvent&);
-    void _render();
 
 private:
     struct GraphicsOptions final {

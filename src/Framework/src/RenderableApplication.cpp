@@ -23,5 +23,7 @@ void RenderableApplication::_run()
         const auto shouldQuit = _iterate(appEventVariant);
         if (shouldQuit)
             break;
+
+        _render();
     }
 }

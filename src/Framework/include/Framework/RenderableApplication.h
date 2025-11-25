@@ -21,6 +21,7 @@ namespace framework {
 
     private:
         virtual ShouldQuit _iterate(const app_event::AppEvent&) = 0;
+        virtual void _render() = 0;
 
         //--------------------------------------------------------------------------------------------------------------
         void _run() override final;
