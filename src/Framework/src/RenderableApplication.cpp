@@ -14,11 +14,9 @@ RenderableApplication::RenderableApplication() = default;
 RenderableApplication::~RenderableApplication() = default;
 
 //======================================================================================================================
-void RenderableApplication::run()
+void RenderableApplication::_run()
 {
-    _framework = _init();
-
-    auto& appEventMgr = _framework->getAppEventMgr();
+    auto& appEventMgr = getFramework().getAppEventMgr();
     while (true) {
         const auto appEventVariant = appEventMgr.getNextEvent();
 
