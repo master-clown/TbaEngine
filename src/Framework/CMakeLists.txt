@@ -4,7 +4,6 @@ set(TARGET_NAME Framework)
 
 set(PUBLIC_HEADERS
     Application.h
-    EventLoopApplication.h
     Framework.h
     RefreshRateOptions.h
     RenderableApplication.h
@@ -14,7 +13,6 @@ list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
     Application.cpp  
-    EventLoopApplication.cpp
     Framework.cpp    
     RefreshRateOptions.cpp
     RenderableApplication.cpp
