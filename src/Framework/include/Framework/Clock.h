@@ -12,16 +12,18 @@ namespace framework {
         ~Clock();
 
         using Nanoseconds = std::chrono::duration<uint64, std::nano>;
-        Nanoseconds getCurrentTicksSinceStart() const;
+        Nanoseconds getRealTicksSinceStart() const;
+        Nanoseconds getCurrentRefreshTicks() const;
 
     private:
         friend class RenderableApplication;
-        void _update();
+        void _updateCurrentRefreshTicks();
 
     private:
         using ClockImpl = std::chrono::high_resolution_clock;
         using TimeMoment = ClockImpl::time_point;
 
         TimeMoment _startTime;
+        Nanoseconds _currentRefreshTicks{};
     };
 }

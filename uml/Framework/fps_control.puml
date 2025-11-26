@@ -4,9 +4,10 @@ skinparam defaultFontName monospaced
 
 '=======================================================================================================================
 class Clock {
-    + getCurrentTicksSinceStart() -> Nanoseconds
+    + getRealTicksSinceStart() -> Nanoseconds
+    + getCurrentRefreshTicks() -> Nanoseconds
 --
-    - update()
+    - _updateCurrentRefreshTicks()
 }
 
 '=======================================================================================================================
