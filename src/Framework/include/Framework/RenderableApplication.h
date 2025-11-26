@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Framework/Application.h>
+#include <Framework/Clock.h>
 
 #include <AppEvent/AppEvent.h> // TODO: avoid this include (not very light)
 #include <Common/Memory.h>
@@ -25,5 +26,8 @@ namespace framework {
 
         //--------------------------------------------------------------------------------------------------------------
         void _run() override final;
+
+    private:
+        Clock _clock;
     };
 }

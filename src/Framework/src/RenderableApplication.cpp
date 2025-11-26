@@ -18,6 +18,8 @@ void RenderableApplication::_run()
 {
     auto& appEventMgr = getFramework().getAppEventMgr();
     while (true) {
+        _clock._updateCurrentRefreshTicks();
+
         const auto appEventVariant = appEventMgr.getNextEvent();
 
         const auto shouldQuit = _iterate(appEventVariant);
