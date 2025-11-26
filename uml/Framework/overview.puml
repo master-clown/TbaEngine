@@ -25,7 +25,8 @@ class GlfwFramework implements Framework
 abstract class Application {
     + run()
 --
-    {abstract} + init() : Framework
+    + {abstract} _init() : Framework
+    + {abstract} _run()
 --
     - _framework
 }
