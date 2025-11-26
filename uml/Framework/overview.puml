@@ -37,6 +37,8 @@ abstract class RenderableApplication implements Application {
     + {abstract} _render()
     --
     + _run() 
+    --
+    + getClock() -> Clock
 }
 
 '-----------------------------------------------------------------------------------------------------------------------
