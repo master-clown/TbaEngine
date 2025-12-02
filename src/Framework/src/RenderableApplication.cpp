@@ -8,7 +8,10 @@
 using namespace framework;
 
 //======================================================================================================================
-RenderableApplication::RenderableApplication() = default;
+RenderableApplication::RenderableApplication(RefreshRateOptions refreshRateOpts)
+    : _refreshRateLimiter(_clock, std::move(refreshRateOpts))
+{
+}
 
 //======================================================================================================================
 RenderableApplication::~RenderableApplication() = default;
@@ -26,6 +29,9 @@ void RenderableApplication::_run()
         if (shouldQuit)
             break;
 
-        _render();
+        if (_refreshRateLimiter.requestPermissionToRender())
+            _render();
+
+        _refreshRateLimiter.wait();
     }
 }

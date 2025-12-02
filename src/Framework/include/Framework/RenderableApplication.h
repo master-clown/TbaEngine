@@ -2,6 +2,7 @@
 
 #include <Framework/Application.h>
 #include <Framework/Clock.h>
+#include <Framework/RefreshRateLimiter.h>
 
 #include <AppEvent/AppEvent.h> // TODO: avoid this include (not very light)
 #include <Common/Memory.h>
@@ -14,7 +15,7 @@ namespace framework {
     //==================================================================================================================
     class RenderableApplication : public Application {
     public:
-        RenderableApplication();
+        explicit RenderableApplication(RefreshRateOptions);
         ~RenderableApplication();
 
     protected:
@@ -29,5 +30,6 @@ namespace framework {
 
     private:
         Clock _clock;
+        RefreshRateLimiter _refreshRateLimiter;
     };
 }

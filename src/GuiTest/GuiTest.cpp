@@ -11,7 +11,10 @@
 #include <Winsys/WindowMgr.h>
 
 //======================================================================================================================
-GuiTest::GuiTest() = default;
+GuiTest::GuiTest()
+    : framework::RenderableApplication(framework::RefreshRateOptions{})
+{
+}
 
 //----------------------------------------------------------------------------------------------------------------------
 GuiTest::~GuiTest() = default;
