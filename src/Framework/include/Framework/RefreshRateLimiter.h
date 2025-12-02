@@ -13,7 +13,7 @@ namespace framework {
         void wait();
 
         using IsRenderAllowed = bool;
-        IsRenderAllowed requestPermissionToRender() const;
+        IsRenderAllowed requestPermissionToRender();
 
     private:
         const Clock& _clock;
@@ -22,6 +22,6 @@ namespace framework {
         //--------------------------------------------------------------------------------------------------------------
         using NsecsTillNextRefresh = Clock::Nanoseconds;
         NsecsTillNextRefresh _nsecRefreshSeparation;
-        mutable uint16 _performedLogicUpdatesBeforeRender = 0;
+        uint16 _performedLogicUpdatesBeforeRender = 0;
     };
 }

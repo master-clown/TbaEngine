@@ -31,7 +31,7 @@ void RefreshRateLimiter::wait()
 }
 
 //======================================================================================================================
-auto RefreshRateLimiter::requestPermissionToRender() const -> IsRenderAllowed
+auto RefreshRateLimiter::requestPermissionToRender() -> IsRenderAllowed
 {
     if (++_performedLogicUpdatesBeforeRender >= _refreshRateOptions.logicRefreshesPerRenderFrame) {
         _performedLogicUpdatesBeforeRender = 0;
