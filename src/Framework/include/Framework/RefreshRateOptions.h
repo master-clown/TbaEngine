@@ -10,6 +10,6 @@ namespace framework {
         TimesPerSecond maxLogicRefreshRatePerSecond = 60;
         uint16 logicRefreshesPerRenderFrame = 1;
 
-        static constexpr TimesPerSecond unlimited{0};
+        static constexpr TimesPerSecond unlimitedRefreshRate{0};
     };
 }
