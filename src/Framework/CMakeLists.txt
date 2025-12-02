@@ -4,14 +4,22 @@ set(TARGET_NAME Framework)
 
 set(PUBLIC_HEADERS
     Application.h
+    Clock.h
     Framework.h
+    RefreshRateLimiter.h
+    RefreshRateOptions.h
+    RenderableApplication.h
     SdlFramework.h   
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
     Application.cpp  
+    Clock.cpp
     Framework.cpp    
+    RefreshRateLimiter.cpp
+    RefreshRateOptions.cpp
+    RenderableApplication.cpp
     SdlFramework.cpp 
 )
 list(TRANSFORM SOURCES PREPEND "src/")

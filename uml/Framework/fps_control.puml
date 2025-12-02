@@ -1,0 +1,39 @@
+@startuml
+
+skinparam defaultFontName monospaced
+
+'=======================================================================================================================
+class Clock {
+    + getRealTicksSinceStart() -> Nanoseconds
+    + getCurrentRefreshTicks() -> Nanoseconds
+--
+    - _updateCurrentRefreshTicks()
+}
+
+'=======================================================================================================================
+abstract class RenderableApplication
+
+'-----------------------------------------------------------------------------------------------------------------------
+RenderableApplication *-- Clock
+RenderableApplication --> Clock : updates
+
+'=======================================================================================================================
+struct RefreshRateOptions {
+    + maxLogicRefreshRatePerSecond : TimesPerSecond 
+    + logicRefreshesPerRenderFrame : uint16 
+}
+
+'=======================================================================================================================
+class RefreshRateLimiter {
+    + wait()
+    + requestPermissionToRender() -> IsRenderAllowed 
+}
+
+'-----------------------------------------------------------------------------------------------------------------------
+RefreshRateLimiter o-- Clock
+RefreshRateLimiter *-- RefreshRateOptions 
+RenderableApplication *-- RefreshRateLimiter 
+RefreshRateLimiter --> RenderableApplication : Limits the main loop exec speed
+
+'=======================================================================================================================
+@enduml

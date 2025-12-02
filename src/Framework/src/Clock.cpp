@@ -1,29 +1,31 @@
-#include <Framework/Application.h>
-
-#include <Framework/Framework.h>
+#include <Framework/Clock.h>
 
 //======================================================================================================================
 using namespace framework;
 
 //======================================================================================================================
-Application::~Application() = default;
+Clock::Clock()
+    : _startTime(ClockImpl::now())
+{
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+Clock::~Clock() = default;
 
 //======================================================================================================================
-void Application::run()
+auto Clock::getRealTicksSinceStart() const -> Nanoseconds
 {
-    _framework = _init();
-
-    _run();
+    return std::chrono::duration_cast<Nanoseconds>(ClockImpl::now() - _startTime);
 }
 
 //======================================================================================================================
-Framework& Application::getFramework()
+auto Clock::getCurrentRefreshTicks() const -> Nanoseconds
 {
-    return *_framework;
+    return _currentRefreshTicks;
 }
 
 //======================================================================================================================
-const Framework& Application::getFramework() const
+void Clock::_updateCurrentRefreshTicks()
 {
-    return *_framework;
+    _currentRefreshTicks = getRealTicksSinceStart();
 }

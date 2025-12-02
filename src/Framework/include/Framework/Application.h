@@ -1,6 +1,5 @@
 #pragma once
 
-#include <AppEvent/AppEvent.h> // TODO: avoid this include (not very light)
 #include <Common/Memory.h>
 
 //======================================================================================================================
@@ -11,17 +10,17 @@ namespace framework {
     //==================================================================================================================
     class Application {
     public:
-        Application();
         virtual ~Application();
 
         void run();
 
-    protected:
-        using ShouldQuit = bool;
+        //--------------------------------------------------------------------------------------------------------------
+        Framework& getFramework();
+        const Framework& getFramework() const;
 
     private:
         virtual uptr<Framework> _init() = 0;
-        virtual ShouldQuit _iterate(const app_event::AppEvent&) = 0;
+        virtual void _run() = 0;
 
     private:
         uptr<Framework> _framework;

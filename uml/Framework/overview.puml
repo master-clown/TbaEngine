@@ -25,9 +25,20 @@ class GlfwFramework implements Framework
 abstract class Application {
     + run()
 --
-    {abstract} + init() : Framework
+    + {abstract} _init() : Framework
+    + {abstract} _run()
 --
     - _framework
+}
+
+'-----------------------------------------------------------------------------------------------------------------------
+abstract class RenderableApplication implements Application {
+    + {abstract} _iterate()
+    + {abstract} _render()
+    --
+    + _run() 
+    --
+    + getClock() -> Clock
 }
 
 '-----------------------------------------------------------------------------------------------------------------------
