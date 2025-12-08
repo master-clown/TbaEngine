@@ -6,28 +6,35 @@
 //======================================================================================================================
 struct LogStreamContext final {
     std::ostream* outStream = &std::cout;
-    std::mutex outStreamMutex;
+    std::ostream* errorStream = &std::cerr;
+    std::mutex streamsMutex;
 };
 
 //----------------------------------------------------------------------------------------------------------------------
 static LogStreamContext globalLogStreamContext;
 
 //======================================================================================================================
+namespace {
+    void _printToLog(std::ostream& stream, std::function<void(std::ostream&)> func)
+    {
+        std::lock_guard lock{globalLogStreamContext.streamsMutex};
+
+        // TODO: add timestamp
+
+        func(stream);
+    }
+}
+
+//======================================================================================================================
 void logger::detail::logImpl(std::function<void(std::ostream&)> func)
 {
-    std::lock_guard lock{globalLogStreamContext.outStreamMutex};
-
-    // TODO: add timestamp
-
-    auto& outStream = *globalLogStreamContext.outStream;
-
-    func(outStream);
+    _printToLog(*globalLogStreamContext.outStream, std::move(func));
 }
 
 //======================================================================================================================
 void logger::detail::logError(std::function<void(std::ostream&)> func)
 {
-    logImpl([func = std::move(func)](std::ostream& stream) {
+    _printToLog(*globalLogStreamContext.errorStream, [func = std::move(func)](std::ostream& stream) {
         stream << "[ERROR] ";
         func(stream);
     });
