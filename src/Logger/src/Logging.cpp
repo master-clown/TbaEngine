@@ -39,3 +39,25 @@ void logger::detail::logError(std::function<void(std::ostream&)> func)
         func(stream);
     });
 }
+
+//======================================================================================================================
+void logger::setLoggingStream(std::optional<std::ostream*> streamOpt)
+{
+    if (!streamOpt.has_value() || streamOpt == coutAsDefaultLoggingStream)
+        streamOpt = &std::cout;
+
+    std::lock_guard lock{globalLogStreamContext.streamsMutex};
+
+    globalLogStreamContext.outStream = *streamOpt;
+}
+
+//======================================================================================================================
+void logger::setErrorLoggingStream(std::optional<std::ostream*> streamOpt)
+{
+    if (!streamOpt.has_value() || streamOpt == cerrAsDefaultErrorLoggingStream)
+        streamOpt = &std::cerr;
+
+    std::lock_guard lock{globalLogStreamContext.streamsMutex};
+
+    globalLogStreamContext.errorStream = *streamOpt;
+}

@@ -6,12 +6,24 @@
 #include <format>
 #include <functional>
 #include <iosfwd>
+#include <optional>
 
 //======================================================================================================================
 namespace logger::detail {
     //==================================================================================================================
     void logImpl(std::function<void(std::ostream&)>);
     void logError(std::function<void(std::ostream&)>);
+}
+
+//======================================================================================================================
+namespace logger {
+    //==================================================================================================================
+    constexpr auto coutAsDefaultLoggingStream = std::nullopt;
+    constexpr auto cerrAsDefaultErrorLoggingStream = std::nullopt;
+
+    //==================================================================================================================
+    void setLoggingStream(std::optional<std::ostream*> = coutAsDefaultLoggingStream);
+    void setErrorLoggingStream(std::optional<std::ostream*> = cerrAsDefaultErrorLoggingStream);
 }
 
 //======================================================================================================================
