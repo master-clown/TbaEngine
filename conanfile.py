@@ -21,6 +21,9 @@ class guiTestProjectRecipe(ConanFile):
         self.requires("sdl/3.2.20", options={"shared": True})
         return
 
+    def build_requirements(self):
+        self.test_requires("gtest/1.17.0")
+
     def config_options(self):
         if self.settings.os == "Windows":
             del self.options.fPIC
