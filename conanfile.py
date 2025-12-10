@@ -7,11 +7,13 @@ class guiTestProjectRecipe(ConanFile):
 
     options = {
         "enableLog": [True, False],
-        "fPIC": [True, False],
+        "buildTests": [True, False],
+        "fPIC": [True, False]
     }
     default_options = {
         "enableLog": False,
-        "fPIC": True,
+        "buildTests": False,
+        "fPIC": True
     }
 
     settings = "os", "compiler", "build_type", "arch"
@@ -34,7 +36,8 @@ class guiTestProjectRecipe(ConanFile):
     def generate(self):
         tc = CMakeToolchain(self)
 
-        tc.variables["ENABLE_LOG"] = self.options["enableLog"]
+        tc.variables["ENABLE_LOG"] = self.options.enableLog
+        tc.variables["BUILD_TESTS"] = self.options.buildTests
 
         tc.generate()
 
