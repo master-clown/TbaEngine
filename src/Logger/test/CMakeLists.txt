@@ -13,6 +13,7 @@ list(TRANSFORM SOURCES PREPEND "src/")
 
 set(TEST_SOURCES
     LogCategoryTest.cpp
+    LogTest.cpp
 )
 list(TRANSFORM TEST_SOURCES PREPEND "src/")
 
