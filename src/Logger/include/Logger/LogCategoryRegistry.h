@@ -23,7 +23,7 @@ namespace logger {
         LogMessageLevel getLogLevel(LogCategory) const;
 
         //--------------------------------------------------------------------------------------------------------------
-        LogCategoryRegistry& getInstance();
+        static LogCategoryRegistry& getInstance();
 
     private:
         using CategoryLevels = std::vector<LogMessageLevel>;
@@ -38,7 +38,10 @@ namespace logger {
         static size_t _toIndexInCategoryLevels(LogCategory);
 
         template <class LogCategory>
-        CategoryLevels& _getRegisteredCategoryLevels();
+        CategoryLevels* _getRegisteredCategoryLevels();
+
+        template <class LogCategory>
+        const CategoryLevels* _getRegisteredCategoryLevels() const;
 
     private:
         std::unordered_map<CategoryTypeIndex, CategoryLevels> _logLevelsOfCategories;
