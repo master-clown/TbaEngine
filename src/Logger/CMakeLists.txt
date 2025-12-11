@@ -26,3 +26,7 @@ target_sources(${TARGET_NAME}
     BASE_DIRS include
     FILES
     ${PUBLIC_HEADERS})
+
+if(BUILD_TESTS)
+    add_subdirectory(test)
+endif()
