@@ -28,15 +28,15 @@ namespace logger {
 
 //======================================================================================================================
 // private macros
-#define _LOG_IMPL(LOG_FUNC, msg)                                               \
-    {                                                                          \
-        logger::detail::LOG_FUNC([](std::ostream& stream) { stream << msg; }); \
+#define _LOG_IMPL(LOG_FUNC, msg)                                                \
+    {                                                                           \
+        logger::detail::LOG_FUNC([&](std::ostream& stream) { stream << msg; }); \
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-#define _LOG_IMPL_FORMAT(LOG_FUNC, formatStr, ...)                                                             \
-    {                                                                                                          \
-        logger::detail::LOG_FUNC([](std::ostream& stream) { stream << std::format(formatStr, __VA_ARGS__); }); \
+#define _LOG_IMPL_FORMAT(LOG_FUNC, formatStr, ...)                                                              \
+    {                                                                                                           \
+        logger::detail::LOG_FUNC([&](std::ostream& stream) { stream << std::format(formatStr, __VA_ARGS__); }); \
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -65,11 +65,3 @@ namespace logger {
 //======================================================================================================================
 #define LOG_ERROR(...) \
     _LOG_ERROR_WITH_FORMATTING_SELECTION(__VA_ARGS__);
-
-//======================================================================================================================
-#undef _LOG_IMPL
-#undef _LOG_IMPL_FORMAT
-#undef _SHOULD_LOG
-#undef _CONCAT
-#undef _LOG_IMPL_WITH_FORMATTING_SELECTION
-#undef _LOG_ERROR_WITH_FORMATTING_SELECTION
