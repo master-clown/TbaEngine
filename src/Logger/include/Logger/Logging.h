@@ -40,8 +40,9 @@ namespace logger {
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-#define _SHOULD_LOG(logMsgCategory, logMsgLevel) \
-    (logMsgLevel <= logger::LogCategoryRegistry::getInstance().getLogLevel(logMsgCategory))
+#define _SHOULD_LOG(logMsgCategory, logMsgLevel)                                              \
+    (logMsgLevel <= logger::LogCategoryRegistry::getInstance().getLogLevel(logMsgCategory) && \
+     logMsgLevel != logger::LogMessageLevel::Silent)
 
 //----------------------------------------------------------------------------------------------------------------------
 #define _CONCAT(A, B) A##B
