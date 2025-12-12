@@ -9,9 +9,9 @@ std::string str(const TestLogCategory cat)
     using Enum = TestLogCategory;
 
     switch (cat) {
-    case Enum::One: return "One";
-    case Enum::Two: return "Two";
-    case Enum::Three: return "Three";
+    case Enum::One: return "TestLogCategory::One";
+    case Enum::Two: return "TestLogCategory::Two";
+    case Enum::Three: return "TestLogCategory::Three";
     default: std::unreachable();
     }
 }
