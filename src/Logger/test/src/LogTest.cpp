@@ -1,6 +1,6 @@
 #include "TestLogCategory.h"
 
-#include <Logger/Logging.h>
+#include <Logger/BasicLogging.h>
 
 #include <gtest/gtest.h>
 
@@ -8,8 +8,6 @@
 
 //======================================================================================================================
 namespace {
-    using MsgLevel = logger::LogMessageLevel;
-
     struct TestLog final {
         std::ostringstream logSstream;
         std::ostringstream errorLogSstream;

@@ -1,6 +1,6 @@
 #include "TestLogCategory.h"
 
-#include <Logger/Logging.h>
+#include <Logger/CategorizedLogging.h>
 
 #include <gtest/gtest.h>
 
