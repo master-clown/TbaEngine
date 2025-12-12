@@ -149,3 +149,24 @@ TEST_CASE(PrintToCategoryWithTraceLevel)
     checkLevel(ShouldPrint{true}, MsgLevel::Verbose);
     checkLevel(ShouldPrint{true}, MsgLevel::Trace);
 }
+
+//======================================================================================================================
+TEST_CASE(PrintingToSilentCategoryWhenAllOthersAreEnabled)
+{
+    logger::LogCategoryRegistry::getInstance().setLogLevel(TestLogCategory::Two, MsgLevel::Silent);
+
+    logger::LogCategoryRegistry::getInstance().setLogLevel(TestLogCategory::One, MsgLevel::Trace);
+    logger::LogCategoryRegistry::getInstance().setLogLevel(TestLogCategory::Three, MsgLevel::Trace);
+
+    constexpr auto silencedText = "2";
+
+    std::ostringstream logStream;
+    logger::LoggingSettings::setLoggingStream(&logStream);
+    logger::LoggingSettings::setShowTime(false);
+
+    LOG_CATEGORIZED(TestLogCategory::One, MsgLevel::Trace, "1");
+    LOG_CATEGORIZED(TestLogCategory::Two, MsgLevel::Trace, silencedText);
+    LOG_CATEGORIZED(TestLogCategory::Three, MsgLevel::Trace, "3");
+
+    EXPECT_TRUE(!logStream.str().contains(silencedText));
+}
