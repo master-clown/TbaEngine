@@ -5,14 +5,16 @@
 #include <sstream>
 
 //======================================================================================================================
-struct LogStreamContext final {
-    std::ostream* outStream = &std::cout;
-    std::ostream* errorStream = &std::cerr;
-    std::mutex streamsMutex;
-};
+namespace {
+    struct LogSettingsData final {
+        std::ostream* outStream = &std::cout;
+        std::ostream* errorStream = &std::cerr;
+        std::mutex streamsMutex;
+    };
+}
 
 //----------------------------------------------------------------------------------------------------------------------
-static LogStreamContext globalLogStreamContext;
+static LogSettingsData globalLogSettingsData;
 
 //======================================================================================================================
 namespace {
@@ -23,7 +25,7 @@ namespace {
 
         func(sstream);
 
-        std::lock_guard lock{globalLogStreamContext.streamsMutex};
+        std::lock_guard lock{globalLogSettingsData.streamsMutex};
         outputStream << sstream.str() << std::endl;
     }
 }
@@ -31,36 +33,36 @@ namespace {
 //======================================================================================================================
 void logger::detail::logImpl(std::function<void(std::ostream&)> func)
 {
-    _printToLog(*globalLogStreamContext.outStream, std::move(func));
+    _printToLog(*globalLogSettingsData.outStream, std::move(func));
 }
 
 //======================================================================================================================
 void logger::detail::logError(std::function<void(std::ostream&)> func)
 {
-    _printToLog(*globalLogStreamContext.errorStream, [func = std::move(func)](std::ostream& stream) {
+    _printToLog(*globalLogSettingsData.errorStream, [func = std::move(func)](std::ostream& stream) {
         stream << "[ERROR] ";
         func(stream);
     });
 }
 
 //======================================================================================================================
-void logger::setLoggingStream(std::optional<std::ostream*> streamOpt)
+void logger::LoggingSettings::setLoggingStream(std::optional<std::ostream*> streamOpt)
 {
     if (!streamOpt.has_value() || streamOpt == coutAsDefaultLoggingStream)
         streamOpt = &std::cout;
 
-    std::lock_guard lock{globalLogStreamContext.streamsMutex};
+    std::lock_guard lock{globalLogSettingsData.streamsMutex};
 
-    globalLogStreamContext.outStream = *streamOpt;
+    globalLogSettingsData.outStream = *streamOpt;
 }
 
 //======================================================================================================================
-void logger::setErrorLoggingStream(std::optional<std::ostream*> streamOpt)
+void logger::LoggingSettings::setErrorLoggingStream(std::optional<std::ostream*> streamOpt)
 {
     if (!streamOpt.has_value() || streamOpt == cerrAsDefaultErrorLoggingStream)
         streamOpt = &std::cerr;
 
-    std::lock_guard lock{globalLogStreamContext.streamsMutex};
+    std::lock_guard lock{globalLogSettingsData.streamsMutex};
 
-    globalLogStreamContext.errorStream = *streamOpt;
+    globalLogSettingsData.errorStream = *streamOpt;
 }

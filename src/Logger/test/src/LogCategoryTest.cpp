@@ -18,14 +18,14 @@ namespace {
 
         TestLog()
         {
-            logger::setLoggingStream(&logSstream);
-            logger::setErrorLoggingStream(&errorLogSstream);
+            logger::LoggingSettings::setLoggingStream(&logSstream);
+            logger::LoggingSettings::setErrorLoggingStream(&errorLogSstream);
         }
 
         ~TestLog()
         {
-            logger::setLoggingStream(std::nullopt);
-            logger::setErrorLoggingStream(std::nullopt);
+            logger::LoggingSettings::setLoggingStream();
+            logger::LoggingSettings::setErrorLoggingStream();
         }
     };
 }

@@ -15,12 +15,15 @@ namespace logger::detail {
 //======================================================================================================================
 namespace logger {
     //==================================================================================================================
-    constexpr auto coutAsDefaultLoggingStream = std::nullopt;
-    constexpr auto cerrAsDefaultErrorLoggingStream = std::nullopt;
+    class LoggingSettings final {
+    public:
+        //--------------------------------------------------------------------------------------------------------------
+        static constexpr auto coutAsDefaultLoggingStream = std::nullopt;
+        static constexpr auto cerrAsDefaultErrorLoggingStream = std::nullopt;
 
-    //==================================================================================================================
-    void setLoggingStream(std::optional<std::ostream*> = coutAsDefaultLoggingStream);
-    void setErrorLoggingStream(std::optional<std::ostream*> = cerrAsDefaultErrorLoggingStream);
+        static void setLoggingStream(std::optional<std::ostream*> = coutAsDefaultLoggingStream);
+        static void setErrorLoggingStream(std::optional<std::ostream*> = cerrAsDefaultErrorLoggingStream);
+    };
 }
 
 //======================================================================================================================

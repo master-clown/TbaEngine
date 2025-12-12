@@ -16,14 +16,14 @@ namespace {
 
         TestLog()
         {
-            logger::setLoggingStream(&logSstream);
-            logger::setErrorLoggingStream(&errorLogSstream);
+            logger::LoggingSettings::setLoggingStream(&logSstream);
+            logger::LoggingSettings::setErrorLoggingStream(&errorLogSstream);
         }
 
         ~TestLog()
         {
-            logger::setLoggingStream(std::nullopt);
-            logger::setErrorLoggingStream(std::nullopt);
+            logger::LoggingSettings::setLoggingStream(std::nullopt);
+            logger::LoggingSettings::setErrorLoggingStream(std::nullopt);
         }
     };
 }
@@ -64,8 +64,8 @@ TEST_CASE(SameStreamsHaveSameText)
     constexpr auto text = "Some text";
     constexpr auto errorText = "Error text";
 
-    logger::setLoggingStream(&sstream);
-    logger::setErrorLoggingStream(&sstream);
+    logger::LoggingSettings::setLoggingStream(&sstream);
+    logger::LoggingSettings::setErrorLoggingStream(&sstream);
 
     LOG_ALWAYS(text);
     LOG_ERROR(errorText);
@@ -80,10 +80,10 @@ TEST_CASE(FormattedLogIsEssentiallyEquivalentToStreamBased)
     std::ostringstream sstreamForFormattedPrint;
     const auto userName = "UserName";
 
-    logger::setLoggingStream(&sstreamForStreamedPrint);
+    logger::LoggingSettings::setLoggingStream(&sstreamForStreamedPrint);
     LOG_ALWAYS("Hello, " << userName << ", you are always " << 25 << "!");
 
-    logger::setLoggingStream(&sstreamForFormattedPrint);
+    logger::LoggingSettings::setLoggingStream(&sstreamForFormattedPrint);
     LOG_ALWAYS("Hello, {}, you are always {}!", userName, 25);
 
     EXPECT_EQ(sstreamForStreamedPrint.str(), sstreamForFormattedPrint.str());
