@@ -55,17 +55,18 @@ size_t logger::LogCategoryRegistry::_toIndexInCategoryLevels(const LogCategory l
 template <class LogCategory>
 auto logger::LogCategoryRegistry::_getRegisteredCategoryLevels() -> CategoryLevels*
 {
-    const auto categoryTypeIndex = std::type_index(typeid(LogCategory));
-    auto it = _logLevelsOfCategories.find(categoryTypeIndex);
-    if (it == _logLevelsOfCategories.cend())
-        return nullptr;
-
-    return &it->second;
+    return const_cast<CategoryLevels*>(
+        static_cast<const LogCategoryRegistry&>(*this)._getRegisteredCategoryLevels<LogCategory>());
 }
 
 //======================================================================================================================
 template <class LogCategory>
 auto logger::LogCategoryRegistry::_getRegisteredCategoryLevels() const -> const CategoryLevels*
 {
-    return const_cast<LogCategoryRegistry&>(*this)._getRegisteredCategoryLevels<LogCategory>();
+    const auto categoryTypeIndex = std::type_index(typeid(LogCategory));
+    auto it = _logLevelsOfCategories.find(categoryTypeIndex);
+    if (it == _logLevelsOfCategories.cend())
+        return nullptr;
+
+    return &it->second;
 }
