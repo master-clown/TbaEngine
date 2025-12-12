@@ -36,6 +36,9 @@ namespace {
 #define TEST_CASE(name) TEST(LogCategoryTest, name)
 
 //======================================================================================================================
+#ifdef ENABLE_LOG
+
+//======================================================================================================================
 TEST_CASE(PrintToCategoryWithSilentLevel)
 {
     using ShouldPrint = bool;
@@ -170,3 +173,29 @@ TEST_CASE(PrintingToSilentCategoryWhenAllOthersAreEnabled)
 
     EXPECT_TRUE(!logStream.str().contains(silencedText));
 }
+
+//======================================================================================================================
+#else // ENABLE_LOG
+
+//======================================================================================================================
+TEST_CASE(CategorizedLoggingIsNoopWhenLogIsDisabled)
+{
+    std::ostringstream logStream;
+    logger::LoggingSettings::setLoggingStream(&logStream);
+    logger::LoggingSettings::setShowTime(false);
+
+    const std::string text = "Hello!";
+
+    LOG_ALWAYS(text);
+    EXPECT_EQ(logStream.str(), text + logRecordSeparator);
+
+    const auto streamContentsBeforeCategorizedPrint = logStream.str();
+
+    logger::LogCategoryRegistry::getInstance().setLogLevel(TestLogCategory::One, MsgLevel::Trace);
+    LOG_CATEGORIZED(TestLogCategory::One, MsgLevel::Trace, "1");
+
+    EXPECT_EQ(logStream.str(), streamContentsBeforeCategorizedPrint);
+}
+
+//======================================================================================================================
+#endif // ENABLE_LOG
