@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Logger/BasicLogging.h>
 #include <Logger/LogCategoryRegistry.h>
 
 #include <cassert>
@@ -10,8 +11,10 @@ void logger::LogCategoryRegistry::registerLogCategory()
 {
     const auto categoryTypeIndex = std::type_index(typeid(LogCategory));
     auto [it, isInserted] = _logLevelsOfCategories.emplace(categoryTypeIndex, CategoryLevels{});
-    if (!isInserted)
+    if (!isInserted) {
+        LOG_ALWAYS("Warning: trying to register an already registred LogCategory");
         return;
+    }
 
     auto& categoryLogLevels = it->second;
     for (const auto logCategory : LogCategory{})
@@ -23,8 +26,10 @@ template <class LogCategory>
 void logger::LogCategoryRegistry::setLogLevel(const LogCategory logCategory, const LogMessageLevel msgLevel)
 {
     auto* categoryLevels = _getRegisteredCategoryLevels<LogCategory>();
-    if (!categoryLevels)
+    if (!categoryLevels) {
+        LOG_ALWAYS("Warning: trying to setLogLevel({}) for an unregistered LogCategory", str(logCategory));
         return;
+    }
 
     const auto index = _toIndexInCategoryLevels(logCategory);
     assert(index < categoryLevels->size());
