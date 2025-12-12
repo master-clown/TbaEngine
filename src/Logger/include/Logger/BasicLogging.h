@@ -2,8 +2,8 @@
 
 #include <format>
 #include <functional>
-#include <iosfwd>
 #include <optional>
+#include <ostream>
 
 //======================================================================================================================
 namespace logger::detail {
