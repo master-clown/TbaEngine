@@ -18,6 +18,10 @@ namespace logger {
     class LoggingSettings final {
     public:
         //--------------------------------------------------------------------------------------------------------------
+        static constexpr auto showTimeByDefault = std::nullopt;
+        static void setShowTime(std::optional<bool> = showTimeByDefault);
+
+        //--------------------------------------------------------------------------------------------------------------
         static constexpr auto coutAsDefaultLoggingStream = std::nullopt;
         static constexpr auto cerrAsDefaultErrorLoggingStream = std::nullopt;
 

@@ -16,12 +16,14 @@ namespace {
 
         TestLog()
         {
+            logger::LoggingSettings::setShowTime(false);
             logger::LoggingSettings::setLoggingStream(&logSstream);
             logger::LoggingSettings::setErrorLoggingStream(&errorLogSstream);
         }
 
         ~TestLog()
         {
+            logger::LoggingSettings::setShowTime();
             logger::LoggingSettings::setLoggingStream(std::nullopt);
             logger::LoggingSettings::setErrorLoggingStream(std::nullopt);
         }
@@ -64,6 +66,7 @@ TEST_CASE(SameStreamsHaveSameText)
     constexpr auto text = "Some text";
     constexpr auto errorText = "Error text";
 
+    logger::LoggingSettings::setShowTime(false);
     logger::LoggingSettings::setLoggingStream(&sstream);
     logger::LoggingSettings::setErrorLoggingStream(&sstream);
 
@@ -79,6 +82,8 @@ TEST_CASE(FormattedLogIsEssentiallyEquivalentToStreamBased)
     std::ostringstream sstreamForStreamedPrint;
     std::ostringstream sstreamForFormattedPrint;
     const auto userName = "UserName";
+
+    logger::LoggingSettings::setShowTime(false);
 
     logger::LoggingSettings::setLoggingStream(&sstreamForStreamedPrint);
     LOG_ALWAYS("Hello, " << userName << ", you are always " << 25 << "!");

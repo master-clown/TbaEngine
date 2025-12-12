@@ -18,12 +18,14 @@ namespace {
 
         TestLog()
         {
+            logger::LoggingSettings::setShowTime(false);
             logger::LoggingSettings::setLoggingStream(&logSstream);
             logger::LoggingSettings::setErrorLoggingStream(&errorLogSstream);
         }
 
         ~TestLog()
         {
+            logger::LoggingSettings::setShowTime();
             logger::LoggingSettings::setLoggingStream();
             logger::LoggingSettings::setErrorLoggingStream();
         }

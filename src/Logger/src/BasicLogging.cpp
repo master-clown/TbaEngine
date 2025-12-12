@@ -1,5 +1,8 @@
 #include <Logger/BasicLogging.h>
 
+#include <atomic>
+#include <chrono>
+#include <format>
 #include <iostream>
 #include <mutex>
 #include <sstream>
@@ -10,6 +13,7 @@ namespace {
         std::ostream* outStream = &std::cout;
         std::ostream* errorStream = &std::cerr;
         std::mutex streamsMutex;
+        std::atomic<bool> showTime = true;
     };
 }
 
@@ -21,7 +25,13 @@ namespace {
     void _printToLog(std::ostream& outputStream, std::function<void(std::ostream&)> func)
     {
         std::ostringstream sstream;
-        // TODO: add timestamp
+
+        if (globalLogSettingsData.showTime.load()) {
+            const auto msgTimePoint = std::chrono::system_clock::now();
+
+            // TODO: %S gives the fractional part too. Ensure its format is standartized.
+            sstream << std::format("{:%y%m%dT%H%M%S}> ", msgTimePoint);
+        }
 
         func(sstream);
 
@@ -43,6 +53,15 @@ void logger::detail::logError(std::function<void(std::ostream&)> func)
         stream << "[ERROR] ";
         func(stream);
     });
+}
+
+//======================================================================================================================
+void logger::LoggingSettings::setShowTime(std::optional<bool> showTimeOpt)
+{
+    if (!showTimeOpt.has_value())
+        showTimeOpt = true;
+
+    globalLogSettingsData.showTime.store(*showTimeOpt);
 }
 
 //======================================================================================================================
