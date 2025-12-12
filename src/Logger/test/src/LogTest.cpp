@@ -8,6 +8,8 @@
 
 //======================================================================================================================
 namespace {
+    constexpr auto logRecordSeparator = "\n";
+
     struct TestLog final {
         std::ostringstream logSstream;
         std::ostringstream errorLogSstream;
@@ -34,10 +36,11 @@ TEST_CASE(DifferentStreamsRemainSeparateOnPrintLog)
 {
     TestLog testLog;
     constexpr auto text = "Some text";
+    const auto expected = std::string{text} + logRecordSeparator;
 
     LOG_ALWAYS(text);
 
-    EXPECT_EQ(testLog.logSstream.str(), text);
+    EXPECT_EQ(testLog.logSstream.str(), expected);
     EXPECT_EQ(testLog.errorLogSstream.str(), "");
 }
 
@@ -46,11 +49,12 @@ TEST_CASE(DifferentStreamsRemainSeparateOnPrintErrorLog)
 {
     TestLog testLog;
     constexpr auto text = "Some text";
+    const auto expected = std::string{"[ERROR] "} + text + logRecordSeparator;
 
     LOG_ERROR(text);
 
     EXPECT_EQ(testLog.logSstream.str(), "");
-    EXPECT_EQ(testLog.errorLogSstream.str(), std::string{"[ERROR] "} + text);
+    EXPECT_EQ(testLog.errorLogSstream.str(), expected);
 }
 
 //======================================================================================================================
@@ -66,7 +70,7 @@ TEST_CASE(SameStreamsHaveSameText)
     LOG_ALWAYS(text);
     LOG_ERROR(errorText);
 
-    EXPECT_EQ(sstream.str(), std::string{text} + "[ERROR] " + errorText);
+    EXPECT_EQ(sstream.str(), std::string{text} + logRecordSeparator + "[ERROR] " + errorText + logRecordSeparator);
 }
 
 //======================================================================================================================

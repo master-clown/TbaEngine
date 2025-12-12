@@ -10,6 +10,8 @@
 namespace {
     using MsgLevel = logger::LogMessageLevel;
 
+    constexpr auto logRecordSeparator = "\n";
+
     struct TestLog final {
         std::ostringstream logSstream;
         std::ostringstream errorLogSstream;
@@ -41,8 +43,9 @@ TEST_CASE(PrintToCategoryWithSilentLevel)
 
     const auto checkLevel = [&testLog](const ShouldPrint shouldPrint, const MsgLevel msgLevel) {
         const auto text = "Log " + str(msgLevel);
+        const auto expected = text + logRecordSeparator;
         LOG_CATEGORIZED(TestLogCategory::One, msgLevel, text);
-        EXPECT_EQ(testLog.logSstream.str(), shouldPrint ? text : "");
+        EXPECT_EQ(testLog.logSstream.str(), shouldPrint ? expected : "");
         testLog.logSstream.str("");
     };
 
@@ -63,8 +66,9 @@ TEST_CASE(PrintToCategoryWithBriefLevel)
 
     const auto checkLevel = [&testLog](const ShouldPrint shouldPrint, const MsgLevel msgLevel) {
         const auto text = "Log " + str(msgLevel);
+        const auto expected = text + logRecordSeparator;
         LOG_CATEGORIZED(TestLogCategory::One, msgLevel, text);
-        EXPECT_EQ(testLog.logSstream.str(), shouldPrint ? text : "");
+        EXPECT_EQ(testLog.logSstream.str(), shouldPrint ? expected : "");
         testLog.logSstream.str("");
     };
 
@@ -85,8 +89,9 @@ TEST_CASE(PrintToCategoryWithNormalLevel)
 
     const auto checkLevel = [&testLog](const ShouldPrint shouldPrint, const MsgLevel msgLevel) {
         const auto text = "Log " + str(msgLevel);
+        const auto expected = text + logRecordSeparator;
         LOG_CATEGORIZED(TestLogCategory::One, msgLevel, text);
-        EXPECT_EQ(testLog.logSstream.str(), shouldPrint ? text : "");
+        EXPECT_EQ(testLog.logSstream.str(), shouldPrint ? expected : "");
         testLog.logSstream.str("");
     };
 
@@ -107,8 +112,9 @@ TEST_CASE(PrintToCategoryWithVerboseLevel)
 
     const auto checkLevel = [&testLog](const ShouldPrint shouldPrint, const MsgLevel msgLevel) {
         const auto text = "Log " + str(msgLevel);
+        const auto expected = text + logRecordSeparator;
         LOG_CATEGORIZED(TestLogCategory::One, msgLevel, text);
-        EXPECT_EQ(testLog.logSstream.str(), shouldPrint ? text : "");
+        EXPECT_EQ(testLog.logSstream.str(), shouldPrint ? expected : "");
         testLog.logSstream.str("");
     };
 
@@ -129,8 +135,9 @@ TEST_CASE(PrintToCategoryWithTraceLevel)
 
     const auto checkLevel = [&testLog](const ShouldPrint shouldPrint, const MsgLevel msgLevel) {
         const auto text = "Log " + str(msgLevel);
+        const auto expected = text + logRecordSeparator;
         LOG_CATEGORIZED(TestLogCategory::One, msgLevel, text);
-        EXPECT_EQ(testLog.logSstream.str(), shouldPrint ? text : "");
+        EXPECT_EQ(testLog.logSstream.str(), shouldPrint ? expected : "");
         testLog.logSstream.str("");
     };
 
