@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <mutex>
+#include <sstream>
 
 //======================================================================================================================
 struct LogStreamContext final {
@@ -15,13 +16,15 @@ static LogStreamContext globalLogStreamContext;
 
 //======================================================================================================================
 namespace {
-    void _printToLog(std::ostream& stream, std::function<void(std::ostream&)> func)
+    void _printToLog(std::ostream& outputStream, std::function<void(std::ostream&)> func)
     {
-        std::lock_guard lock{globalLogStreamContext.streamsMutex};
-
+        std::ostringstream sstream;
         // TODO: add timestamp
 
-        func(stream);
+        func(sstream);
+
+        std::lock_guard lock{globalLogStreamContext.streamsMutex};
+        outputStream << sstream.str() << std::endl;
     }
 }
 
