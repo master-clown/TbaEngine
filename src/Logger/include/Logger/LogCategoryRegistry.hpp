@@ -6,7 +6,7 @@
 #include <cassert>
 
 //======================================================================================================================
-template <class LogCategory>
+template <logger::LogCategoryConcept LogCategory>
 void logger::LogCategoryRegistry::registerLogCategory()
 {
     const auto categoryTypeIndex = std::type_index(typeid(LogCategory));
@@ -22,7 +22,7 @@ void logger::LogCategoryRegistry::registerLogCategory()
 }
 
 //======================================================================================================================
-template <class LogCategory>
+template <logger::LogCategoryConcept LogCategory>
 void logger::LogCategoryRegistry::setLogLevel(const LogCategory logCategory, const LogMessageLevel msgLevel)
 {
     auto* categoryLevels = _getRegisteredCategoryLevels<LogCategory>();
@@ -37,7 +37,7 @@ void logger::LogCategoryRegistry::setLogLevel(const LogCategory logCategory, con
 }
 
 //======================================================================================================================
-template <class LogCategory>
+template <logger::LogCategoryConcept LogCategory>
 logger::LogMessageLevel logger::LogCategoryRegistry::getLogLevel(const LogCategory logCategory) const
 {
     const auto* categoryLevels = _getRegisteredCategoryLevels<LogCategory>();
@@ -50,14 +50,14 @@ logger::LogMessageLevel logger::LogCategoryRegistry::getLogLevel(const LogCatego
 }
 
 //======================================================================================================================
-template <class LogCategory>
+template <logger::LogCategoryConcept LogCategory>
 size_t logger::LogCategoryRegistry::_toIndexInCategoryLevels(const LogCategory logCategory)
 {
     return static_cast<size_t>(logCategory);
 }
 
 //======================================================================================================================
-template <class LogCategory>
+template <logger::LogCategoryConcept LogCategory>
 auto logger::LogCategoryRegistry::_getRegisteredCategoryLevels() -> CategoryLevels*
 {
     return const_cast<CategoryLevels*>(
@@ -65,7 +65,7 @@ auto logger::LogCategoryRegistry::_getRegisteredCategoryLevels() -> CategoryLeve
 }
 
 //======================================================================================================================
-template <class LogCategory>
+template <logger::LogCategoryConcept LogCategory>
 auto logger::LogCategoryRegistry::_getRegisteredCategoryLevels() const -> const CategoryLevels*
 {
     const auto categoryTypeIndex = std::type_index(typeid(LogCategory));

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Logger/LogCategoryConcept.h>
 #include <Logger/LogMessageLevel.h>
 
 #include <typeindex>
@@ -12,14 +13,14 @@ namespace logger {
     class LogCategoryRegistry final {
     public:
         //--------------------------------------------------------------------------------------------------------------
-        template <class LogCategory>
+        template <LogCategoryConcept LogCategory>
         void registerLogCategory();
 
         //--------------------------------------------------------------------------------------------------------------
-        template <class LogCategory>
+        template <LogCategoryConcept LogCategory>
         void setLogLevel(LogCategory, LogMessageLevel);
 
-        template <class LogCategory>
+        template <LogCategoryConcept LogCategory>
         LogMessageLevel getLogLevel(LogCategory) const;
 
         //--------------------------------------------------------------------------------------------------------------
@@ -34,13 +35,13 @@ namespace logger {
         LogCategoryRegistry(const LogCategoryRegistry&) = delete;
 
         //--------------------------------------------------------------------------------------------------------------
-        template <class LogCategory>
+        template <LogCategoryConcept LogCategory>
         static size_t _toIndexInCategoryLevels(LogCategory);
 
-        template <class LogCategory>
+        template <LogCategoryConcept LogCategory>
         CategoryLevels* _getRegisteredCategoryLevels();
 
-        template <class LogCategory>
+        template <LogCategoryConcept LogCategory>
         const CategoryLevels* _getRegisteredCategoryLevels() const;
 
     private:
