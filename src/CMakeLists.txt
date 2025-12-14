@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.10)
 add_subdirectory(AppEvent)
 add_subdirectory(Common)
 add_subdirectory(Framework)
+add_subdirectory(Logger)
 add_subdirectory(Render)
 add_subdirectory(Winsys)
 

@@ -7,11 +7,13 @@ class guiTestProjectRecipe(ConanFile):
 
     options = {
         "enableLog": [True, False],
-        "fPIC": [True, False],
+        "buildTests": [True, False],
+        "fPIC": [True, False]
     }
     default_options = {
         "enableLog": False,
-        "fPIC": True,
+        "buildTests": False,
+        "fPIC": True
     }
 
     settings = "os", "compiler", "build_type", "arch"
@@ -20,6 +22,9 @@ class guiTestProjectRecipe(ConanFile):
     def requirements(self):
         self.requires("sdl/3.2.20", options={"shared": True})
         return
+
+    def build_requirements(self):
+        self.test_requires("gtest/1.17.0")
 
     def config_options(self):
         if self.settings.os == "Windows":
@@ -31,7 +36,8 @@ class guiTestProjectRecipe(ConanFile):
     def generate(self):
         tc = CMakeToolchain(self)
 
-        tc.variables["ENABLE_LOG"] = self.options["enableLog"]
+        tc.variables["ENABLE_LOG"] = self.options.enableLog
+        tc.variables["BUILD_TESTS"] = self.options.buildTests
 
         tc.generate()
 
