@@ -5,6 +5,7 @@ set(TARGET_NAME Logger)
 set(PUBLIC_HEADERS
     BasicLogging.h
     CategorizedLogging.h
+    LogCategoryConcept.h
     LogCategoryRegistry.hpp
     LogCategoryRegistry.h
     LogMessageLevel.h
@@ -15,6 +16,7 @@ list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 set(SOURCES
     BasicLogging.cpp
     CategorizedLogging.cpp
+    LogCategoryConcept.cpp
     LogCategoryRegistry.cpp
     LogMessageLevel.cpp
     Logging.cpp
