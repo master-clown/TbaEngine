@@ -7,6 +7,7 @@ set(PUBLIC_HEADERS
     DeviceInfo.h
     DeviceMgr.h
     DeviceType.h
+    Keyboard.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
@@ -15,6 +16,7 @@ set(SOURCES
     DeviceInfo.cpp
     DeviceMgr.cpp
     DeviceType.cpp
+    Keyboard.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
