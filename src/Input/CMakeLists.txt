@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.12)
 set(TARGET_NAME Input)
 
 set(PUBLIC_HEADERS
+    Device.h
     DeviceInfo.h
     DeviceMgr.h
     DeviceType.h
@@ -10,6 +11,7 @@ set(PUBLIC_HEADERS
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
+    Device.cpp
     DeviceInfo.cpp
     DeviceMgr.cpp
     DeviceType.cpp
