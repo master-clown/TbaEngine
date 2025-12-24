@@ -8,6 +8,7 @@ set(PUBLIC_HEADERS
     DeviceMgr.h
     DeviceType.h
     KeyCode.h
+    KeyMods.h
     Keyboard.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
@@ -18,6 +19,7 @@ set(SOURCES
     DeviceMgr.cpp
     DeviceType.cpp
     KeyCode.cpp
+    KeyMods.cpp
     Keyboard.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
