@@ -12,6 +12,7 @@ set(PUBLIC_HEADERS
     KeyScancode.h
     Keyboard.h
     KeyboardState.h
+    LogCategory.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
@@ -25,6 +26,7 @@ set(SOURCES
     KeyScancode.cpp
     Keyboard.cpp
     KeyboardState.cpp
+    LogCategory.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
