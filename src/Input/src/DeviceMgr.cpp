@@ -1,5 +1,7 @@
 #include <Input/DeviceMgr.h>
 
+#include <Input/Keyboard.h>
+
 #include <cassert>
 
 using namespace input;
