@@ -7,8 +7,7 @@
 using namespace input;
 
 //======================================================================================================================
-DeviceMgr::DeviceMgr(framework::Framework& fr)
-    : _framework(fr)
+DeviceMgr::DeviceMgr()
 {
 }
 
@@ -32,12 +31,6 @@ const Keyboard& DeviceMgr::getKeyboard() const
 {
     assert(_keyboard && "Make sure '_setKeyboard()' is called when creating DeviceMgr");
     return *_keyboard;
-}
-
-//======================================================================================================================
-framework::Framework& DeviceMgr::_getFramework()
-{
-    return _framework;
 }
 
 //======================================================================================================================

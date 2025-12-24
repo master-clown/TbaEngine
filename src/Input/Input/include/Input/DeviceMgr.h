@@ -3,11 +3,6 @@
 #include <Common/Memory.h>
 
 //======================================================================================================================
-namespace framework {
-    class Framework;
-}
-
-//======================================================================================================================
 namespace input {
     class Keyboard;
 }
@@ -17,7 +12,7 @@ namespace input {
     //==================================================================================================================
     class DeviceMgr {
     public:
-        explicit DeviceMgr(framework::Framework&);
+        DeviceMgr();
         virtual ~DeviceMgr();
 
         //--------------------------------------------------------------------------------------------------------------
@@ -28,13 +23,9 @@ namespace input {
         const Keyboard& getKeyboard() const;
 
     protected:
-        framework::Framework& _getFramework();
-
-        //--------------------------------------------------------------------------------------------------------------
         void _setKeyboard(uptr<Keyboard>);
 
     private:
-        framework::Framework& _framework;
         uptr<Keyboard> _keyboard;
     };
 }
