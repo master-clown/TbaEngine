@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Input/KeyCode.h>
 #include <Input/KeyMods.h>
+#include <Input/KeyScancode.h>
 
 //======================================================================================================================
 namespace input {
@@ -15,7 +15,7 @@ namespace input {
             Pressed,
         };
 
-        virtual KeyState getKeyState(KeyCode) const = 0;
+        virtual KeyState getKeyState(KeyScancode) const = 0;
 
         //--------------------------------------------------------------------------------------------------------------
         virtual KeyMods getModsState() const = 0;
