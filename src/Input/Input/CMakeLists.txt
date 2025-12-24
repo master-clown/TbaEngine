@@ -9,6 +9,7 @@ set(PUBLIC_HEADERS
     DeviceType.h
     KeyCode.h
     KeyMods.h
+    KeyScancode.h
     Keyboard.h
     KeyboardState.h
 )
@@ -21,6 +22,7 @@ set(SOURCES
     DeviceType.cpp
     KeyCode.cpp
     KeyMods.cpp
+    KeyScancode.cpp
     Keyboard.cpp
     KeyboardState.cpp
 )
