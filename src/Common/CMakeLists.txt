@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.12)
 set(TARGET_NAME Common)
 
 set(PUBLIC_HEADERS
+    FlagEnum.h
+    FlagEnum.hpp
     Integers.h
     Memory.h
     NumericCast.hpp
@@ -17,6 +19,7 @@ set(PUBLIC_HEADERS
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
+    FlagEnum.cpp
     Integers.cpp
     Memory.cpp
     NumericCast.cpp
