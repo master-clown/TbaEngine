@@ -15,6 +15,8 @@ set(SOURCES
     SdlKeyboard.cpp
     SdlKeyboardState.cpp
     SdlKeyboardState.h
+    SdlKeyScancode.cpp
+    SdlKeyScancode.h
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
@@ -32,5 +34,6 @@ target_link_libraries(${TARGET_NAME} PUBLIC
 )
 target_link_libraries(${TARGET_NAME} PRIVATE
     Common
+    Logger
     SDL3::SDL3
 )
