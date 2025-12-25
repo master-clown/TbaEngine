@@ -2,7 +2,6 @@
 
 skinparam defaultFontName monospaced
 
-
 '=======================================================================================================================
 class EventInfo<Type, Details> {
     + getType() : Type
@@ -13,10 +12,10 @@ class EventInfo<Type, Details> {
 }
 
 '------------------------------------------------------------------------------------------------------------------------
-class WindowEvent<WindowEventKind, WindowEventDetails> extends EventInfo
+class WindowEvent extends EventInfo
 
 '------------------------------------------------------------------------------------------------------------------------
-class KeyboardEvent<KeyboardEventKind, KeyboardEventDetails> extends EventInfo
+class KeyboardEvent extends EventInfo
 
 '=======================================================================================================================
 class AppEvent {
@@ -29,20 +28,34 @@ class AppEvent {
 }
 
 '------------------------------------------------------------------------------------------------------------------------
-AppEvent "1" *-- "1" WindowEvent 
-AppEvent "1" *-- "1" KeyboardEvent 
+AppEvent *-- WindowEvent 
+AppEvent *-- KeyboardEvent 
+
+'=======================================================================================================================
+class EventQueue {
+    + push(AppEvent)
+--
+    - pop() -> AppEvent
+--
+    - _queue
+}
+
+'------------------------------------------------------------------------------------------------------------------------
+EventQueue *-- AppEvent
+
+'------------------------------------------------------------------------------------------------------------------------
+note left: AppEventMgr is friend for `pop()`
 
 '=======================================================================================================================
 abstract class AppEventMgr {
-    + {abstract} getNextEvent() : AppEvent
+    + {abstract} update()
+==
+    + getNextEvent() : AppEvent
+    + getEventQueue()
 }
 
-class SdlEventMgr implements AppEventMgr
-class GlfwEventMgr implements AppEventMgr
-
 '------------------------------------------------------------------------------------------------------------------------
-AppEventMgr *-- AppEvent
-
+AppEventMgr *-- EventQueue
 
 '=======================================================================================================================
 @enduml
