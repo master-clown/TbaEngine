@@ -42,5 +42,6 @@ target_sources(${TARGET_NAME}
     ${PUBLIC_HEADERS})
 target_link_libraries(${TARGET_NAME} PRIVATE 
     Common
+    Logger
     SDL3::SDL3
 )
