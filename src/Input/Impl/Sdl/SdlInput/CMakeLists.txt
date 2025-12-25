@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
+find_package(SDL3 REQUIRED)
+
 set(TARGET_NAME SdlInput)
 
 set(PUBLIC_HEADERS
@@ -30,4 +32,5 @@ target_link_libraries(${TARGET_NAME} PUBLIC
 )
 target_link_libraries(${TARGET_NAME} PRIVATE
     Common
+    SDL3::SDL3
 )
