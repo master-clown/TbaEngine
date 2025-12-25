@@ -1,6 +1,6 @@
 #include <SdlInput/SdlKeyboard.h>
 
-#include <SdlInput/SdlKeyboardState.h>
+#include "SdlKeyboardState.h"
 
 #include <cassert>
 

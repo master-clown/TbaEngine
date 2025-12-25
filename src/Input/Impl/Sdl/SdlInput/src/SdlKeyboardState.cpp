@@ -1,4 +1,4 @@
-#include <SdlInput/SdlKeyboardState.h>
+#include "SdlKeyboardState.h"
 
 using namespace input;
 using namespace sdl_input;
