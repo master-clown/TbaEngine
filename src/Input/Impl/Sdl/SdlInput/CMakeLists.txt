@@ -17,6 +17,8 @@ set(SOURCES
     SdlKeyboardState.h
     SdlKeyScancode.cpp
     SdlKeyScancode.h
+    SdlKeyMods.cpp
+    SdlKeyMods.h
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
