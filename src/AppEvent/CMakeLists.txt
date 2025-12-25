@@ -8,6 +8,7 @@ set(PUBLIC_HEADERS
     EventInfo.h         
     EventInfo.hpp       
     EventQueue.h 
+    LogCategory.h
     SdlAppEventMgr.h      
     WindowEvent.h       
     WindowEventDetails.h
@@ -20,6 +21,7 @@ set(SOURCES
     AppEventMgr.cpp       
     EventInfo.cpp         
     EventQueue.cpp
+    LogCategory.cpp
     SdlAppEventMgr.cpp    
     WindowEvent.cpp       
     WindowEventDetails.cpp
