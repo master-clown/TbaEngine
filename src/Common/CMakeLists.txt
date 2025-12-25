@@ -8,6 +8,7 @@ set(PUBLIC_HEADERS
     NumericCast.hpp
     OverloadMultiplexor.h
     Stl/Array.h
+    Stl/Queue.h
     String.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
@@ -18,6 +19,7 @@ set(SOURCES
     NumericCast.cpp
     OverloadMultiplexor.cpp
     Stl/Array.cpp
+    Stl/Queue.cpp
     String.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
