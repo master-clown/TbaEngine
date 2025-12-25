@@ -2,11 +2,18 @@
 
 #include <Input/KeyboardState.h>
 
+#include <span>
+
 //======================================================================================================================
-namespace input {
-    class SdlKeyboardState final : public KeyboardState {
+namespace sdl_input {
+    class SdlKeyboardState final : public input::KeyboardState {
     public:
-        KeyState getKeyState(KeyCode) const override;
-        KeyMods getModsState() const override;
+        SdlKeyboardState();
+
+        KeyState getKeyState(input::KeyScancode) const override;
+        input::KeyMods getModsState() const override;
+
+    private:
+        std::span<const bool> _sdlKeyStates;
     };
 }
