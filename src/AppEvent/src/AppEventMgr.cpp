@@ -1,7 +1,22 @@
 #include <AppEvent/AppEventMgr.h>
 
 //======================================================================================================================
-using app_event::AppEventMgr;
+using namespace app_event;
 
 //======================================================================================================================
 AppEventMgr::~AppEventMgr() = default;
+
+//======================================================================================================================
+AppEvent AppEventMgr::getNextEvent()
+{
+    if (_eventQueue._isEmpty())
+        return NoneAppEvent{};
+
+    return _eventQueue._pop();
+}
+
+//======================================================================================================================
+EventQueue& AppEventMgr::getEventQueue() const
+{
+    return _eventQueue;
+}

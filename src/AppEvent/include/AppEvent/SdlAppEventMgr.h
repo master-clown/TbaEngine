@@ -11,7 +11,7 @@ namespace app_event {
         SdlAppEventMgr();
         ~SdlAppEventMgr();
 
-        AppEvent getNextEvent() override;
+        void update() override;
 
     private:
         struct Pimpl;

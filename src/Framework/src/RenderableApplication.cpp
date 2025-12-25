@@ -22,6 +22,7 @@ void RenderableApplication::_run()
     auto& appEventMgr = getFramework().getAppEventMgr();
     while (true) {
         _clock._updateCurrentRefreshTicks();
+        appEventMgr.update();
 
         const auto appEventVariant = appEventMgr.getNextEvent();
 

@@ -2,6 +2,8 @@
 
 #include <AppEvent/EventInfo.hpp>
 
+#include <Common/Stl/Optional.h>
+
 #include <SDL3/SDL_events.h>
 
 //======================================================================================================================
@@ -23,19 +25,23 @@ SdlAppEventMgr::SdlAppEventMgr()
 SdlAppEventMgr::~SdlAppEventMgr() = default;
 
 //======================================================================================================================
-AppEvent SdlAppEventMgr::getNextEvent()
+void SdlAppEventMgr::update()
 {
     auto& sdlEvent = _pimpl->sdlEvent;
 
     const auto newEventsAvailable = SDL_PollEvent(&sdlEvent);
     if (!newEventsAvailable)
-        return NoneAppEvent{};
+        return;
 
-    switch (sdlEvent.type) {
-    case SDL_EventType::SDL_EVENT_QUIT: return WindowEvent{WindowEventKind::QuitRequested};
-    }
+    auto newEvent = [&] -> Optional<AppEvent> {
+        switch (sdlEvent.type) {
+        case SDL_EventType::SDL_EVENT_QUIT: return WindowEvent{WindowEventKind::QuitRequested};
+        default: return {};
+        }
+    }();
 
-    // TODO: add verbose log about missed event (very verbose)
+    if (!newEvent.has_value())
+        return;
 
-    return NoneAppEvent{};
+    getEventQueue().push(std::move(*newEvent));
 }
