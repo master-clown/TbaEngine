@@ -8,6 +8,7 @@ set(PUBLIC_HEADERS
     NumericCast.hpp
     OverloadMultiplexor.h
     Stl/Array.h
+    Stl/Optional.h
     Stl/Queue.h
     String.h
 )
@@ -19,6 +20,7 @@ set(SOURCES
     NumericCast.cpp
     OverloadMultiplexor.cpp
     Stl/Array.cpp
+    Stl/Optional.cpp
     Stl/Queue.cpp
     String.cpp
 )
