@@ -16,4 +16,12 @@ constexpr FlagEnum operator&(const FlagEnum&, const FlagEnum&);
 
 //----------------------------------------------------------------------------------------------------------------------
 template <FlagEnumConcept FlagEnum>
+constexpr FlagEnum& operator&=(FlagEnum&, const FlagEnum&);
+
+//======================================================================================================================
+template <FlagEnumConcept FlagEnum>
 constexpr FlagEnum operator|(const FlagEnum&, const FlagEnum&);
+
+//----------------------------------------------------------------------------------------------------------------------
+template <FlagEnumConcept FlagEnum>
+constexpr FlagEnum& operator|=(FlagEnum&, const FlagEnum&);
