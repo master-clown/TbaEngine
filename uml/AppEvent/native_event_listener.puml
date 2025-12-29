@@ -1,0 +1,45 @@
+@startuml
+
+skinparam defaultFontName monospaced
+
+'=======================================================================================================================
+class AppEvent
+class AppEventMgr
+
+'=======================================================================================================================
+class NativeEventListenersGuard
+
+'------------------------------------------------------------------------------------------------------------------------
+NativeEventListenersGuard <--> NativeEventListeners : friends (mutually)
+
+'=======================================================================================================================
+class NativeEventListener {
+    + {abstract} processNativeEvent(NativeEvent) -> Optional<AppEvent>
+==
+    + ctor(NativeEventListeners)
+}
+
+'------------------------------------------------------------------------------------------------------------------------
+NativeEventListener *-- NativeEventListenersGuard
+NativeEventListener --> AppEvent : creates
+
+'------------------------------------------------------------------------------------------------------------------------
+AppEventMgr --> NativeEventListener : Provides `NativeEvent`
+
+'=======================================================================================================================
+class NativeEventListeners {
+    + add(NativeEventListener) -> NativeEventListenersGuard
+    + forEach(func)
+--
+    - remove(ListenerId)
+}
+
+'------------------------------------------------------------------------------------------------------------------------
+NativeEventListeners o-- NativeEventListener
+
+'------------------------------------------------------------------------------------------------------------------------
+AppEventMgr *-- NativeEventListeners
+AppEventMgr --> NativeEventListeners : Iterates listeners
+
+'=======================================================================================================================
+@enduml
