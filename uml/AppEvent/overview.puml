@@ -32,6 +32,21 @@ AppEvent *-- WindowEvent
 AppEvent *-- KeyboardEvent 
 
 '=======================================================================================================================
+class NativeEventListenersGuard
+
+'------------------------------------------------------------------------------------------------------------------------
+NativeEventListenersGuard --> NativeEventListeners : friend for
+
+'=======================================================================================================================
+class NativeEventListener {
+    + ctor(NativeEventListeners, EventQueue)
+    + {abstract} processNativeEvent(NativeEvent) -> Optional<AppEvent>
+}
+
+'------------------------------------------------------------------------------------------------------------------------
+NativeEventListener *-- NativeEventListenersGuard
+
+'=======================================================================================================================
 class EventQueue {
     + push(AppEvent)
 --
@@ -44,18 +59,34 @@ class EventQueue {
 EventQueue *-- AppEvent
 
 '------------------------------------------------------------------------------------------------------------------------
-note left: AppEventMgr is friend for `pop()`
+AppEventMgr --> EventQueue : friend for
+
+'=======================================================================================================================
+class NativeEventListeners {
+    + add(NativeEventListener) -> NativeEventListenersGuard
+    + forEach(func)
+--
+    - remove(ListenerId)
+}
+
+'------------------------------------------------------------------------------------------------------------------------
+NativeEventListeners o-- NativeEventListener
 
 '=======================================================================================================================
 abstract class AppEventMgr {
-    + {abstract} update()
+    + pollEvents()
 ==
     + getNextEvent() : AppEvent
+--
     + getEventQueue()
+    + getNativeEventListeners()
+==
+    - {abstract} _fetchNativeEvents()
 }
 
 '------------------------------------------------------------------------------------------------------------------------
 AppEventMgr *-- EventQueue
+AppEventMgr *-- NativeEventListeners
 
 '=======================================================================================================================
 @enduml
