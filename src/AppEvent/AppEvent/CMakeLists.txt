@@ -9,6 +9,7 @@ set(PUBLIC_HEADERS
     EventInfo.hpp       
     EventQueue.h 
     LogCategory.h
+    NativeEvent.h
     WindowEvent.h       
     WindowEventDetails.h
     WindowEventKind.h   
@@ -21,6 +22,7 @@ set(SOURCES
     EventInfo.cpp         
     EventQueue.cpp
     LogCategory.cpp
+    NativeEvent.cpp
     WindowEvent.cpp       
     WindowEventDetails.cpp
     WindowEventKind.cpp   
