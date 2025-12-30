@@ -1,30 +1,31 @@
 cmake_minimum_required(VERSION 3.12)
 
-set(TARGET_NAME Framework)
+set(TARGET_NAME AppEvent)
 
 set(PUBLIC_HEADERS
-    Application.h
-    Clock.h
-    Framework.h
-    RefreshRateLimiter.h
-    RefreshRateOptions.h
-    RenderableApplication.h
-    SdlFramework.h   
+    AppEvent.h          
+    AppEventMgr.h       
+    EventInfo.h         
+    EventInfo.hpp       
+    EventQueue.h 
+    LogCategory.h
+    WindowEvent.h       
+    WindowEventDetails.h
+    WindowEventKind.h   
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
-    Application.cpp  
-    Clock.cpp
-    Framework.cpp    
-    RefreshRateLimiter.cpp
-    RefreshRateOptions.cpp
-    RenderableApplication.cpp
-    SdlFramework.cpp 
+    AppEvent.cpp          
+    AppEventMgr.cpp       
+    EventInfo.cpp         
+    EventQueue.cpp
+    LogCategory.cpp
+    WindowEvent.cpp       
+    WindowEventDetails.cpp
+    WindowEventKind.cpp   
 )
 list(TRANSFORM SOURCES PREPEND "src/")
-
-find_package(SDL3 REQUIRED)
 
 add_library(${TARGET_NAME} STATIC)
 
@@ -36,13 +37,8 @@ target_sources(${TARGET_NAME}
     FILES
     ${PUBLIC_HEADERS})
 target_link_libraries(${TARGET_NAME} PUBLIC
-    AppEvent
-    Renderer
-    Winsys
+    Common
 )
 target_link_libraries(${TARGET_NAME} PRIVATE 
-    Common
-    SdlAppEvent
-    SdlRenderer
-    SDL3::SDL3
+    Logger
 )

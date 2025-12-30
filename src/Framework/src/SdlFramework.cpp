@@ -1,6 +1,6 @@
 #include <Framework/SdlFramework.h>
 
-#include <AppEvent/SdlAppEventMgr.h>
+#include <SdlAppEvent/SdlAppEventMgr.h>
 #include <SdlRenderer/SdlRenderer.h>
 #include <Winsys/SdlWindow.h>
 #include <Winsys/SdlWindowMgr.h>

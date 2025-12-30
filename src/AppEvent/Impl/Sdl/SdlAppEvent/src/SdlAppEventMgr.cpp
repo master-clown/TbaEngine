@@ -1,4 +1,4 @@
-#include <AppEvent/SdlAppEventMgr.h>
+#include <SdlAppEvent/SdlAppEventMgr.h>
 
 #include <AppEvent/EventInfo.hpp>
 #include <AppEvent/LogCategory.h>
