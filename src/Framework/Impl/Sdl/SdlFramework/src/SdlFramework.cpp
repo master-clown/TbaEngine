@@ -1,4 +1,4 @@
-#include <Framework/SdlFramework.h>
+#include <SdlFramework/SdlFramework.h>
 
 #include <SdlAppEvent/SdlAppEventMgr.h>
 #include <SdlRenderer/SdlRenderer.h>

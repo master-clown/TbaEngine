@@ -2,12 +2,12 @@
 
 #include <AppEvent/EventInfo.hpp>
 #include <Common/Memory.h>
-#include <Framework/SdlFramework.h>
 #include <Geometry2d/Line.h>
 #include <Geometry2d/Point2d.h>
 #include <Geometry2d/Triangle.h>
 #include <Render2d/Renderer.h>
 #include <Renderer/Renderer.h>
+#include <SdlFramework/SdlFramework.h>
 #include <Winsys/WindowMgr.h>
 
 //======================================================================================================================
