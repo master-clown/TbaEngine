@@ -2,8 +2,8 @@
 
 #include <SdlAppEvent/SdlAppEventMgr.h>
 #include <SdlRenderer/SdlRenderer.h>
-#include <Winsys/SdlWindow.h>
-#include <Winsys/SdlWindowMgr.h>
+#include <SdlWinsys/SdlWindow.h>
+#include <SdlWinsys/SdlWindowMgr.h>
 
 #include <SDL3/SDL.h>
 

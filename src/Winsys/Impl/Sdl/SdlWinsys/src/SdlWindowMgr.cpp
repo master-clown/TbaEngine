@@ -1,6 +1,6 @@
-#include <Winsys/SdlWindowMgr.h>
+#include <SdlWinsys/SdlWindowMgr.h>
 
-#include <Winsys/SdlWindow.h>
+#include <SdlWinsys/SdlWindow.h>
 
 //======================================================================================================================
 using namespace winsys;

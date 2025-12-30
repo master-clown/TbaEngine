@@ -1,4 +1,4 @@
-#include <Winsys/SdlWindow.h>
+#include <SdlWinsys/SdlWindow.h>
 
 #include <SDL3/SDL_video.h>
 

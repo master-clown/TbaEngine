@@ -44,5 +44,6 @@ target_link_libraries(${TARGET_NAME} PRIVATE
     Common
     SdlAppEvent
     SdlRenderer
+    SdlWinsys
     SDL3::SDL3
 )

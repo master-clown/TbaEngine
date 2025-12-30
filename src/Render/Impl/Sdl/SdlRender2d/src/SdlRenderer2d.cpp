@@ -8,7 +8,7 @@
 #include <Geometry2d/Line.h>
 #include <Geometry2d/Point2d.h>
 #include <Geometry2d/Triangle.h>
-#include <Winsys/SdlWindow.h>
+#include <SdlWinsys/SdlWindow.h>
 
 #include <SDL3/SDL.h>
 
