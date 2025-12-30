@@ -11,6 +11,7 @@ set(PUBLIC_HEADERS
     Stl/HashMap.h
     Stl/Optional.h
     Stl/Queue.h
+    Stl/Vector.h
     String.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
@@ -24,6 +25,7 @@ set(SOURCES
     Stl/Array.cpp
     Stl/Optional.cpp
     Stl/Queue.cpp
+    Stl/Vector.cpp
     String.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
