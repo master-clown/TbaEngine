@@ -11,6 +11,7 @@ set(PUBLIC_HEADERS
     LogCategory.h
     NativeEvent.h
     NativeEventListenerId.h
+    NativeEventListenersGuard.h
     WindowEvent.h       
     WindowEventDetails.h
     WindowEventKind.h   
@@ -25,6 +26,7 @@ set(SOURCES
     LogCategory.cpp
     NativeEvent.cpp
     NativeEventListenerId.cpp
+    NativeEventListenersGuard.cpp
     WindowEvent.cpp       
     WindowEventDetails.cpp
     WindowEventKind.cpp   
