@@ -2,47 +2,29 @@
 
 skinparam defaultFontName monospaced
 
-
 '=======================================================================================================================
-class EventInfo<Type, Details> {
-    + getType() : Type
-    + getDetails<eventType>() : Details<eventType>
-==
-    - _type
-    - _anyEventDetails: std::any
-}
-
-'------------------------------------------------------------------------------------------------------------------------
-class WindowEvent<WindowEventKind, WindowEventDetails> extends EventInfo
-
-'------------------------------------------------------------------------------------------------------------------------
-class KeyboardEvent<KeyboardEventKind, KeyboardEventDetails> extends EventInfo
-
-'=======================================================================================================================
-class AppEvent {
-    one of
-==
-    None
-    WindowEvent
-    KeyboardEvent
-    // ...
-}
-
-'------------------------------------------------------------------------------------------------------------------------
-AppEvent "1" *-- "1" WindowEvent 
-AppEvent "1" *-- "1" KeyboardEvent 
+class AppEvent
+class EventQueue
+class NativeEventListeners
 
 '=======================================================================================================================
 abstract class AppEventMgr {
-    + {abstract} getNextEvent() : AppEvent
+    + pollEvents()
+==
+    + getNextEvent() : AppEvent
+--
+    + getEventQueue()
+    + getNativeEventListeners()
+==
+    - {abstract} _fetchNativeEvents()
 }
 
-class SdlEventMgr implements AppEventMgr
-class GlfwEventMgr implements AppEventMgr
+'------------------------------------------------------------------------------------------------------------------------
+AppEventMgr *-- EventQueue
+AppEventMgr *-- NativeEventListeners
 
 '------------------------------------------------------------------------------------------------------------------------
-AppEventMgr *-- AppEvent
-
+AppEventMgr --> AppEvent
 
 '=======================================================================================================================
 @enduml
