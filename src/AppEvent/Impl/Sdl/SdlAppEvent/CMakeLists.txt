@@ -6,11 +6,13 @@ set(TARGET_NAME SdlAppEvent)
 
 set(PUBLIC_HEADERS
     SdlAppEventMgr.h      
+    SdlNativeEvent.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
     SdlAppEventMgr.cpp
+    SdlNativeEvent.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
@@ -26,8 +28,8 @@ target_sources(${TARGET_NAME}
 target_link_libraries(${TARGET_NAME} PUBLIC
     AppEvent
     Common
+    SDL3::SDL3
 )
 target_link_libraries(${TARGET_NAME} PRIVATE
     Logger
-    SDL3::SDL3
 )
