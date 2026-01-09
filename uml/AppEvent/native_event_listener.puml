@@ -8,7 +8,7 @@ class AppEventMgr
 
 '=======================================================================================================================
 class NativeEventListener {
-    + {abstract} processNativeEvent(NativeEvent) -> Optional<AppEvent>
+    + {abstract} transformToAppEvent(NativeEvent) -> Optional<AppEvent>
 ==
     + ctor(NativeEventListeners)
 }

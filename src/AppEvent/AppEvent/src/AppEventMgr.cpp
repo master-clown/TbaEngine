@@ -25,7 +25,7 @@ void AppEventMgr::pollEvents()
         const auto& nativeEvent = *nativeEventPtr;
         bool isNativeEventProcessed = false;
         getNativeEventListeners().forEach([this, &nativeEvent, &isNativeEventProcessed](NativeEventListener& listener) {
-            auto appEvent = listener.processNativeEvent(nativeEvent);
+            auto appEvent = listener.transformToAppEvent(nativeEvent);
             if (!appEvent.has_value())
                 return NativeEventListeners::ListenerTraversalAction::Continue;
 

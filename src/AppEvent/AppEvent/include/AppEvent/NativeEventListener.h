@@ -18,7 +18,7 @@ namespace app_event {
         explicit NativeEventListener(NativeEventListeners&);
         virtual ~NativeEventListener();
 
-        virtual Optional<AppEvent> processNativeEvent(const NativeEvent&) = 0;
+        virtual Optional<AppEvent> transformToAppEvent(const NativeEvent&) = 0;
 
     private:
         NativeEventListeners& _listeners;
