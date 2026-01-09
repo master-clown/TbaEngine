@@ -7,12 +7,6 @@ class AppEvent
 class AppEventMgr
 
 '=======================================================================================================================
-class NativeEventListenersGuard
-
-'------------------------------------------------------------------------------------------------------------------------
-NativeEventListenersGuard <--> NativeEventListeners : friends (mutually)
-
-'=======================================================================================================================
 class NativeEventListener {
     + {abstract} processNativeEvent(NativeEvent) -> Optional<AppEvent>
 ==
@@ -20,18 +14,18 @@ class NativeEventListener {
 }
 
 '------------------------------------------------------------------------------------------------------------------------
-NativeEventListener *-- NativeEventListenersGuard
 NativeEventListener --> AppEvent : creates
+NativeEventListener --> NativeEventListeners : friend for _add/_remove()
 
 '------------------------------------------------------------------------------------------------------------------------
 AppEventMgr --> NativeEventListener : Provides `NativeEvent`
 
 '=======================================================================================================================
 class NativeEventListeners {
-    + add(NativeEventListener) -> NativeEventListenersGuard
     + forEach(func)
 --
-    - remove(ListenerId)
+    - _add(NativeEventListener) -> ListenerId
+    - _remove(ListenerId)
 }
 
 '------------------------------------------------------------------------------------------------------------------------

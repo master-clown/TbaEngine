@@ -15,16 +15,6 @@ NativeEventListeners::~NativeEventListeners()
 }
 
 //======================================================================================================================
-NativeEventListenersGuard NativeEventListeners::add(NativeEventListener& listener)
-{
-    const auto newListenerId = NativeEventListeners::_getNextListenerId();
-    [[maybe_unused]] const auto [it, hasInserted] = _listenersMap.emplace(newListenerId, std::ref(listener));
-    assert(hasInserted);
-
-    return NativeEventListenersGuard(*this, newListenerId);
-}
-
-//======================================================================================================================
 void NativeEventListeners::forEach(std::function<ListenerTraversalAction(NativeEventListener&)> func)
 {
     for (auto& [id, listenerRef] : _listenersMap) {
@@ -32,6 +22,16 @@ void NativeEventListeners::forEach(std::function<ListenerTraversalAction(NativeE
         if (traversalAction == ListenerTraversalAction::Break)
             break;
     }
+}
+
+//======================================================================================================================
+NativeEventListenerId NativeEventListeners::_add(NativeEventListener& listener)
+{
+    const auto newListenerId = NativeEventListeners::_getNextListenerId();
+    [[maybe_unused]] const auto [it, hasInserted] = _listenersMap.emplace(newListenerId, std::ref(listener));
+    assert(hasInserted);
+
+    return newListenerId;
 }
 
 //======================================================================================================================

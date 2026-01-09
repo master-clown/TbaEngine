@@ -1,6 +1,6 @@
 #pragma once
 
-#include <AppEvent/NativeEventListenersGuard.h>
+#include <AppEvent/NativeEventListenerId.h>
 
 #include <Common/Stl/HashMap.h>
 
@@ -20,9 +20,6 @@ namespace app_event {
         ~NativeEventListeners();
 
         //--------------------------------------------------------------------------------------------------------------
-        NativeEventListenersGuard add(NativeEventListener&);
-
-        //--------------------------------------------------------------------------------------------------------------
         enum class ListenerTraversalAction {
             Continue,
             Break,
@@ -31,7 +28,8 @@ namespace app_event {
         void forEach(std::function<ListenerTraversalAction(NativeEventListener&)>);
 
     private:
-        friend class NativeEventListenersGuard;
+        friend class NativeEventListener;
+        NativeEventListenerId _add(NativeEventListener&);
         void _remove(NativeEventListenerId);
 
         //--------------------------------------------------------------------------------------------------------------

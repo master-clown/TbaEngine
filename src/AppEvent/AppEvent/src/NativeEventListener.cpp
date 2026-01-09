@@ -6,9 +6,13 @@ using namespace app_event;
 
 //======================================================================================================================
 NativeEventListener::NativeEventListener(NativeEventListeners& listeners)
-    : _guardInListeners(listeners.add(*this))
+    : _listeners(listeners)
+    , _listenerId(_listeners._add(*this))
 {
 }
 
 //======================================================================================================================
-NativeEventListener::~NativeEventListener() = default;
+NativeEventListener::~NativeEventListener()
+{
+    _listeners._remove(_listenerId);
+}

@@ -13,7 +13,6 @@ set(PUBLIC_HEADERS
     NativeEventListenerId.h
     NativeEventListener.h
     NativeEventListeners.h
-    NativeEventListenersGuard.h
     WindowEvent.h       
     WindowEventDetails.h
     WindowEventKind.h   
@@ -30,7 +29,6 @@ set(SOURCES
     NativeEventListenerId.cpp
     NativeEventListener.cpp
     NativeEventListeners.cpp
-    NativeEventListenersGuard.cpp
     WindowEvent.cpp       
     WindowEventDetails.cpp
     WindowEventKind.cpp   
