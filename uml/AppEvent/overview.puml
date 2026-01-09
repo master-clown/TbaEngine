@@ -24,7 +24,7 @@ AppEventMgr *-- EventQueue
 AppEventMgr *-- NativeEventListeners
 
 '------------------------------------------------------------------------------------------------------------------------
-AppEventMgr --> AppEvent : Uniform way to obtain new events
+AppEventMgr --> AppEvent
 
 '=======================================================================================================================
 @enduml
