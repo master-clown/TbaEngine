@@ -21,8 +21,8 @@ set(SOURCES
     Memory.cpp
     NumericCast.cpp
     OverloadMultiplexor.cpp
-    Stl/HashMap.cpp
     Stl/Array.cpp
+    Stl/HashMap.cpp
     Stl/Optional.cpp
     Stl/Queue.cpp
     Stl/Vector.cpp
