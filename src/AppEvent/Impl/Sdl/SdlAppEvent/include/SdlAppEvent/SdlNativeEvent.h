@@ -5,8 +5,8 @@
 #include <SDL3/SDL_events.h>
 
 //======================================================================================================================
-namespace app_event {
-    class SdlNativeEvent final : public NativeEvent {
+namespace sdl_app_event {
+    class SdlNativeEvent final : public app_event::NativeEvent {
     public:
         explicit SdlNativeEvent(SDL_Event);
 

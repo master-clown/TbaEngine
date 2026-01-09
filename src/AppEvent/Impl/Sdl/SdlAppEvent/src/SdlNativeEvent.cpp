@@ -1,6 +1,6 @@
 #include <SdlAppEvent/SdlNativeEvent.h>
 
-using namespace app_event;
+using namespace sdl_app_event;
 
 //======================================================================================================================
 SdlNativeEvent::SdlNativeEvent(SDL_Event ev)

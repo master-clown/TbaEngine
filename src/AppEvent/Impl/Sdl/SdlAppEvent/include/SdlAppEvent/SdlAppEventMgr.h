@@ -3,9 +3,9 @@
 #include <AppEvent/AppEventMgr.h>
 
 //======================================================================================================================
-namespace app_event {
-    class SdlAppEventMgr final : public AppEventMgr {
+namespace sdl_app_event {
+    class SdlAppEventMgr final : public app_event::AppEventMgr {
     private:
-        Vector<uptr<NativeEvent>> _fetchNativeEvents() override;
+        Vector<uptr<app_event::NativeEvent>> _fetchNativeEvents() override;
     };
 }
