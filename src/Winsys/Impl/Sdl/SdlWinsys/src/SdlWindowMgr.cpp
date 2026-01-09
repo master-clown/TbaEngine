@@ -17,5 +17,5 @@ SdlWindowMgr::~SdlWindowMgr() = default;
 //======================================================================================================================
 uptr<Window> SdlWindowMgr::createWindow(WindowOptions options)
 {
-    return std::make_unique<SdlWindow>(std::move(options));
+    return std::make_unique<SdlWindow>(getNativeEventListeners(), std::move(options));
 }

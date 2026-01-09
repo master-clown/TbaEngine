@@ -1,15 +1,22 @@
 #include <SdlWinsys/SdlWindow.h>
 
+#include <AppEvent/EventInfo.hpp>
+#include <AppEvent/NativeEvent.h>
+#include <AppEvent/NativeEventListeners.h>
+#include <SdlAppEvent/SdlNativeEvent.h>
+
 #include <SDL3/SDL_video.h>
 
+#include <cassert>
 #include <stdexcept>
 
 //======================================================================================================================
 using namespace winsys;
 
 //======================================================================================================================
-SdlWindow::SdlWindow(WindowOptions optionsArg)
-    : Super(std::move(optionsArg))
+SdlWindow::SdlWindow(app_event::NativeEventListeners& nativeEventListeners, WindowOptions optionsArg)
+    : winsys::Window(std::move(optionsArg))
+    , app_event::NativeEventListener(nativeEventListeners)
 {
     const WindowOptions& options = getWindowOptions();
 
@@ -26,6 +33,20 @@ SdlWindow::SdlWindow(WindowOptions optionsArg)
 SdlWindow::~SdlWindow()
 {
     SDL_DestroyWindow(_sdlWindow);
+}
+
+//======================================================================================================================
+Optional<app_event::AppEvent> SdlWindow::transformToAppEvent(const app_event::NativeEvent& nativeEvent)
+{
+    assert(dynamic_cast<const sdl_app_event::SdlNativeEvent*>(&nativeEvent));
+
+    const auto& sdlNativeEvent = static_cast<const sdl_app_event::SdlNativeEvent&>(nativeEvent);
+    const auto& sdlEvent = sdlNativeEvent.getSdlEvent();
+
+    switch (sdlEvent.type) {
+    case SDL_EventType::SDL_EVENT_QUIT: return app_event::WindowEvent{app_event::WindowEventKind::QuitRequested};
+    default: return std::nullopt;
+    }
 }
 
 //======================================================================================================================

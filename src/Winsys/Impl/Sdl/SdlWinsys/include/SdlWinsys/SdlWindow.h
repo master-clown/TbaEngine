@@ -1,19 +1,27 @@
 #pragma once
 
+#include <AppEvent/NativeEventListener.h>
 #include <Winsys/Window.h>
+
+//======================================================================================================================
+namespace app_event {
+    class NativeEventListeners;
+}
 
 //======================================================================================================================
 struct SDL_Window;
 
 //======================================================================================================================
 namespace winsys {
-    class SdlWindow final : public Window {
-        using Super = Window;
-
+    class SdlWindow final : public Window,
+                            public app_event::NativeEventListener {
     public:
-        explicit SdlWindow(WindowOptions);
+        SdlWindow(app_event::NativeEventListeners&, WindowOptions);
         ~SdlWindow();
 
+        Optional<app_event::AppEvent> transformToAppEvent(const app_event::NativeEvent&) override;
+
+        //--------------------------------------------------------------------------------------------------------------
         SDL_Window& getRawWindow();
         const SDL_Window& getRawWindow() const;
 
