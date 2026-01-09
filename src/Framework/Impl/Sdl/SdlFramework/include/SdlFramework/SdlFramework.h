@@ -6,8 +6,8 @@
 #include <Winsys/WindowMgr.h>
 
 //======================================================================================================================
-namespace framework {
-    class SdlFramework final : public Framework {
+namespace sdl_framework {
+    class SdlFramework final : public framework::Framework {
     public:
         SdlFramework();
         ~SdlFramework();
@@ -15,8 +15,7 @@ namespace framework {
         winsys::WindowMgr& getWindowMgr() override;
         app_event::AppEventMgr& getAppEventMgr() override;
         audio::AudioMgr& getAudioMgr() override;
-        uptr<render::Renderer> createRenderer(render::RendererType,
-                                              TargetWindow&) override;
+        uptr<render::Renderer> createRenderer(render::RendererType, TargetWindow&) override;
 
     private:
         static uptr<render::Renderer> _createSdlRenderer(TargetWindow&);

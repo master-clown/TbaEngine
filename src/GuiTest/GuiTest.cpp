@@ -22,7 +22,7 @@ GuiTest::~GuiTest() = default;
 //======================================================================================================================
 uptr<framework::Framework> GuiTest::_init()
 {
-    auto fr = makeUPtr<framework::SdlFramework>();
+    auto fr = makeUPtr<sdl_framework::SdlFramework>();
 
     _initWindow(*fr);
     _initRenderer(*fr);
