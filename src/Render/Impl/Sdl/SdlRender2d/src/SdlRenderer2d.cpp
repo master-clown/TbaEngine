@@ -17,7 +17,7 @@ struct sdl_render::SdlRenderer2d::Pimpl final {
     SDL_Renderer* renderer = nullptr;
     details::SdlTriangle sdlTriangle; // not thread-safe
 
-    Pimpl(winsys::SdlWindow& sdlWindow)
+    Pimpl(sdl_winsys::SdlWindow& sdlWindow)
     {
         renderer = SDL_CreateRenderer(&sdlWindow.getRawWindow(), nullptr);
         if (!renderer)
@@ -31,7 +31,7 @@ struct sdl_render::SdlRenderer2d::Pimpl final {
 };
 
 //=====================================================================================================================
-sdl_render::SdlRenderer2d::SdlRenderer2d(winsys::SdlWindow& sdlWindow)
+sdl_render::SdlRenderer2d::SdlRenderer2d(sdl_winsys::SdlWindow& sdlWindow)
     : _pimpl(makeUPtr<Pimpl>(sdlWindow))
 {
 }

@@ -17,7 +17,7 @@ using framework::SdlFramework;
 SdlFramework::SdlFramework()
     : _sdlLibraryRaiiWrapper{}
     , _sdlAppEventMgr(makeUPtr<sdl_app_event::SdlAppEventMgr>())
-    , _sdlWinMgr(makeUPtr<winsys::SdlWindowMgr>(_sdlAppEventMgr->getNativeEventListeners()))
+    , _sdlWinMgr(makeUPtr<sdl_winsys::SdlWindowMgr>(_sdlAppEventMgr->getNativeEventListeners()))
 {
 }
 
@@ -61,7 +61,7 @@ uptr<render::Renderer> SdlFramework::createRenderer(const render::RendererType r
 //======================================================================================================================
 uptr<render::Renderer> SdlFramework::_createSdlRenderer(TargetWindow& targetWindow)
 {
-    auto* sdlWindow = dynamic_cast<winsys::SdlWindow*>(&targetWindow);
+    auto* sdlWindow = dynamic_cast<sdl_winsys::SdlWindow*>(&targetWindow);
     if (!sdlWindow)
         throw std::runtime_error("SdlRenderer can be created only for target window of type 'SdlWindow'");
 

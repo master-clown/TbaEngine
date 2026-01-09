@@ -12,11 +12,11 @@ namespace app_event {
 struct SDL_Window;
 
 //======================================================================================================================
-namespace winsys {
-    class SdlWindow final : public Window,
+namespace sdl_winsys {
+    class SdlWindow final : public winsys::Window,
                             public app_event::NativeEventListener {
     public:
-        SdlWindow(app_event::NativeEventListeners&, WindowOptions);
+        SdlWindow(app_event::NativeEventListeners&, winsys::WindowOptions);
         ~SdlWindow();
 
         Optional<app_event::AppEvent> transformToAppEvent(const app_event::NativeEvent&) override;

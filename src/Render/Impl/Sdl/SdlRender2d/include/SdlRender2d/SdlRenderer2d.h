@@ -5,7 +5,7 @@
 #include <Common/Memory.h>
 
 //======================================================================================================================
-namespace winsys {
+namespace sdl_winsys {
     class SdlWindow;
 }
 
@@ -14,7 +14,7 @@ namespace sdl_render {
     //==================================================================================================================
     class SdlRenderer2d final : public render_2d::Renderer {
     public:
-        explicit SdlRenderer2d(winsys::SdlWindow&);
+        explicit SdlRenderer2d(sdl_winsys::SdlWindow&);
         ~SdlRenderer2d();
 
         void clear(const content::Color&) override;
