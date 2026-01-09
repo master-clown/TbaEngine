@@ -16,8 +16,8 @@ using framework::SdlFramework;
 //======================================================================================================================
 SdlFramework::SdlFramework()
     : _sdlLibraryRaiiWrapper{}
-    , _sdlWinMgr(makeUPtr<winsys::SdlWindowMgr>())
-    , _sdlAppEventMgr(makeUPtr<app_event::SdlAppEventMgr>())
+    , _sdlAppEventMgr(makeUPtr<sdl_app_event::SdlAppEventMgr>())
+    , _sdlWinMgr(makeUPtr<winsys::SdlWindowMgr>(_sdlAppEventMgr->getNativeEventListeners()))
 {
 }
 

@@ -29,7 +29,7 @@ namespace framework {
         };
 
         SdlLibraryRaiiWrapper _sdlLibraryRaiiWrapper;
-        uptr<winsys::WindowMgr> _sdlWinMgr;
         uptr<app_event::AppEventMgr> _sdlAppEventMgr;
+        uptr<winsys::WindowMgr> _sdlWinMgr;
     };
 }
