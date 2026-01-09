@@ -1,7 +1,6 @@
 #include <SdlWinsys/SdlWindow.h>
 
 #include <AppEvent/EventInfo.hpp>
-#include <AppEvent/NativeEvent.h>
 #include <AppEvent/NativeEventListeners.h>
 #include <SdlAppEvent/SdlNativeEvent.h>
 
