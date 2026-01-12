@@ -2,8 +2,12 @@
 
 #include <EventSys/NativeEventListenerId.h>
 
-#include <AppEvent/AppEvent.h>
 #include <Common/Stl/Optional.h>
+
+//======================================================================================================================
+namespace app_event {
+    class AppEvent;
+}
 
 //======================================================================================================================
 namespace event_sys {

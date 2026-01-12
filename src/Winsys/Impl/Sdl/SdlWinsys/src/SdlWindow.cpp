@@ -1,5 +1,6 @@
 #include <SdlWinsys/SdlWindow.h>
 
+#include <AppEvent/AppEvent.h>
 #include <EventInfo/EventInfo.hpp>
 #include <EventSys/NativeEventListeners.h>
 #include <SdlEventSys/SdlNativeEvent.h>
@@ -44,7 +45,8 @@ Optional<app_event::AppEvent> SdlWindow::transformToAppEvent(const event_sys::Na
     const auto& sdlEvent = sdlNativeEvent.getSdlEvent();
 
     switch (sdlEvent.type) {
-    case SDL_EventType::SDL_EVENT_QUIT: return win_event::WindowEvent{win_event::WindowEventKind::QuitRequested};
+    case SDL_EventType::SDL_EVENT_QUIT:
+        return app_event::AppEvent{win_event::WindowEvent{win_event::WindowEventKind::QuitRequested}};
     default: return std::nullopt;
     }
 }

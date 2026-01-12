@@ -3,12 +3,13 @@ cmake_minimum_required(VERSION 3.12)
 set(TARGET_NAME AppEvent)
 
 set(PUBLIC_HEADERS
-    AppEvent.h          
+    AppEvent.h
+    AppEvent.hpp
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
-    AppEvent.cpp          
+    AppEvent.cpp 
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 

@@ -2,6 +2,7 @@
 
 #include <Framework/Framework.h>
 
+#include <AppEvent/AppEvent.h>
 #include <EventSys/EventMgr.h>
 
 //======================================================================================================================

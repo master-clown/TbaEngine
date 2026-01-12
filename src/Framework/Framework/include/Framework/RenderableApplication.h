@@ -4,14 +4,15 @@
 #include <Framework/Clock.h>
 #include <Framework/RefreshRateLimiter.h>
 
-#include <AppEvent/AppEvent.h> // TODO: avoid this include (not very light)
 #include <Common/Memory.h>
 
 //======================================================================================================================
-namespace framework {
-    //==================================================================================================================
-    class Framework;
+namespace app_event {
+    class AppEvent;
+}
 
+//======================================================================================================================
+namespace framework {
     //==================================================================================================================
     class RenderableApplication : public Application {
     public:

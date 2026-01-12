@@ -55,7 +55,7 @@ void EventMgr::pollEvents()
 app_event::AppEvent EventMgr::getNextEvent()
 {
     if (_eventQueue._isEmpty())
-        return app_event::NoneAppEvent{};
+        return app_event::noneAppEvent;
 
     return _eventQueue._pop();
 }
