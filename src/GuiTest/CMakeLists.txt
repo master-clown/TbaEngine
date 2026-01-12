@@ -12,6 +12,8 @@ add_executable(${TARGET_NAME})
 
 target_sources(${TARGET_NAME} PRIVATE ${SOURCES})
 target_link_libraries(${TARGET_NAME} PRIVATE 
+    AppEvent
     Common
+    EventInfo
     SdlFramework
 )

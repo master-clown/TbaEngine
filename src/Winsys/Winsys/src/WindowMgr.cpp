@@ -4,7 +4,7 @@
 using winsys::WindowMgr;
 
 //======================================================================================================================
-WindowMgr::WindowMgr(app_event::NativeEventListeners& nativeEventListeners)
+WindowMgr::WindowMgr(event_sys::NativeEventListeners& nativeEventListeners)
     : _nativeEventListeners(nativeEventListeners)
 {
 }
@@ -13,7 +13,7 @@ WindowMgr::WindowMgr(app_event::NativeEventListeners& nativeEventListeners)
 WindowMgr::~WindowMgr() = default;
 
 //======================================================================================================================
-app_event::NativeEventListeners& WindowMgr::getNativeEventListeners()
+event_sys::NativeEventListeners& WindowMgr::getNativeEventListeners()
 {
     return _nativeEventListeners;
 }

@@ -10,8 +10,8 @@ namespace winsys {
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-namespace app_event {
-    class AppEventMgr;
+namespace event_sys {
+    class EventMgr;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ namespace framework {
         virtual ~Framework();
 
         virtual winsys::WindowMgr& getWindowMgr() = 0;
-        virtual app_event::AppEventMgr& getAppEventMgr() = 0;
+        virtual event_sys::EventMgr& getEventMgr() = 0;
         virtual audio::AudioMgr& getAudioMgr() = 0;
 
         using TargetWindow = winsys::Window;

@@ -29,7 +29,7 @@ target_link_libraries(${TARGET_NAME} PUBLIC
     Winsys
 )
 target_link_libraries(${TARGET_NAME} PRIVATE
-    SdlAppEvent
+    SdlEventSys
     SdlRenderer
     SdlWinsys
     SDL3::SDL3

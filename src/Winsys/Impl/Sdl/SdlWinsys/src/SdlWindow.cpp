@@ -1,8 +1,8 @@
 #include <SdlWinsys/SdlWindow.h>
 
-#include <AppEvent/EventInfo.hpp>
-#include <AppEvent/NativeEventListeners.h>
-#include <SdlAppEvent/SdlNativeEvent.h>
+#include <EventInfo/EventInfo.hpp>
+#include <EventSys/NativeEventListeners.h>
+#include <SdlEventSys/SdlNativeEvent.h>
 
 #include <SDL3/SDL_video.h>
 
@@ -14,9 +14,9 @@ using namespace sdl_winsys;
 using namespace winsys;
 
 //======================================================================================================================
-SdlWindow::SdlWindow(app_event::NativeEventListeners& nativeEventListeners, WindowOptions optionsArg)
+SdlWindow::SdlWindow(event_sys::NativeEventListeners& nativeEventListeners, WindowOptions optionsArg)
     : winsys::Window(std::move(optionsArg))
-    , app_event::NativeEventListener(nativeEventListeners)
+    , event_sys::NativeEventListener(nativeEventListeners)
 {
     const WindowOptions& options = getWindowOptions();
 
@@ -36,15 +36,15 @@ SdlWindow::~SdlWindow()
 }
 
 //======================================================================================================================
-Optional<app_event::AppEvent> SdlWindow::transformToAppEvent(const app_event::NativeEvent& nativeEvent)
+Optional<app_event::AppEvent> SdlWindow::transformToAppEvent(const event_sys::NativeEvent& nativeEvent)
 {
-    assert(dynamic_cast<const sdl_app_event::SdlNativeEvent*>(&nativeEvent));
+    assert(dynamic_cast<const sdl_event_sys::SdlNativeEvent*>(&nativeEvent));
 
-    const auto& sdlNativeEvent = static_cast<const sdl_app_event::SdlNativeEvent&>(nativeEvent);
+    const auto& sdlNativeEvent = static_cast<const sdl_event_sys::SdlNativeEvent&>(nativeEvent);
     const auto& sdlEvent = sdlNativeEvent.getSdlEvent();
 
     switch (sdlEvent.type) {
-    case SDL_EventType::SDL_EVENT_QUIT: return app_event::WindowEvent{app_event::WindowEventKind::QuitRequested};
+    case SDL_EventType::SDL_EVENT_QUIT: return win_event::WindowEvent{win_event::WindowEventKind::QuitRequested};
     default: return std::nullopt;
     }
 }

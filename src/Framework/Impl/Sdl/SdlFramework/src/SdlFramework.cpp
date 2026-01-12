@@ -1,6 +1,6 @@
 #include <SdlFramework/SdlFramework.h>
 
-#include <SdlAppEvent/SdlAppEventMgr.h>
+#include <SdlEventSys/SdlEventMgr.h>
 #include <SdlRenderer/SdlRenderer.h>
 #include <SdlWinsys/SdlWindow.h>
 #include <SdlWinsys/SdlWindowMgr.h>
@@ -16,8 +16,8 @@ using sdl_framework::SdlFramework;
 //======================================================================================================================
 SdlFramework::SdlFramework()
     : _sdlLibraryRaiiWrapper{}
-    , _sdlAppEventMgr(makeUPtr<sdl_app_event::SdlAppEventMgr>())
-    , _sdlWinMgr(makeUPtr<sdl_winsys::SdlWindowMgr>(_sdlAppEventMgr->getNativeEventListeners()))
+    , _sdlEventMgr(makeUPtr<sdl_event_sys::SdlEventMgr>())
+    , _sdlWinMgr(makeUPtr<sdl_winsys::SdlWindowMgr>(_sdlEventMgr->getNativeEventListeners()))
 {
 }
 
@@ -32,10 +32,10 @@ winsys::WindowMgr& SdlFramework::getWindowMgr()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-app_event::AppEventMgr& SdlFramework::getAppEventMgr()
+event_sys::EventMgr& SdlFramework::getEventMgr()
 {
-    assert(_sdlAppEventMgr);
-    return *_sdlAppEventMgr;
+    assert(_sdlEventMgr);
+    return *_sdlEventMgr;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
