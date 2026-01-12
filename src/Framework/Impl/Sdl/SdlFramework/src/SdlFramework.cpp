@@ -25,13 +25,6 @@ SdlFramework::SdlFramework()
 SdlFramework::~SdlFramework() = default;
 
 //======================================================================================================================
-winsys::WindowMgr& SdlFramework::getWindowMgr()
-{
-    assert(_sdlWinMgr);
-    return *_sdlWinMgr;
-}
-
-//----------------------------------------------------------------------------------------------------------------------
 event_sys::EventMgr& SdlFramework::getEventMgr()
 {
     assert(_sdlEventMgr);
@@ -39,9 +32,10 @@ event_sys::EventMgr& SdlFramework::getEventMgr()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-audio::AudioMgr& SdlFramework::getAudioMgr()
+winsys::WindowMgr& SdlFramework::getWindowMgr()
 {
-    throw std::logic_error("Not implemented");
+    assert(_sdlWinMgr);
+    return *_sdlWinMgr;
 }
 
 //----------------------------------------------------------------------------------------------------------------------

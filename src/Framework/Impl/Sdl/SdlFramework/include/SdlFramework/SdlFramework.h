@@ -9,9 +9,8 @@ namespace sdl_framework {
         SdlFramework();
         ~SdlFramework();
 
-        winsys::WindowMgr& getWindowMgr() override;
         event_sys::EventMgr& getEventMgr() override;
-        audio::AudioMgr& getAudioMgr() override;
+        winsys::WindowMgr& getWindowMgr() override;
         uptr<render::Renderer> createRenderer(render::RendererType, TargetWindow&) override;
 
     private:
