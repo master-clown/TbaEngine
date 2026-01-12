@@ -3,8 +3,9 @@
 skinparam defaultFontName monospaced
 
 '=======================================================================================================================
-class AppEvent
-class AppEventMgr
+package app_event {
+    class AppEvent
+}
 
 '=======================================================================================================================
 class NativeEventListener {
@@ -17,8 +18,11 @@ class NativeEventListener {
 NativeEventListener --> AppEvent : creates
 NativeEventListener --> NativeEventListeners : friend for _add/_remove()
 
-'------------------------------------------------------------------------------------------------------------------------
-AppEventMgr --> NativeEventListener : Provides `NativeEvent`
+'=======================================================================================================================
+class EventMgr
+
+'-----------------------------------------------------------------------------------------------------------------------
+EventMgr --> NativeEventListener : Provides `NativeEvent`
 
 '=======================================================================================================================
 class NativeEventListeners {
@@ -32,8 +36,8 @@ class NativeEventListeners {
 NativeEventListeners o-- NativeEventListener
 
 '------------------------------------------------------------------------------------------------------------------------
-AppEventMgr *-- NativeEventListeners
-AppEventMgr --> NativeEventListeners : Iterates listeners
+EventMgr *-- NativeEventListeners
+EventMgr --> NativeEventListeners : Iterates listeners
 
 '=======================================================================================================================
 @enduml

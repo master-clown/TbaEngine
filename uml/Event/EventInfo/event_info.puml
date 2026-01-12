@@ -3,32 +3,25 @@
 skinparam defaultFontName monospaced
 
 '=======================================================================================================================
-package event_sys {
-    class EventMgr
-}
-
-package render {
-    abstract class Renderer
-}
-
-package winsys {
-    abstract class WindowMgr
-}
-
-'=======================================================================================================================
-package framework {
-    abstract class Framework
-
-    Framework *-up- event_sys.EventMgr
-    Framework *-up- render.Renderer
-    Framework *-up- winsys.WindowMgr
+package event_info {
+    class EventInfo<Type, Details> {
+        + getType() : Type
+        + getDetails<eventType>() : Details<eventType>
+    ==
+        - _type
+        - _anyEventDetails: std::any
+    }
 }
 
 '=======================================================================================================================
-class SdlFramework implements framework.Framework
-class GlfwFramework implements framework.Framework
+package win_event {
+    class WindowEvent implements event_info.EventInfo
+}
 
 '=======================================================================================================================
-Client -right-> framework.Framework
+package input_event {
+    class KeyboardEvent implements event_info.EventInfo
+}
 
+'=======================================================================================================================
 @enduml

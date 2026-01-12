@@ -3,28 +3,28 @@
 skinparam defaultFontName monospaced
 
 '=======================================================================================================================
-class AppEvent
-class EventQueue
-class NativeEventListeners
+package win_event {
+    class WindowEvent
+}
 
 '=======================================================================================================================
-abstract class AppEventMgr {
-    + pollEvents()
-==
-    + getNextEvent() : AppEvent
---
-    + getEventQueue()
-    + getNativeEventListeners()
-==
-    - {abstract} _fetchNativeEvents()
+package input_event {
+    class KeyboardEvent
+}
+
+'=======================================================================================================================
+package app_event {
+    class AppEvent {
+        one of
+    ==
+        None
+        ...
+    }
 }
 
 '------------------------------------------------------------------------------------------------------------------------
-AppEventMgr *-- EventQueue
-AppEventMgr *-- NativeEventListeners
-
-'------------------------------------------------------------------------------------------------------------------------
-AppEventMgr --> AppEvent
+app_event.AppEvent *-- win_event.WindowEvent 
+app_event.AppEvent *-- input_event.KeyboardEvent 
 
 '=======================================================================================================================
 @enduml
