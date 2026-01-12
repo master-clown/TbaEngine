@@ -5,7 +5,8 @@
 using namespace sdl_input;
 
 //======================================================================================================================
-SdlDeviceMgr::SdlDeviceMgr()
+SdlDeviceMgr::SdlDeviceMgr(event_sys::NativeEventListeners& nativeEventListeners)
+    : input::DeviceMgr(nativeEventListeners)
 {
     _setKeyboard(makeUPtr<SdlKeyboard>());
 }

@@ -7,7 +7,8 @@
 using namespace input;
 
 //======================================================================================================================
-DeviceMgr::DeviceMgr()
+DeviceMgr::DeviceMgr(event_sys::NativeEventListeners& nativeEventListeners)
+    : _nativeEventListeners(nativeEventListeners)
 {
 }
 
@@ -18,6 +19,12 @@ DeviceMgr::~DeviceMgr() = default;
 void DeviceMgr::update()
 {
     getKeyboard().update();
+}
+
+//======================================================================================================================
+event_sys::NativeEventListeners& DeviceMgr::getNativeEventListeners()
+{
+    return _nativeEventListeners;
 }
 
 //======================================================================================================================

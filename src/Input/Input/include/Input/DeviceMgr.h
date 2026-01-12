@@ -3,6 +3,11 @@
 #include <Common/Memory.h>
 
 //======================================================================================================================
+namespace event_sys {
+    class NativeEventListeners;
+}
+
+//======================================================================================================================
 namespace input {
     class Keyboard;
 }
@@ -12,11 +17,14 @@ namespace input {
     //==================================================================================================================
     class DeviceMgr {
     public:
-        DeviceMgr();
+        explicit DeviceMgr(event_sys::NativeEventListeners&);
         virtual ~DeviceMgr();
 
         //--------------------------------------------------------------------------------------------------------------
         void update();
+
+        //--------------------------------------------------------------------------------------------------------------
+        event_sys::NativeEventListeners& getNativeEventListeners();
 
         //--------------------------------------------------------------------------------------------------------------
         Keyboard& getKeyboard();
@@ -26,6 +34,7 @@ namespace input {
         void _setKeyboard(uptr<Keyboard>);
 
     private:
+        event_sys::NativeEventListeners& _nativeEventListeners;
         uptr<Keyboard> _keyboard;
     };
 }

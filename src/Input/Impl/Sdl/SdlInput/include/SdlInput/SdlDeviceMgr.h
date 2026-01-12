@@ -7,6 +7,6 @@ namespace sdl_input {
     //==================================================================================================================
     class SdlDeviceMgr final : public input::DeviceMgr {
     public:
-        SdlDeviceMgr();
+        explicit SdlDeviceMgr(event_sys::NativeEventListeners&);
     };
 }
