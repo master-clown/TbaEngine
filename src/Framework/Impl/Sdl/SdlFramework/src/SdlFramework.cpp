@@ -1,6 +1,7 @@
 #include <SdlFramework/SdlFramework.h>
 
-#include <SdlEventSys/SdlEventMgr.h>
+#include <EventSys/EventMgr.h>
+#include <SdlEventSys/SdlEventProvider.h>
 #include <SdlRenderer/SdlRenderer.h>
 #include <SdlWinsys/SdlWindow.h>
 #include <SdlWinsys/SdlWindowMgr.h>
@@ -16,7 +17,7 @@ using sdl_framework::SdlFramework;
 //======================================================================================================================
 SdlFramework::SdlFramework()
     : _sdlLibraryRaiiWrapper{}
-    , _sdlEventMgr(makeUPtr<sdl_event_sys::SdlEventMgr>())
+    , _sdlEventMgr(makeUPtr<event_sys::EventMgr>(makeUPtr<sdl_event_sys::SdlEventProvider>()))
     , _sdlWinMgr(makeUPtr<sdl_winsys::SdlWindowMgr>(_sdlEventMgr->getNativeEventListeners()))
 {
 }

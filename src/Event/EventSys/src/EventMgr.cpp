@@ -3,6 +3,7 @@
 #include <EventSys/LogCategory.h>
 #include <EventSys/NativeEvent.h>
 #include <EventSys/NativeEventListener.h>
+#include <EventSys/NativeEventProvider.h>
 
 #include <Logger/CategorizedLogging.h>
 
@@ -12,12 +13,19 @@
 using namespace event_sys;
 
 //======================================================================================================================
+EventMgr::EventMgr(uptr<NativeEventProvider> nativeEventProvider)
+    : _nativeEventProvider(std::move(nativeEventProvider))
+{
+    assert(_nativeEventProvider);
+}
+
+//======================================================================================================================
 EventMgr::~EventMgr() = default;
 
 //======================================================================================================================
 void EventMgr::pollEvents()
 {
-    const auto nativeEvents = _fetchNativeEvents();
+    const auto nativeEvents = _nativeEventProvider->fetchNewNativeEvents();
 
     for (const auto& nativeEventPtr : nativeEvents) {
         assert(nativeEventPtr);

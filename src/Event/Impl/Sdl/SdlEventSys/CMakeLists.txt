@@ -5,13 +5,13 @@ find_package(SDL3 REQUIRED)
 set(TARGET_NAME SdlEventSys)
 
 set(PUBLIC_HEADERS
-    SdlEventMgr.h
+    SdlEventProvider.h
     SdlNativeEvent.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
-    SdlEventMgr.cpp
+    SdlEventProvider.cpp
     SdlNativeEvent.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")

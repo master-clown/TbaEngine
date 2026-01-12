@@ -10,25 +10,25 @@ package AppEvent_ {
 '=======================================================================================================================
 class EventQueue
 class NativeEventListeners
+class NativeEventProvider
 
 '=======================================================================================================================
-abstract class EventMgr {
+class EventMgr {
     + pollEvents()
 ==
     + getNextEvent() : AppEvent
 --
     + getEventQueue()
     + getNativeEventListeners()
-==
-    - {abstract} _fetchNativeEvents()
 }
 
 '------------------------------------------------------------------------------------------------------------------------
 EventMgr *-- EventQueue
 EventMgr *-- NativeEventListeners
+EventMgr *-- NativeEventProvider
 
 '------------------------------------------------------------------------------------------------------------------------
-EventMgr --> AppEvent : provides to client
+EventMgr -up-> AppEvent : provides to client
 
 '=======================================================================================================================
 @enduml

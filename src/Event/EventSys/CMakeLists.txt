@@ -10,6 +10,7 @@ set(PUBLIC_HEADERS
     NativeEventListenerId.h
     NativeEventListener.h
     NativeEventListeners.h
+    NativeEventProvider.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
@@ -21,6 +22,7 @@ set(SOURCES
     NativeEventListenerId.cpp
     NativeEventListener.cpp
     NativeEventListeners.cpp
+    NativeEventProvider.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 

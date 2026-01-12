@@ -1,4 +1,4 @@
-#include <SdlEventSys/SdlEventMgr.h>
+#include <SdlEventSys/SdlEventProvider.h>
 
 #include <SdlEventSys/SdlNativeEvent.h>
 
@@ -8,7 +8,7 @@
 using namespace sdl_event_sys;
 
 //======================================================================================================================
-Vector<uptr<event_sys::NativeEvent>> SdlEventMgr::_fetchNativeEvents()
+Vector<uptr<event_sys::NativeEvent>> SdlEventProvider::fetchNewNativeEvents()
 {
     Vector<uptr<event_sys::NativeEvent>> nativeEvents;
 
