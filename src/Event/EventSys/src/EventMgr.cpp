@@ -20,9 +20,6 @@ EventMgr::EventMgr(uptr<NativeEventProvider> nativeEventProvider)
 }
 
 //======================================================================================================================
-EventMgr::~EventMgr() = default;
-
-//======================================================================================================================
 void EventMgr::pollEvents()
 {
     const auto nativeEvents = _nativeEventProvider->fetchNewNativeEvents();

@@ -17,7 +17,6 @@ namespace event_sys {
     class EventMgr final {
     public:
         explicit EventMgr(uptr<NativeEventProvider>);
-        virtual ~EventMgr();
 
         //--------------------------------------------------------------------------------------------------------------
         void pollEvents();
