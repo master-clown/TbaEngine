@@ -1,5 +1,6 @@
 #pragma once
 
+#include <InputEvent/KeyboardEvent.h>
 #include <WinEvent/WindowEvent.h>
 
 #include <variant>
@@ -12,6 +13,7 @@ namespace app_event {
         using NoneAppEvent = std::monostate;
         using EventVariant =
             std::variant<
+                input_event::KeyboardEvent,
                 win_event::WindowEvent,
                 NoneAppEvent>;
 

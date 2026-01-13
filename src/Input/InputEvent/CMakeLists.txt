@@ -1,15 +1,18 @@
 cmake_minimum_required(VERSION 3.12)
 
-set(TARGET_NAME AppEvent)
+set(TARGET_NAME InputEvent)
 
 set(PUBLIC_HEADERS
-    AppEvent.h
-    AppEvent.hpp
+    KeyboardEvent.h
+    KeyboardEventDetails.h
+    KeyboardEventKind.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
-    AppEvent.cpp 
+    KeyboardEvent.cpp
+    KeyboardEventDetails.cpp
+    KeyboardEventKind.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
@@ -22,7 +25,8 @@ target_sources(${TARGET_NAME}
     BASE_DIRS include
     FILES
     ${PUBLIC_HEADERS})
-target_link_libraries(${TARGET_NAME} PUBLIC 
-    InputEvent
-    WinEvent
+target_link_libraries(${TARGET_NAME} PUBLIC
+    Common
+    EventInfo
+    Keyboard
 )
