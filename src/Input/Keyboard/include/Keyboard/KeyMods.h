@@ -4,16 +4,16 @@
 #include <Common/Integers.h>
 
 //======================================================================================================================
-namespace input {
+namespace keyboard {
     enum class KeyMods : uint16;
 }
 
 //======================================================================================================================
 template <>
-inline constexpr bool isFlagEnum<input::KeyMods> = true;
+inline constexpr bool isFlagEnum<keyboard::KeyMods> = true;
 
 //======================================================================================================================
-namespace input {
+namespace keyboard {
     enum class KeyMods : uint16 {
         None = 0,
         LShift = 1 << 0,

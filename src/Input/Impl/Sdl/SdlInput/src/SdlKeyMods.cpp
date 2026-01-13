@@ -3,9 +3,9 @@
 using namespace sdl_input;
 
 //======================================================================================================================
-input::KeyMods fromSdlKeyMods(const SDL_Keymod keyMods)
+keyboard::KeyMods fromSdlKeyMods(const SDL_Keymod keyMods)
 {
-    using To = input::KeyMods;
+    using To = keyboard::KeyMods;
 
     auto result = To::None;
     if (keyMods & SDL_KMOD_LSHIFT)

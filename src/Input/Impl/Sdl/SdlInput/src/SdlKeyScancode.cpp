@@ -6,9 +6,9 @@
 using namespace sdl_input;
 
 //======================================================================================================================
-SDL_Scancode toSdlKeyScancode(const input::KeyScancode scancode)
+SDL_Scancode toSdlKeyScancode(const keyboard::KeyScancode scancode)
 {
-    using En = input::KeyScancode;
+    using En = keyboard::KeyScancode;
 
     switch (scancode) {
     case En::Unknown: return SDL_SCANCODE_UNKNOWN;
@@ -77,8 +77,8 @@ SDL_Scancode toSdlKeyScancode(const input::KeyScancode scancode)
 
     LOG_CATEGORIZED(input::LogCategory::KeyScancodeConversion,
                     logger::LogMessageLevel::Verbose,
-                    "Unknown input::KeyScancode passed ({})",
-                    static_cast<std::underlying_type_t<input::KeyScancode>>(scancode)); // TODO: print str(code)
+                    "Unknown keyboard::KeyScancode passed ({})",
+                    static_cast<std::underlying_type_t<keyboard::KeyScancode>>(scancode)); // TODO: print str(code)
 
     return SDL_SCANCODE_UNKNOWN;
 }

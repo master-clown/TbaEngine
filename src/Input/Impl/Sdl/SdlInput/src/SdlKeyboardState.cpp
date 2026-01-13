@@ -9,6 +9,7 @@
 #include <SDL3/SDL_keyboard.h>
 
 using namespace input;
+using namespace keyboard;
 using namespace sdl_input;
 
 #define LOG(level, ...) LOG_CATEGORIZED(input::LogCategory::KeyboardState, \
@@ -35,7 +36,7 @@ auto SdlKeyboardState::getKeyState(const KeyScancode scancode) const -> KeyState
     if (sdlKeyScancode == SDL_SCANCODE_UNKNOWN) {
         LOG(Verbose,
             "[!] State of unknown KeyScancode is requested ({})",
-            static_cast<std::underlying_type_t<input::KeyScancode>>(scancode));
+            static_cast<std::underlying_type_t<keyboard::KeyScancode>>(scancode));
         return defaultState;
     }
 

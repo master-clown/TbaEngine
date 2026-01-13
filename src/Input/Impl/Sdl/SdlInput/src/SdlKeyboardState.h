@@ -10,8 +10,8 @@ namespace sdl_input {
     public:
         SdlKeyboardState();
 
-        KeyState getKeyState(input::KeyScancode) const override;
-        input::KeyMods getModsState() const override;
+        KeyState getKeyState(keyboard::KeyScancode) const override;
+        keyboard::KeyMods getModsState() const override;
 
     private:
         std::span<const bool> _sdlKeyStates;

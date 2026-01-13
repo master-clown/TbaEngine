@@ -1,7 +1,7 @@
 #pragma once
 
 //======================================================================================================================
-namespace input {
+namespace keyboard {
     enum class KeyScancode {
         Unknown,
         A,
