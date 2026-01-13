@@ -16,7 +16,8 @@ namespace app_event {
                 NoneAppEvent>;
 
         //--------------------------------------------------------------------------------------------------------------
-        constexpr AppEvent(EventVariant&& ev)
+        template <class Event>
+        constexpr AppEvent(Event&& ev)
             : _eventVariant(std::move(ev))
         {
         }
