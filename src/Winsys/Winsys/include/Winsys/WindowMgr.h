@@ -5,7 +5,7 @@
 #include <Common/Memory.h>
 
 //======================================================================================================================
-namespace app_event {
+namespace event_sys {
     class NativeEventListeners;
 }
 
@@ -13,16 +13,16 @@ namespace app_event {
 namespace winsys {
     class WindowMgr {
     public:
-        explicit WindowMgr(app_event::NativeEventListeners&);
+        explicit WindowMgr(event_sys::NativeEventListeners&);
         virtual ~WindowMgr();
 
         //--------------------------------------------------------------------------------------------------------------
         virtual uptr<Window> createWindow(WindowOptions) = 0;
 
         //--------------------------------------------------------------------------------------------------------------
-        app_event::NativeEventListeners& getNativeEventListeners();
+        event_sys::NativeEventListeners& getNativeEventListeners();
 
     private:
-        app_event::NativeEventListeners& _nativeEventListeners;
+        event_sys::NativeEventListeners& _nativeEventListeners;
     };
 }

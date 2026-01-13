@@ -6,7 +6,7 @@
 namespace sdl_winsys {
     class SdlWindowMgr final : public winsys::WindowMgr {
     public:
-        explicit SdlWindowMgr(app_event::NativeEventListeners&);
+        explicit SdlWindowMgr(event_sys::NativeEventListeners&);
         ~SdlWindowMgr();
 
         uptr<winsys::Window> createWindow(winsys::WindowOptions) override;

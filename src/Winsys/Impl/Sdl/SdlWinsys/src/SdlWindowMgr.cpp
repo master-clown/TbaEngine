@@ -7,7 +7,7 @@ using namespace sdl_winsys;
 using namespace winsys;
 
 //======================================================================================================================
-SdlWindowMgr::SdlWindowMgr(app_event::NativeEventListeners& nativeEventListeners)
+SdlWindowMgr::SdlWindowMgr(event_sys::NativeEventListeners& nativeEventListeners)
     : WindowMgr(nativeEventListeners)
 {
 }

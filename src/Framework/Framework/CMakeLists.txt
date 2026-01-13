@@ -34,6 +34,7 @@ target_sources(${TARGET_NAME}
 target_link_libraries(${TARGET_NAME} PUBLIC
     AppEvent
     Common
+    EventSys
     Renderer
     Winsys
 )

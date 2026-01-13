@@ -1,6 +1,7 @@
 #include <SdlFramework/SdlFramework.h>
 
-#include <SdlAppEvent/SdlAppEventMgr.h>
+#include <EventSys/EventMgr.h>
+#include <SdlEventSys/SdlEventProvider.h>
 #include <SdlRenderer/SdlRenderer.h>
 #include <SdlWinsys/SdlWindow.h>
 #include <SdlWinsys/SdlWindowMgr.h>
@@ -16,8 +17,8 @@ using sdl_framework::SdlFramework;
 //======================================================================================================================
 SdlFramework::SdlFramework()
     : _sdlLibraryRaiiWrapper{}
-    , _sdlAppEventMgr(makeUPtr<sdl_app_event::SdlAppEventMgr>())
-    , _sdlWinMgr(makeUPtr<sdl_winsys::SdlWindowMgr>(_sdlAppEventMgr->getNativeEventListeners()))
+    , _sdlEventMgr(makeUPtr<event_sys::EventMgr>(makeUPtr<sdl_event_sys::SdlEventProvider>()))
+    , _sdlWinMgr(makeUPtr<sdl_winsys::SdlWindowMgr>(_sdlEventMgr->getNativeEventListeners()))
 {
 }
 
@@ -25,23 +26,17 @@ SdlFramework::SdlFramework()
 SdlFramework::~SdlFramework() = default;
 
 //======================================================================================================================
+event_sys::EventMgr& SdlFramework::getEventMgr()
+{
+    assert(_sdlEventMgr);
+    return *_sdlEventMgr;
+}
+
+//----------------------------------------------------------------------------------------------------------------------
 winsys::WindowMgr& SdlFramework::getWindowMgr()
 {
     assert(_sdlWinMgr);
     return *_sdlWinMgr;
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-app_event::AppEventMgr& SdlFramework::getAppEventMgr()
-{
-    assert(_sdlAppEventMgr);
-    return *_sdlAppEventMgr;
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-audio::AudioMgr& SdlFramework::getAudioMgr()
-{
-    throw std::logic_error("Not implemented");
 }
 
 //----------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,27 @@
+@startuml
+
+skinparam defaultFontName monospaced
+
+'=======================================================================================================================
+package event_info {
+    class EventInfo<Type, Details> {
+        + getType() : Type
+        + getDetails<eventType>() : Details<eventType>
+    ==
+        - _type
+        - _anyEventDetails: std::any
+    }
+}
+
+'=======================================================================================================================
+package win_event {
+    class WindowEvent implements event_info.EventInfo
+}
+
+'=======================================================================================================================
+package input_event {
+    class KeyboardEvent implements event_info.EventInfo
+}
+
+'=======================================================================================================================
+@enduml

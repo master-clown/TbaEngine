@@ -2,9 +2,6 @@
 
 #include <Framework/Framework.h>
 
-#include <AppEvent/AppEventMgr.h>
-#include <Winsys/WindowMgr.h>
-
 //======================================================================================================================
 namespace sdl_framework {
     class SdlFramework final : public framework::Framework {
@@ -12,9 +9,8 @@ namespace sdl_framework {
         SdlFramework();
         ~SdlFramework();
 
+        event_sys::EventMgr& getEventMgr() override;
         winsys::WindowMgr& getWindowMgr() override;
-        app_event::AppEventMgr& getAppEventMgr() override;
-        audio::AudioMgr& getAudioMgr() override;
         uptr<render::Renderer> createRenderer(render::RendererType, TargetWindow&) override;
 
     private:
@@ -28,7 +24,7 @@ namespace sdl_framework {
         };
 
         SdlLibraryRaiiWrapper _sdlLibraryRaiiWrapper;
-        uptr<app_event::AppEventMgr> _sdlAppEventMgr;
+        uptr<event_sys::EventMgr> _sdlEventMgr;
         uptr<winsys::WindowMgr> _sdlWinMgr;
     };
 }

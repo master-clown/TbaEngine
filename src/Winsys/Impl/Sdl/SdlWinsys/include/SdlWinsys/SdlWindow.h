@@ -1,10 +1,10 @@
 #pragma once
 
-#include <AppEvent/NativeEventListener.h>
+#include <EventSys/NativeEventListener.h>
 #include <Winsys/Window.h>
 
 //======================================================================================================================
-namespace app_event {
+namespace event_sys {
     class NativeEventListeners;
 }
 
@@ -14,12 +14,12 @@ struct SDL_Window;
 //======================================================================================================================
 namespace sdl_winsys {
     class SdlWindow final : public winsys::Window,
-                            public app_event::NativeEventListener {
+                            public event_sys::NativeEventListener {
     public:
-        SdlWindow(app_event::NativeEventListeners&, winsys::WindowOptions);
+        SdlWindow(event_sys::NativeEventListeners&, winsys::WindowOptions);
         ~SdlWindow();
 
-        Optional<app_event::AppEvent> transformToAppEvent(const app_event::NativeEvent&) override;
+        Optional<app_event::AppEvent> transformToAppEvent(const event_sys::NativeEvent&) override;
 
         //--------------------------------------------------------------------------------------------------------------
         SDL_Window& getRawWindow();

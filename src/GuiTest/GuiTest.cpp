@@ -1,7 +1,8 @@
 #include "GuiTest.h"
 
-#include <AppEvent/EventInfo.hpp>
+#include <AppEvent/AppEvent.h>
 #include <Common/Memory.h>
+#include <EventInfo/EventInfo.hpp>
 #include <Geometry2d/Line.h>
 #include <Geometry2d/Point2d.h>
 #include <Geometry2d/Triangle.h>
@@ -94,10 +95,10 @@ void GuiTest::_initRenderer(framework::Framework& fr)
 }
 
 //======================================================================================================================
-auto GuiTest::_processEvent(const app_event::AppEvent& appEventVariant) -> ShouldQuit
+auto GuiTest::_processEvent(const app_event::AppEvent& appEvent) -> ShouldQuit
 {
-    if (const auto* windowEvent = std::get_if<app_event::WindowEvent>(&appEventVariant)) {
-        using Kind = app_event::WindowEventKind;
+    if (const auto* windowEvent = std::get_if<win_event::WindowEvent>(&appEvent.getVariant())) {
+        using Kind = win_event::WindowEventKind;
         switch (windowEvent->getKind()) {
         case Kind::QuitRequested: return ShouldQuit{true};
         }

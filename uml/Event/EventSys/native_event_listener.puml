@@ -1,0 +1,43 @@
+@startuml
+
+skinparam defaultFontName monospaced
+
+'=======================================================================================================================
+package app_event {
+    class AppEvent
+}
+
+'=======================================================================================================================
+class NativeEventListener {
+    + {abstract} transformToAppEvent(NativeEvent) -> Optional<AppEvent>
+==
+    + ctor(NativeEventListeners)
+}
+
+'------------------------------------------------------------------------------------------------------------------------
+NativeEventListener --> AppEvent : creates
+NativeEventListener --> NativeEventListeners : friend for _add/_remove()
+
+'=======================================================================================================================
+class EventMgr
+
+'-----------------------------------------------------------------------------------------------------------------------
+EventMgr --> NativeEventListener : Provides `NativeEvent`
+
+'=======================================================================================================================
+class NativeEventListeners {
+    + forEach(func)
+--
+    - _add(NativeEventListener) -> ListenerId
+    - _remove(ListenerId)
+}
+
+'------------------------------------------------------------------------------------------------------------------------
+NativeEventListeners o-- NativeEventListener
+
+'------------------------------------------------------------------------------------------------------------------------
+EventMgr *-- NativeEventListeners
+EventMgr --> NativeEventListeners : Iterates listeners
+
+'=======================================================================================================================
+@enduml
