@@ -3,6 +3,7 @@
 //======================================================================================================================
 namespace keyboard {
     enum class KeyCode {
+        Unknown,
         Exclamation,
         DoubleQuote,
         Hash,
