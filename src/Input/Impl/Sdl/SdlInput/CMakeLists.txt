@@ -12,15 +12,15 @@ list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
     SdlDeviceMgr.cpp
+    SdlKeyCode.cpp
+    SdlKeyCode.h
+    SdlKeyMods.cpp
+    SdlKeyMods.h
+    SdlKeyScancode.cpp
+    SdlKeyScancode.h
     SdlKeyboard.cpp
     SdlKeyboardState.cpp
     SdlKeyboardState.h
-    SdlKeyCode.cpp
-    SdlKeyCode.h
-    SdlKeyScancode.cpp
-    SdlKeyScancode.h
-    SdlKeyMods.cpp
-    SdlKeyMods.h
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
