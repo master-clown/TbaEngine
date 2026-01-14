@@ -15,6 +15,8 @@ set(SOURCES
     SdlKeyboard.cpp
     SdlKeyboardState.cpp
     SdlKeyboardState.h
+    SdlKeyCode.cpp
+    SdlKeyCode.h
     SdlKeyScancode.cpp
     SdlKeyScancode.h
     SdlKeyMods.cpp
