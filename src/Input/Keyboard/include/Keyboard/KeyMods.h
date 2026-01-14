@@ -2,6 +2,7 @@
 
 #include <Common/FlagEnum.hpp>
 #include <Common/Integers.h>
+#include <Common/String.h>
 
 //======================================================================================================================
 namespace keyboard {
@@ -30,4 +31,7 @@ namespace keyboard {
         Alt = LAlt | RAlt,
         Gui = LGui | RGui,
     };
+
+    //------------------------------------------------------------------------------------------------------------------
+    String str(KeyMods);
 }
