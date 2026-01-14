@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Common/String.h>
+
 //======================================================================================================================
 namespace input_event {
     enum class KeyboardEventKind {
@@ -7,4 +9,7 @@ namespace input_event {
         KeyUp,
         KeyRepeat,
     };
+
+    //------------------------------------------------------------------------------------------------------------------
+    String str(KeyboardEventKind);
 }
