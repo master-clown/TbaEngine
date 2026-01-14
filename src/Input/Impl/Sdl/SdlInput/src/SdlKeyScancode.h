@@ -6,5 +6,6 @@
 
 //======================================================================================================================
 namespace sdl_input {
+    keyboard::KeyScancode fromSdlKeyScancode(SDL_Scancode);
     SDL_Scancode toSdlKeyScancode(keyboard::KeyScancode);
 }
