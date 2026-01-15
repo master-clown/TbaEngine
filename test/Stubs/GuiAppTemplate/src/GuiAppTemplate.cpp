@@ -18,6 +18,9 @@ GuiAppTemplate::GuiAppTemplate(winsys::WindowOptions winOpts)
 {
     if (_appWindowOptions.wndWidth == 0)
         _appWindowOptions.wndWidth = 640;
+
+    if (_appWindowOptions.wndHeight == 0)
+        _appWindowOptions.wndHeight = 480;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
