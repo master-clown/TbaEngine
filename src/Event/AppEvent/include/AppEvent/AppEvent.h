@@ -28,6 +28,12 @@ namespace app_event {
         template <class Event>
         bool is() const;
 
+        template <class Event>
+        Event* getIf();
+
+        template <class Event>
+        const Event* getIf() const;
+
         //--------------------------------------------------------------------------------------------------------------
         EventVariant& getVariant();
         const EventVariant& getVariant() const;
