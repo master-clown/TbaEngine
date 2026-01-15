@@ -6,7 +6,7 @@
 using namespace sdl_input;
 
 //======================================================================================================================
-keyboard::KeyCode fromSdlKeyCode(const SDL_Keycode code)
+keyboard::KeyCode sdl_input::fromSdlKeyCode(const SDL_Keycode code)
 {
     using To = keyboard::KeyCode;
 
@@ -92,7 +92,7 @@ keyboard::KeyCode fromSdlKeyCode(const SDL_Keycode code)
 }
 
 //======================================================================================================================
-SDL_Keycode toSdlKeyCode(const keyboard::KeyCode code)
+SDL_Keycode sdl_input::toSdlKeyCode(const keyboard::KeyCode code)
 {
     using From = keyboard::KeyCode;
 

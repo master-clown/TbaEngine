@@ -3,7 +3,7 @@
 using namespace sdl_input;
 
 //======================================================================================================================
-keyboard::KeyMods fromSdlKeyMods(const SDL_Keymod keyMods)
+keyboard::KeyMods sdl_input::fromSdlKeyMods(const SDL_Keymod keyMods)
 {
     using To = keyboard::KeyMods;
 

@@ -6,7 +6,7 @@
 using namespace sdl_input;
 
 //======================================================================================================================
-keyboard::KeyScancode fromSdlKeyScancode(const SDL_Scancode scancode)
+keyboard::KeyScancode sdl_input::fromSdlKeyScancode(const SDL_Scancode scancode)
 {
     using From = SDL_Scancode;
     using To = keyboard::KeyScancode;
@@ -85,7 +85,7 @@ keyboard::KeyScancode fromSdlKeyScancode(const SDL_Scancode scancode)
 }
 
 //======================================================================================================================
-SDL_Scancode toSdlKeyScancode(const keyboard::KeyScancode scancode)
+SDL_Scancode sdl_input::toSdlKeyScancode(const keyboard::KeyScancode scancode)
 {
     using From = keyboard::KeyScancode;
 
