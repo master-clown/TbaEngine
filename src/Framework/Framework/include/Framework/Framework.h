@@ -28,6 +28,7 @@ namespace winsys {
 namespace framework {
     class Framework {
     public:
+        Framework();
         virtual ~Framework();
 
         virtual event_sys::EventMgr& getEventMgr() = 0;
@@ -36,5 +37,8 @@ namespace framework {
 
         using TargetWindow = winsys::Window;
         virtual uptr<render::Renderer> createRenderer(render::RendererType, TargetWindow&) = 0;
+
+        //--------------------------------------------------------------------------------------------------------------
+        static void enableStaticLogCategories(); // can be called by anyone at any time
     };
 }

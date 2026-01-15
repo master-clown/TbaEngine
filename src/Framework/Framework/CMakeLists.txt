@@ -36,6 +36,7 @@ target_link_libraries(${TARGET_NAME} PUBLIC
     Common
     EventSys
     Input
+    Logger
     Renderer
     Winsys
 )
