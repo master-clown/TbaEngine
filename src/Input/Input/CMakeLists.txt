@@ -41,3 +41,7 @@ target_link_libraries(${TARGET_NAME} PUBLIC
 target_link_libraries(${TARGET_NAME} PRIVATE
     Common
 )
+
+if(BUILD_TESTS)
+    add_subdirectory(test)
+endif()
