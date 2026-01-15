@@ -8,6 +8,11 @@ namespace event_sys {
     class EventMgr;
 }
 
+//======================================================================================================================
+namespace input {
+    class DeviceMgr;
+}
+
 //----------------------------------------------------------------------------------------------------------------------
 namespace render {
     class Renderer;
@@ -26,6 +31,7 @@ namespace framework {
         virtual ~Framework();
 
         virtual event_sys::EventMgr& getEventMgr() = 0;
+        virtual input::DeviceMgr& getDeviceMgr() = 0;
         virtual winsys::WindowMgr& getWindowMgr() = 0;
 
         using TargetWindow = winsys::Window;
