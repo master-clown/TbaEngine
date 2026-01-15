@@ -5,6 +5,7 @@ set(TARGET_NAME InputEvent)
 set(PUBLIC_HEADERS
     KeyboardEvent.h
     KeyboardEventDetails.h
+    KeyboardEventDetails.hpp
     KeyboardEventKind.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
