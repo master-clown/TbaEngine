@@ -8,6 +8,7 @@ namespace input {
     enum class LogCategory {
         KeyScancodeConversion,
         KeyCodeConversion,
+        KeyboardEvents,
         KeyboardState,
     };
 

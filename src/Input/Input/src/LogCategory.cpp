@@ -12,6 +12,8 @@ std::string input::str(const LogCategory cat)
 
     switch (cat) {
     case Enum::KeyScancodeConversion: return "input::LogCategory::KeyScancodeConversion";
+    case Enum::KeyCodeConversion: return "input::LogCategory::KeyCodeConversion";
+    case Enum::KeyboardEvents: return "input::LogCategory::KeyboardEvents";
     case Enum::KeyboardState: return "input::LogCategory::KeyboardState";
     default: std::unreachable();
     }
