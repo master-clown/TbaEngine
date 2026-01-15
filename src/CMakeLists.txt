@@ -8,7 +8,3 @@ add_subdirectory(Input)
 add_subdirectory(Logger)
 add_subdirectory(Render)
 add_subdirectory(Winsys)
-
-# A simple app which tests the framework
-# TODO: move outside the project or replace with unit-tests
-add_subdirectory(GuiTest)
