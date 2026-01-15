@@ -16,7 +16,8 @@ public:
     ~GuiTest();
 
 private:
-    uptr<framework::Framework> _init() override;
+    uptr<framework::Framework> _createFramework() override;
+    void _init() override;
     ShouldQuit _iterate(const app_event::AppEvent&) override;
     void _render() override;
 
