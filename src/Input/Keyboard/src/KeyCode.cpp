@@ -8,6 +8,11 @@ String keyboard::str(const keyboard::KeyCode code)
     using En = keyboard::KeyCode;
 
     switch (code) {
+    case En::Enter: return "KeyCode::Enter";
+    case En::Escape: return "KeyCode::Escape";
+    case En::Backspace: return "KeyCode::Backspace";
+    case En::Tab: return "KeyCode::Tab";
+    case En::Space: return "KeyCode::Space";
     case En::Unknown: return "KeyCode::Unknown";
     case En::Exclamation: return "KeyCode::Exclamation";
     case En::DoubleQuote: return "KeyCode::DoubleQuote";
@@ -77,6 +82,30 @@ String keyboard::str(const keyboard::KeyCode code)
     case En::VerticalBar: return "KeyCode::VerticalBar";
     case En::RightCurlyBracket: return "KeyCode::RightCurlyBracket";
     case En::Tilde: return "KeyCode::Tilde";
+    case En::CapsLock: return "KeyCode::CapsLock";
+    case En::F1: return "KeyCode::F1";
+    case En::F2: return "KeyCode::F2";
+    case En::F3: return "KeyCode::F3";
+    case En::F4: return "KeyCode::F4";
+    case En::F5: return "KeyCode::F5";
+    case En::F6: return "KeyCode::F6";
+    case En::F7: return "KeyCode::F7";
+    case En::F8: return "KeyCode::F8";
+    case En::F9: return "KeyCode::F9";
+    case En::F10: return "KeyCode::F10";
+    case En::F11: return "KeyCode::F11";
+    case En::F12: return "KeyCode::F12";
+    case En::PrintScreen: return "KeyCode::PrintScreen";
+    case En::Insert: return "KeyCode::Insert";
+    case En::Delete: return "KeyCode::Delete";
+    case En::Home: return "KeyCode::Home";
+    case En::PageUp: return "KeyCode::PageUp";
+    case En::PageDown: return "KeyCode::PageDown";
+    case En::End: return "KeyCode::End";
+    case En::LeftArrow: return "KeyCode::LeftArrow";
+    case En::RightArrow: return "KeyCode::RightArrow";
+    case En::UpArrow: return "KeyCode::UpArrow";
+    case En::DownArrow: return "KeyCode::DownArrow";
     default: std::unreachable();
     }
 }

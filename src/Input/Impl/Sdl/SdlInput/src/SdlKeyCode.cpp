@@ -12,6 +12,11 @@ keyboard::KeyCode sdl_input::fromSdlKeyCode(const SDL_Keycode code)
 
     switch (code) {
     case SDLK_UNKNOWN: return To::Unknown;
+    case SDLK_RETURN: return To::Enter;
+    case SDLK_ESCAPE: return To::Escape;
+    case SDLK_BACKSPACE: return To::Backspace;
+    case SDLK_TAB: return To::Tab;
+    case SDLK_SPACE: return To::Space;
     case SDLK_EXCLAIM: return To::Exclamation;
     case SDLK_DBLAPOSTROPHE: return To::DoubleQuote;
     case SDLK_HASH: return To::Hash;
@@ -80,6 +85,30 @@ keyboard::KeyCode sdl_input::fromSdlKeyCode(const SDL_Keycode code)
     case SDLK_PIPE: return To::VerticalBar;
     case SDLK_RIGHTBRACE: return To::RightCurlyBracket;
     case SDLK_TILDE: return To::Tilde;
+    case SDLK_CAPSLOCK: return To::CapsLock;
+    case SDLK_F1: return To::F1;
+    case SDLK_F2: return To::F2;
+    case SDLK_F3: return To::F3;
+    case SDLK_F4: return To::F4;
+    case SDLK_F5: return To::F5;
+    case SDLK_F6: return To::F6;
+    case SDLK_F7: return To::F7;
+    case SDLK_F8: return To::F8;
+    case SDLK_F9: return To::F9;
+    case SDLK_F10: return To::F10;
+    case SDLK_F11: return To::F11;
+    case SDLK_F12: return To::F12;
+    case SDLK_PRINTSCREEN: return To::PrintScreen;
+    case SDLK_INSERT: return To::Insert;
+    case SDLK_DELETE: return To::Delete;
+    case SDLK_HOME: return To::Home;
+    case SDLK_PAGEUP: return To::PageUp;
+    case SDLK_PAGEDOWN: return To::PageDown;
+    case SDLK_END: return To::End;
+    case SDLK_LEFT: return To::LeftArrow;
+    case SDLK_RIGHT: return To::RightArrow;
+    case SDLK_UP: return To::UpArrow;
+    case SDLK_DOWN: return To::DownArrow;
     default: break;
     };
 
@@ -98,6 +127,10 @@ SDL_Keycode sdl_input::toSdlKeyCode(const keyboard::KeyCode code)
 
     switch (code) {
     case From::Unknown: return SDLK_UNKNOWN;
+    case From::Enter: return SDLK_RETURN;
+    case From::Escape: return SDLK_ESCAPE;
+    case From::Backspace: return SDLK_BACKSPACE;
+    case From::Tab: return SDLK_TAB;
     case From::Exclamation: return SDLK_EXCLAIM;
     case From::DoubleQuote: return SDLK_DBLAPOSTROPHE;
     case From::Hash: return SDLK_HASH;
@@ -166,6 +199,30 @@ SDL_Keycode sdl_input::toSdlKeyCode(const keyboard::KeyCode code)
     case From::VerticalBar: return SDLK_PIPE;
     case From::RightCurlyBracket: return SDLK_RIGHTBRACE;
     case From::Tilde: return SDLK_TILDE;
+    case From::CapsLock: return SDLK_CAPSLOCK;
+    case From::F1: return SDLK_F1;
+    case From::F2: return SDLK_F2;
+    case From::F3: return SDLK_F3;
+    case From::F4: return SDLK_F4;
+    case From::F5: return SDLK_F5;
+    case From::F6: return SDLK_F6;
+    case From::F7: return SDLK_F7;
+    case From::F8: return SDLK_F8;
+    case From::F9: return SDLK_F9;
+    case From::F10: return SDLK_F10;
+    case From::F11: return SDLK_F11;
+    case From::F12: return SDLK_F12;
+    case From::PrintScreen: return SDLK_PRINTSCREEN;
+    case From::Insert: return SDLK_INSERT;
+    case From::Delete: return SDLK_DELETE;
+    case From::Home: return SDLK_HOME;
+    case From::PageUp: return SDLK_PAGEUP;
+    case From::PageDown: return SDLK_PAGEDOWN;
+    case From::End: return SDLK_END;
+    case From::LeftArrow: return SDLK_LEFT;
+    case From::RightArrow: return SDLK_RIGHT;
+    case From::UpArrow: return SDLK_UP;
+    case From::DownArrow: return SDLK_DOWN;
     default: break;
     };
 
