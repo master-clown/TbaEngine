@@ -37,8 +37,11 @@ target_link_libraries(${TARGET_NAME} PUBLIC
     Input
 )
 target_link_libraries(${TARGET_NAME} PRIVATE
+    AppEvent
     Common
+    EventInfo
     EventSys
+    InputEvent
     Logger
     SdlEventSys
     SDL3::SDL3

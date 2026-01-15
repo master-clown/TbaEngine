@@ -8,5 +8,5 @@ using namespace sdl_input;
 SdlDeviceMgr::SdlDeviceMgr(event_sys::NativeEventListeners& nativeEventListeners)
     : input::DeviceMgr(nativeEventListeners)
 {
-    _setKeyboard(makeUPtr<SdlKeyboard>());
+    _setKeyboard(makeUPtr<SdlKeyboard>(getNativeEventListeners()));
 }
