@@ -2,6 +2,7 @@
 
 #include <EventSys/EventMgr.h>
 #include <SdlEventSys/SdlEventProvider.h>
+#include <SdlInput/SdlDeviceMgr.h>
 #include <SdlRenderer/SdlRenderer.h>
 #include <SdlWinsys/SdlWindow.h>
 #include <SdlWinsys/SdlWindowMgr.h>
@@ -18,6 +19,7 @@ using sdl_framework::SdlFramework;
 SdlFramework::SdlFramework()
     : _sdlLibraryRaiiWrapper{}
     , _sdlEventMgr(makeUPtr<event_sys::EventMgr>(makeUPtr<sdl_event_sys::SdlEventProvider>()))
+    , _sdlDeviceMgr(makeUPtr<sdl_input::SdlDeviceMgr>(_sdlEventMgr->getNativeEventListeners()))
     , _sdlWinMgr(makeUPtr<sdl_winsys::SdlWindowMgr>(_sdlEventMgr->getNativeEventListeners()))
 {
 }
@@ -30,6 +32,13 @@ event_sys::EventMgr& SdlFramework::getEventMgr()
 {
     assert(_sdlEventMgr);
     return *_sdlEventMgr;
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+input::DeviceMgr& SdlFramework::getDeviceMgr()
+{
+    assert(_sdlDeviceMgr);
+    return *_sdlDeviceMgr;
 }
 
 //----------------------------------------------------------------------------------------------------------------------

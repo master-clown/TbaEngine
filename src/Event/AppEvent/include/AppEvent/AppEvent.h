@@ -1,5 +1,6 @@
 #pragma once
 
+#include <InputEvent/KeyboardEvent.h>
 #include <WinEvent/WindowEvent.h>
 
 #include <variant>
@@ -12,11 +13,13 @@ namespace app_event {
         using NoneAppEvent = std::monostate;
         using EventVariant =
             std::variant<
+                input_event::KeyboardEvent,
                 win_event::WindowEvent,
                 NoneAppEvent>;
 
         //--------------------------------------------------------------------------------------------------------------
-        constexpr AppEvent(EventVariant&& ev)
+        template <class Event>
+        constexpr AppEvent(Event&& ev)
             : _eventVariant(std::move(ev))
         {
         }
@@ -24,6 +27,12 @@ namespace app_event {
         //--------------------------------------------------------------------------------------------------------------
         template <class Event>
         bool is() const;
+
+        template <class Event>
+        Event* getIf();
+
+        template <class Event>
+        const Event* getIf() const;
 
         //--------------------------------------------------------------------------------------------------------------
         EventVariant& getVariant();

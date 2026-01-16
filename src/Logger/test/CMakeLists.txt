@@ -25,4 +25,4 @@ target_link_libraries(${TARGET_NAME} PRIVATE
     GTest::gtest)
 
 include(GoogleTest)
-gtest_discover_tests(${TARGET_NAME})
+gtest_discover_tests(${TARGET_NAME} PROPERTIES LABELS "UnitTests")

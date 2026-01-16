@@ -21,14 +21,16 @@ GuiTest::GuiTest()
 GuiTest::~GuiTest() = default;
 
 //======================================================================================================================
-uptr<framework::Framework> GuiTest::_init()
+uptr<framework::Framework> GuiTest::_createFramework()
 {
-    auto fr = makeUPtr<sdl_framework::SdlFramework>();
+    return makeUPtr<sdl_framework::SdlFramework>();
+}
 
-    _initWindow(*fr);
-    _initRenderer(*fr);
-
-    return fr;
+//======================================================================================================================
+void GuiTest::_init()
+{
+    _initWindow(getFramework());
+    _initRenderer(getFramework());
 }
 
 //======================================================================================================================

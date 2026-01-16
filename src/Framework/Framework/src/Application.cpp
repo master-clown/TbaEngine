@@ -11,8 +11,9 @@ Application::~Application() = default;
 //======================================================================================================================
 void Application::run()
 {
-    _framework = _init();
+    _framework = _createFramework();
 
+    _init();
     _run();
 }
 
