@@ -35,11 +35,9 @@ target_sources(${TARGET_NAME}
     ${PUBLIC_HEADERS})
 target_link_libraries(${TARGET_NAME} PUBLIC
     AppEvent
+    Common
     EventSys
     Keyboard
-)
-target_link_libraries(${TARGET_NAME} PRIVATE
-    Common
 )
 
 if(BUILD_TESTS)
