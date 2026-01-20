@@ -10,6 +10,7 @@ namespace event_sys {
 //======================================================================================================================
 namespace input {
     class Keyboard;
+    class Mouse;
 }
 
 //======================================================================================================================
@@ -30,11 +31,16 @@ namespace input {
         Keyboard& getKeyboard();
         const Keyboard& getKeyboard() const;
 
+        Mouse& getMouse();
+        const Mouse& getMouse() const;
+
     protected:
         void _setKeyboard(uptr<Keyboard>);
+        void _setMouse(uptr<Mouse>);
 
     private:
         event_sys::NativeEventListeners& _nativeEventListeners;
         uptr<Keyboard> _keyboard;
+        uptr<Mouse> _mouse;
     };
 }

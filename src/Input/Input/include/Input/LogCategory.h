@@ -10,6 +10,8 @@ namespace input {
         KeyCodeConversion,
         KeyboardEvents,
         KeyboardState,
+        MouseButtonConversion,
+        MouseEvents,
     };
 
     //------------------------------------------------------------------------------------------------------------------

@@ -15,6 +15,8 @@ std::string input::str(const LogCategory cat)
     case Enum::KeyCodeConversion: return "input::LogCategory::KeyCodeConversion";
     case Enum::KeyboardEvents: return "input::LogCategory::KeyboardEvents";
     case Enum::KeyboardState: return "input::LogCategory::KeyboardState";
+    case Enum::MouseButtonConversion: return "input::LogCategory::MouseButtonConversion";
+    case Enum::MouseEvents: return "input::LogCategory::MouseEvents";
     default: std::unreachable();
     }
 }
@@ -28,7 +30,7 @@ LogCategory input::begin(LogCategory)
 //======================================================================================================================
 LogCategory input::end(LogCategory)
 {
-    auto theEnd = LogCategory::KeyboardState;
+    auto theEnd = LogCategory::MouseEvents;
     return ++theEnd;
 }
 

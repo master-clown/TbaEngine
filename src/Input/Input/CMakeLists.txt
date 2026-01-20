@@ -10,6 +10,8 @@ set(PUBLIC_HEADERS
     Keyboard.h
     KeyboardState.h
     LogCategory.h
+    Mouse.h
+    MouseState.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
@@ -21,6 +23,8 @@ set(SOURCES
     Keyboard.cpp
     KeyboardState.cpp
     LogCategory.cpp
+    Mouse.cpp
+    MouseState.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
@@ -38,6 +42,7 @@ target_link_libraries(${TARGET_NAME} PUBLIC
     Common
     EventSys
     Keyboard
+    Mouse
 )
 
 if(BUILD_TESTS)
