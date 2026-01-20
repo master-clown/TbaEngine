@@ -19,7 +19,7 @@ SdlMouseState::SdlMouseState()
 auto SdlMouseState::getButtonState(const mouse::MouseButton btn) const -> ButtonState
 {
     const auto sdlRequestedBtn = toSdlMouseButtonFlags(btn);
-    const auto sdlBtnFlags = SDL_GetRelativeMouseState(nullptr, nullptr);
+    const auto sdlBtnFlags = SDL_GetMouseState(nullptr, nullptr);
 
     return ((sdlBtnFlags & sdlRequestedBtn) != 0) ? ButtonState::Pressed : ButtonState::Released;
 }
@@ -33,10 +33,10 @@ const CursorPosition& SdlMouseState::getCurrentCursorPosition() const
 //======================================================================================================================
 CursorPosition SdlMouseState::_getCurrentCursorPosFromSdl() noexcept
 {
-    SdlWinCoord initialPosX;
-    SdlWinCoord initialPosY;
+    SdlWinCoord sdlPosX;
+    SdlWinCoord sdlPosY;
 
-    SDL_GetRelativeMouseState(&initialPosX, &initialPosY);
+    SDL_GetMouseState(&sdlPosX, &sdlPosY);
 
-    return fromSdlCursorPosition(initialPosX, initialPosY);
+    return fromSdlCursorPosition(sdlPosX, sdlPosY);
 }

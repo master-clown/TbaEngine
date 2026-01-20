@@ -8,6 +8,7 @@ namespace sdl_input {
     public:
         SdlMouseState();
 
+        // TODO: cache each update tick?
         ButtonState getButtonState(mouse::MouseButton) const override;
         const mouse::CursorPosition& getCurrentCursorPosition() const override;
 
