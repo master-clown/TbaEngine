@@ -1,6 +1,7 @@
 #pragma once
 
 #include <InputEvent/KeyboardEvent.h>
+#include <InputEvent/MouseEvent.h>
 #include <WinEvent/WindowEvent.h>
 
 #include <variant>
@@ -14,6 +15,7 @@ namespace app_event {
         using EventVariant =
             std::variant<
                 input_event::KeyboardEvent,
+                input_event::MouseEvent,
                 win_event::WindowEvent,
                 NoneAppEvent>;
 

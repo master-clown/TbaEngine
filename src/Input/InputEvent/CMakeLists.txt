@@ -7,6 +7,9 @@ set(PUBLIC_HEADERS
     KeyboardEventDetails.h
     KeyboardEventDetails.hpp
     KeyboardEventKind.h
+    MouseEvent.h
+    MouseEventDetails.h
+    MouseEventKind.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
@@ -14,6 +17,9 @@ set(SOURCES
     KeyboardEvent.cpp
     KeyboardEventDetails.cpp
     KeyboardEventKind.cpp
+    MouseEvent.cpp
+    MouseEventDetails.cpp
+    MouseEventKind.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
@@ -30,4 +36,5 @@ target_link_libraries(${TARGET_NAME} PUBLIC
     Common
     EventInfo
     Keyboard
+    Mouse
 )
