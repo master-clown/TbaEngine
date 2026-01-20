@@ -27,7 +27,7 @@ String keyboard::str(const keyboard::KeyMods mods)
     if ((mods & En::RGui) != En::None)
         result += "RGui+";
 
-    result.back() = '\0';
+    result.pop_back();
 
     return result;
 }
