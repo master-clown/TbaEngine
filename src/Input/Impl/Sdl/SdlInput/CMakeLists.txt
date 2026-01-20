@@ -7,10 +7,13 @@ set(TARGET_NAME SdlInput)
 set(PUBLIC_HEADERS
     SdlDeviceMgr.h
     SdlKeyboard.h
+    SdlMouse.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
+    SdlCursorPosition.cpp
+    SdlCursorPosition.h
     SdlDeviceMgr.cpp
     SdlKeyCode.cpp
     SdlKeyCode.h
@@ -21,6 +24,11 @@ set(SOURCES
     SdlKeyboard.cpp
     SdlKeyboardState.cpp
     SdlKeyboardState.h
+    SdlMouse.cpp
+    SdlMouseButton.cpp
+    SdlMouseButton.h
+    SdlMouseState.cpp
+    SdlMouseState.h
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
@@ -42,7 +50,9 @@ target_link_libraries(${TARGET_NAME} PRIVATE
     EventInfo
     EventSys
     InputEvent
+    Keyboard
     Logger
+    Mouse
     SdlEventSys
     SDL3::SDL3
 )
