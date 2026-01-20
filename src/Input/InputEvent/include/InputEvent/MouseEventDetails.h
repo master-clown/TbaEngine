@@ -42,7 +42,7 @@ namespace input_event {
     //==================================================================================================================
     template <>
     struct MouseEventDetails<MouseEventKind::WheelMoved> final {
-        using WheelOffset = double;
+        using WheelOffset = float;
 
         WheelOffset x; // positive to the right
         WheelOffset y; // positive away from user
