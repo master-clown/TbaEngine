@@ -63,6 +63,9 @@ Keyboard *-- KeyboardState
 class Mouse implements Device {
     + ctor(AppEventMgr&)
 ==
+    + {abstract} setRelativeMode(bool)
+    + {abstract} getRelativeMode() -> bool
+--
     + {abstract} getDeviceState() -> MouseState
 }
 

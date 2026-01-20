@@ -1,6 +1,8 @@
 #pragma once
 
 #include <Common/Memory.h>
+#include <EventSys/NativeEventListener.h>
+#include <Input/Mouse.h>
 
 //======================================================================================================================
 namespace event_sys {
@@ -9,38 +11,30 @@ namespace event_sys {
 
 //======================================================================================================================
 namespace input {
-    class Keyboard;
-    class Mouse;
+    class DeviceMgr;
 }
 
 //======================================================================================================================
-namespace input {
-    //==================================================================================================================
-    class DeviceMgr {
+namespace sdl_input {
+    class SdlMouse final : public input::Mouse,
+                           public event_sys::NativeEventListener {
     public:
-        explicit DeviceMgr(event_sys::NativeEventListeners&);
-        virtual ~DeviceMgr();
+        explicit SdlMouse(event_sys::NativeEventListeners&, const input::DeviceMgr&);
+        ~SdlMouse();
 
         //--------------------------------------------------------------------------------------------------------------
-        void update();
+        void update() override;
 
         //--------------------------------------------------------------------------------------------------------------
-        event_sys::NativeEventListeners& getNativeEventListeners();
+        void setRelativeModeEnabled(RelativeModeEnabled) override;
+        const input::MouseState& getMouseState() const override;
 
         //--------------------------------------------------------------------------------------------------------------
-        Keyboard& getKeyboard();
-        const Keyboard& getKeyboard() const;
-
-        Mouse& getMouse();
-        const Mouse& getMouse() const;
-
-    protected:
-        void _setKeyboard(uptr<Keyboard>);
-        void _setMouse(uptr<Mouse>);
+        Optional<app_event::AppEvent> transformToAppEvent(const event_sys::NativeEvent&) override;
 
     private:
-        event_sys::NativeEventListeners& _nativeEventListeners;
-        uptr<Keyboard> _keyboard;
-        uptr<Mouse> _mouse;
+        uptr<input::MouseState> _mouseState;
+        const input::DeviceMgr& _deviceMgr;
+        RelativeModeEnabled _relativeModEnabled = false;
     };
 }

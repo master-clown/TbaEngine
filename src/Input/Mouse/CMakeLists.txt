@@ -1,25 +1,16 @@
 cmake_minimum_required(VERSION 3.12)
 
-set(TARGET_NAME InputEvent)
+set(TARGET_NAME Mouse)
 
 set(PUBLIC_HEADERS
-    KeyboardEvent.h
-    KeyboardEventDetails.h
-    KeyboardEventDetails.hpp
-    KeyboardEventKind.h
-    MouseEvent.h
-    MouseEventDetails.h
-    MouseEventKind.h
+    CursorPosition.h
+    MouseButton.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
-    KeyboardEvent.cpp
-    KeyboardEventDetails.cpp
-    KeyboardEventKind.cpp
-    MouseEvent.cpp
-    MouseEventDetails.cpp
-    MouseEventKind.cpp
+    CursorPosition.cpp
+    MouseButton.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
@@ -34,7 +25,4 @@ target_sources(${TARGET_NAME}
     ${PUBLIC_HEADERS})
 target_link_libraries(${TARGET_NAME} PUBLIC
     Common
-    EventInfo
-    Keyboard
-    Mouse
 )
