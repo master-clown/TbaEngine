@@ -6,6 +6,7 @@ set(TARGET_NAME InputTests)
 
 set(TEST_SOURCES
     KeyboardEventsTest.cpp
+    MouseEventsTest.cpp
 )
 list(TRANSFORM TEST_SOURCES PREPEND "src/")
 
