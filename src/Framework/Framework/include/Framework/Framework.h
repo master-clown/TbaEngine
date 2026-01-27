@@ -22,6 +22,8 @@ namespace render {
 namespace winsys {
     class Window;
     class WindowMgr;
+
+    struct WindowOptions;
 }
 
 //======================================================================================================================
@@ -37,6 +39,14 @@ namespace framework {
 
         using TargetWindow = winsys::Window;
         virtual uptr<render::Renderer> createRenderer(renderer_type::RendererType, TargetWindow&) = 0;
+
+        //==============================================================================================================
+        struct WindowWithRenderer final {
+            uptr<winsys::Window> window;
+            uptr<render::Renderer> renderer;
+        };
+
+        WindowWithRenderer createWindowWithRenderer(winsys::WindowOptions, renderer_type::RendererType);
 
         //--------------------------------------------------------------------------------------------------------------
         static void enableStaticLogCategories(); // can be called by anyone at any time
