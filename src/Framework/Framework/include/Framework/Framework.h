@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Common/Memory.h>
-#include <Renderer/RendererType.h>
+#include <RendererType/RendererType.h>
 
 //======================================================================================================================
 namespace event_sys {
@@ -36,7 +36,7 @@ namespace framework {
         virtual winsys::WindowMgr& getWindowMgr() = 0;
 
         using TargetWindow = winsys::Window;
-        virtual uptr<render::Renderer> createRenderer(render::RendererType, TargetWindow&) = 0;
+        virtual uptr<render::Renderer> createRenderer(renderer_type::RendererType, TargetWindow&) = 0;
 
         //--------------------------------------------------------------------------------------------------------------
         static void enableStaticLogCategories(); // can be called by anyone at any time

@@ -15,5 +15,7 @@ target_link_libraries(${TARGET_NAME} PRIVATE
     AppEvent
     Common
     EventInfo
+    Geometry2d
+    Render2d
     SdlFramework
 )

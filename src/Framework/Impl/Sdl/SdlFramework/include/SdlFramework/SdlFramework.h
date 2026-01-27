@@ -12,7 +12,7 @@ namespace sdl_framework {
         event_sys::EventMgr& getEventMgr() override;
         input::DeviceMgr& getDeviceMgr() override;
         winsys::WindowMgr& getWindowMgr() override;
-        uptr<render::Renderer> createRenderer(render::RendererType, TargetWindow&) override;
+        uptr<render::Renderer> createRenderer(renderer_type::RendererType, TargetWindow&) override;
 
     private:
         static uptr<render::Renderer> _createSdlRenderer(TargetWindow&);
