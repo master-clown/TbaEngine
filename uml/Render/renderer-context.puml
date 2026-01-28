@@ -1,0 +1,98 @@
+@startuml
+
+skinparam defaultFontName monospaced
+
+'=======================================================================================================================
+package winsys {
+    '===================================================================================================================
+    abstract class WindowMgr {
+        + {abstract} createWindow(uptr<RendererPreconfigOptions>)
+    }
+
+    '===================================================================================================================
+    abstract class Window {
+        + ctor(uptr<RendererContextCreator>)
+    --
+        + createRendererContext() -> uptr
+    ==
+        - _rendererContextCreator
+    }
+}
+
+'-----------------------------------------------------------------------------------------------------------------------
+winsys.WindowMgr --> renderer_context.RendererPreconfigOptions
+winsys.Window *-- renderer_context.RendererContextCreator
+
+'=======================================================================================================================
+package sdl_winsys {
+    '===================================================================================================================
+    class SdlWindow implements winsys.Window
+
+    '===================================================================================================================
+    class OpenGlContextOnSdl
+    class OpenGlContextCreator
+
+    '-------------------------------------------------------------------------------------------------------------------
+    OpenGlContextCreator --> OpenGlContextOnSdl
+
+    '===================================================================================================================
+    class SdlRendererContextOnSdl
+
+    '-------------------------------------------------------------------------------------------------------------------
+    note bottom: May be redundant, since SDL renderer is supported only on SDL framework
+
+    '===================================================================================================================
+    class SdlRendererContextCreator
+
+    '-------------------------------------------------------------------------------------------------------------------
+    SdlRendererContextCreator --> SdlRendererContextOnSdl
+}
+
+'-----------------------------------------------------------------------------------------------------------------------
+sdl_winsys.OpenGlContextOnSdl ..|> opengl_context.OpenGlContext
+sdl_winsys.OpenGlContextCreator ..|> renderer_context.RendererContextCreator
+
+'-----------------------------------------------------------------------------------------------------------------------
+sdl_winsys.SdlRendererContextOnSdl ..|> sdl_renderer_context.SdlRendererContext
+sdl_winsys.SdlRendererContextCreator  ..|> renderer_context.RendererContextCreator
+
+'=======================================================================================================================
+package renderer_context {
+    '===================================================================================================================
+    enum RendererType
+
+    '===================================================================================================================
+    abstract class RendererPreconfigOptions {
+        + {abstract} getRendererType()
+    }
+
+    '===================================================================================================================
+    class RendererContext
+
+    '===================================================================================================================
+    abstract class RendererContextCreator {
+        + {abstract} configureBeforeWindowCreation(const RendererPreconfigOptions&)
+        + {abstract} createRendererContext() -> uptr
+    }
+
+    '-------------------------------------------------------------------------------------------------------------------
+    RendererContextCreator --> RendererPreconfigOptions
+    RendererContextCreator --> RendererContext
+}
+
+'=======================================================================================================================
+package opengl_context {
+    '===================================================================================================================
+    class OpenGlContext extends renderer_context.RendererContext
+    class OpenGlRendererPreconfigOptions implements renderer_context.RendererPreconfigOptions
+}
+
+'=======================================================================================================================
+package sdl_renderer_context {
+    '===================================================================================================================
+    class SdlRendererContext extends renderer_context.RendererContext
+    class SdlRendererPreconfigOptions implements renderer_context.RendererPreconfigOptions
+}
+
+'=======================================================================================================================
+@enduml
