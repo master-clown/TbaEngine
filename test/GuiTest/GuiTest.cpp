@@ -91,7 +91,7 @@ void GuiTest::_initWindow(framework::Framework& fr)
 //======================================================================================================================
 void GuiTest::_initRenderer(framework::Framework& fr)
 {
-    _renderer = fr.createRenderer(renderer_type::RendererType::Sdl, *_appWindow);
+    _renderer = fr.createRenderer(renderer_info::RendererType::Sdl, *_appWindow);
     _renderer->get2dRenderer().setBaseRenderResolution(_graphicsOptions._renderTargetLogicalWidth,
                                                        _graphicsOptions._renderTargetLogicalHeigth);
 }

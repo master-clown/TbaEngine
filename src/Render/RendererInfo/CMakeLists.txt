@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-set(TARGET_NAME RendererType)
+set(TARGET_NAME RendererInfo)
 
 set(PUBLIC_HEADERS
     RendererType.h

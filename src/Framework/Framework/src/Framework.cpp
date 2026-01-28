@@ -23,7 +23,7 @@ Framework::~Framework() = default;
 
 //======================================================================================================================
 auto Framework::createWindowWithRenderer(winsys::WindowOptions winOpts,
-                                         const renderer_type::RendererType renderType)
+                                         const renderer_info::RendererType renderType)
     -> WindowWithRenderer
 {
     winOpts.initForRendererOfType = renderType;

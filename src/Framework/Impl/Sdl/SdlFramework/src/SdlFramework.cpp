@@ -49,10 +49,10 @@ winsys::WindowMgr& SdlFramework::getWindowMgr()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-uptr<render::Renderer> SdlFramework::createRenderer(const renderer_type::RendererType renderType,
+uptr<render::Renderer> SdlFramework::createRenderer(const renderer_info::RendererType renderType,
                                                     TargetWindow& targetWindow)
 {
-    using Type = renderer_type::RendererType;
+    using Type = renderer_info::RendererType;
 
     switch (renderType) {
     case Type::Sdl: return SdlFramework::_createSdlRenderer(targetWindow);

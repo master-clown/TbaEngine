@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Common/Memory.h>
-#include <RendererType/RendererType.h>
+#include <RendererInfo/RendererType.h>
 
 //======================================================================================================================
 namespace event_sys {
@@ -38,7 +38,7 @@ namespace framework {
         virtual winsys::WindowMgr& getWindowMgr() = 0;
 
         using TargetWindow = winsys::Window;
-        virtual uptr<render::Renderer> createRenderer(renderer_type::RendererType, TargetWindow&) = 0;
+        virtual uptr<render::Renderer> createRenderer(renderer_info::RendererType, TargetWindow&) = 0;
 
         //==============================================================================================================
         struct WindowWithRenderer final {
@@ -46,7 +46,7 @@ namespace framework {
             uptr<render::Renderer> renderer;
         };
 
-        WindowWithRenderer createWindowWithRenderer(winsys::WindowOptions, renderer_type::RendererType);
+        WindowWithRenderer createWindowWithRenderer(winsys::WindowOptions, renderer_info::RendererType);
 
         //--------------------------------------------------------------------------------------------------------------
         static void enableStaticLogCategories(); // can be called by anyone at any time
