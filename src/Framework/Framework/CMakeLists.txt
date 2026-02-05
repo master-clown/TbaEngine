@@ -38,5 +38,6 @@ target_link_libraries(${TARGET_NAME} PUBLIC
     Input
     Logger
     Renderer
+    RendererContext
     Winsys
 )

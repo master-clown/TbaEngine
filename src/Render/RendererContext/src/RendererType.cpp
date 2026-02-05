@@ -1,9 +1,9 @@
-#include <RendererInfo/RendererType.h>
+#include <RendererContext/RendererType.h>
 
 //======================================================================================================================
-String str(const renderer_info::RendererType type) noexcept
+String str(const renderer_context::RendererType type) noexcept
 {
-    using Type = renderer_info::RendererType;
+    using Type = renderer_context::RendererType;
 
     switch (type) {
     case Type::OpenGl: return "RendererType::OpenGl";

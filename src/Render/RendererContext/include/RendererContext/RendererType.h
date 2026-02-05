@@ -3,7 +3,7 @@
 #include <Common/String.h>
 
 //======================================================================================================================
-namespace renderer_info {
+namespace renderer_context {
     //==================================================================================================================
     enum class RendererType {
         OpenGl,
@@ -14,4 +14,4 @@ namespace renderer_info {
 }
 
 //======================================================================================================================
-String str(renderer_info::RendererType) noexcept;
+String str(renderer_context::RendererType) noexcept;
