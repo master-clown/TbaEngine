@@ -1,6 +1,4 @@
-#include <SdlRender2d/SdlRenderer2d.h>
-
-#include "Details/SdlTriangle.h"
+#include <OpenGlRender2d/OpenGlRenderer2d.h>
 
 #include <Common/NumericCast.hpp>
 #include <Common/String.h>
@@ -8,76 +6,64 @@
 #include <Geometry2d/Line.h>
 #include <Geometry2d/Point2d.h>
 #include <Geometry2d/Triangle.h>
-#include <SdlWinsys/SdlWindow.h>
-
-#include <SDL3/SDL.h>
+#include <OpenGlContext/OpenGlApi.h>
+#include <OpenGlContext/OpenGlContext.h>
 
 //=====================================================================================================================
-struct sdl_render::SdlRenderer2d::Pimpl final {
-    SDL_Renderer* renderer = nullptr;
-    details::SdlTriangle sdlTriangle; // not thread-safe
+using opengl_render_2d::OpenGlRenderer2d;
 
-    Pimpl(sdl_winsys::SdlWindow& sdlWindow)
-    {
-        renderer = SDL_CreateRenderer(&sdlWindow.getRawWindow(), nullptr);
-        if (!renderer)
-            throw std::runtime_error(String("Failed to create SDL renderer: ") + SDL_GetError());
-    }
-
-    ~Pimpl()
-    {
-        SDL_DestroyRenderer(renderer);
-    }
+//=====================================================================================================================
+struct OpenGlRenderer2d::Pimpl final {
 };
 
 //=====================================================================================================================
-sdl_render::SdlRenderer2d::SdlRenderer2d(sdl_winsys::SdlWindow& sdlWindow)
-    : _pimpl(makeUPtr<Pimpl>(sdlWindow))
+OpenGlRenderer2d::OpenGlRenderer2d(opengl_context::OpenGlContext& openGlContext)
+    : _openGlContext(openGlContext)
+    , _pimpl(makeUPtr<Pimpl>())
 {
 }
 
 //=====================================================================================================================
-sdl_render::SdlRenderer2d::~SdlRenderer2d() = default;
+OpenGlRenderer2d::~OpenGlRenderer2d() = default;
 
 //=====================================================================================================================
-void sdl_render::SdlRenderer2d::clear(const content::Color& color)
+void OpenGlRenderer2d::clear(const content::Color& color)
 {
-    SDL_SetRenderDrawColor(_pimpl->renderer, color.r, color.g, color.b, color.a);
-    SDL_RenderClear(_pimpl->renderer);
+    constexpr auto toFloat = [](const content::Color::ColorIntensity intensity) constexpr noexcept {
+        return 1.0f * intensity / content::Color::maxColorIntensity;
+    };
+
+    glClearColor(toFloat(color.r), toFloat(color.g), toFloat(color.b), toFloat(color.a));
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 //=====================================================================================================================
-void sdl_render::SdlRenderer2d::finalizeRender()
+void OpenGlRenderer2d::finalizeRender()
 {
-    SDL_RenderPresent(_pimpl->renderer);
+    _openGlContext.swapBuffers();
 }
 
 //=====================================================================================================================
-void sdl_render::SdlRenderer2d::setBaseRenderResolution(const geometry_2d::ScreenCoordinate width,
-                                                        const geometry_2d::ScreenCoordinate height)
+void OpenGlRenderer2d::setBaseRenderResolution(const geometry_2d::ScreenCoordinate width,
+                                               const geometry_2d::ScreenCoordinate height)
 {
-    if (!SDL_SetRenderLogicalPresentation(_pimpl->renderer,
-                                          numericCast<int>(width),
-                                          numericCast<int>(height),
-                                          SDL_LOGICAL_PRESENTATION_STRETCH))
-        throw std::runtime_error(strFormat(
-            "Failed to set SDL renderer logical presentation (width={}, height={}): {}",
-            width,
-            height,
-            SDL_GetError()));
+    glViewport(0, 0, numericCast<GLsizei>(width), numericCast<GLsizei>(height));
 }
 
 //=====================================================================================================================
-void sdl_render::SdlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Point2d>& pt)
+void OpenGlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Point2d>& pt)
 {
+    /*
     const auto& color = pt.contentTraits.color;
     SDL_SetRenderDrawColor(_pimpl->renderer, color.r, color.g, color.b, color.a);
     SDL_RenderPoint(_pimpl->renderer, numericCast<float>(pt.primitive.x), numericCast<float>(pt.primitive.y));
+    */
 }
 
 //=====================================================================================================================
-void sdl_render::SdlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Line>& line)
+void OpenGlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Line>& line)
 {
+    /*
     const auto& color = line.contentTraits.lineColor;
     SDL_SetRenderDrawColor(_pimpl->renderer, color.r, color.g, color.b, color.a);
     SDL_RenderLine(_pimpl->renderer,
@@ -85,11 +71,13 @@ void sdl_render::SdlRenderer2d::render(const render_2d::RenderableGeometry<geome
                    numericCast<float>(line.primitive.startPt.y),
                    numericCast<float>(line.primitive.finalPt.x),
                    numericCast<float>(line.primitive.finalPt.y));
+    */
 }
 
 //=====================================================================================================================
-void sdl_render::SdlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Triangle>& triangle)
+void OpenGlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Triangle>& triangle)
 {
+    /*
     _pimpl->sdlTriangle.setFromTriangle(triangle);
 
     SDL_RenderGeometry(_pimpl->renderer,
@@ -98,4 +86,5 @@ void sdl_render::SdlRenderer2d::render(const render_2d::RenderableGeometry<geome
                        _pimpl->sdlTriangle.sdlVertexes.size(),
                        (int*)nullptr,
                        0);
+    */
 }

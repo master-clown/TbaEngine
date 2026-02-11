@@ -87,6 +87,8 @@ void OpenGlContextOnSdl::_initContext()
     _pimpl->context = SDL_GL_CreateContext(&_sdlWindow->getRawWindow());
     if (!_pimpl->context)
         throw std::runtime_error(String("Failed to init OpenGL context on SDL framework: ") + SDL_GetError());
+
+    makeGlContextAsCurrent();
 }
 
 //======================================================================================================================

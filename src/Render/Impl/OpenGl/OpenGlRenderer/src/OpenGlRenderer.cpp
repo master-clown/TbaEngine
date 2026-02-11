@@ -3,6 +3,7 @@
 #include "OpenGlLibraryRaii.h"
 
 #include <OpenGlContext/OpenGlContext.h>
+#include <OpenGlRender2d/OpenGlRenderer2d.h>
 
 #include <cassert>
 
@@ -21,6 +22,7 @@ OpenGlRenderer::OpenGlRenderer(renderer_context::RendererContextRaii rendererCon
     , _openGlLibraryRaii(makeUPtr<OpenGlLibraryRaii>(OpenGlLibraryRaii::LibraryInitOptions{
           .openGlFunctionsLoader = _openGlContext.getOpenGlFunctionsLoader(),
       }))
+    , _renderer2d(makeUPtr<opengl_render_2d::OpenGlRenderer2d>(_openGlContext))
 {
     assert(getRendererContext().getRendererType() == renderer_context::RendererType::OpenGl);
 }
@@ -31,19 +33,20 @@ OpenGlRenderer::~OpenGlRenderer() = default;
 //==================================================================================================================
 void OpenGlRenderer::clear(const content::Color& color)
 {
-    // get2dRenderer().clear(color);
+    get2dRenderer().clear(color);
 }
 
 //==================================================================================================================
 void OpenGlRenderer::finalizeRender()
 {
-    // get2dRenderer().finalizeRender();
+    get2dRenderer().finalizeRender();
 }
 
 //==================================================================================================================
 render_2d::Renderer& OpenGlRenderer::get2dRenderer()
 {
-    throw std::logic_error("Not implemented");
+    assert(_renderer2d);
+    return *_renderer2d;
 }
 
 //==================================================================================================================

@@ -26,7 +26,7 @@ target_sources(${TARGET_NAME}
 target_link_libraries(${TARGET_NAME} PUBLIC
     Common
     OpenGlContext
-    # OpenGlRender2d
+    OpenGlRender2d
     Renderer
 )
 target_link_libraries(${TARGET_NAME} PRIVATE

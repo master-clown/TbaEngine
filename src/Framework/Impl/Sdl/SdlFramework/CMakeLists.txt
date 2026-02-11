@@ -29,6 +29,7 @@ target_link_libraries(${TARGET_NAME} PUBLIC
     Winsys
 )
 target_link_libraries(${TARGET_NAME} PRIVATE
+    OpenGlRenderer
     SdlEventSys
     SdlInput
     SdlRenderer

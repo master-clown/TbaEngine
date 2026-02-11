@@ -16,6 +16,7 @@ target_link_libraries(${TARGET_NAME} PRIVATE
     Common
     EventInfo
     Geometry2d
+    OpenGlContext
     Render2d
     SdlFramework
     SdlRenderContext

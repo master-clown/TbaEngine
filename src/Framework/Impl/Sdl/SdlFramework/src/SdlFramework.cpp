@@ -1,6 +1,7 @@
 #include <SdlFramework/SdlFramework.h>
 
 #include <EventSys/EventMgr.h>
+#include <OpenGlRenderer/OpenGlRenderer.h>
 #include <RendererContext/RendererContextRaii.h>
 #include <SdlEventSys/SdlEventProvider.h>
 #include <SdlInput/SdlDeviceMgr.h>
@@ -56,17 +57,12 @@ uptr<render::Renderer> SdlFramework::createRenderer(renderer_context::RendererCo
 
     const auto renderType = rendererContext->getRendererType();
     switch (renderType) {
-    case Type::Sdl: return SdlFramework::_createSdlRenderer(std::move(rendererContext));
+    case Type::OpenGl: return makeUPtr<opengl_renderer::OpenGlRenderer>(std::move(rendererContext));
+    case Type::Sdl: return makeUPtr<sdl_render::SdlRenderer>(std::move(rendererContext));
     default: break;
     }
 
     throw std::runtime_error("Unsupported renderer type is passed: " + str(renderType));
-}
-
-//======================================================================================================================
-uptr<render::Renderer> SdlFramework::_createSdlRenderer(renderer_context::RendererContextRaii rendererContext)
-{
-    return makeUPtr<sdl_render::SdlRenderer>(std::move(rendererContext));
 }
 
 //======================================================================================================================

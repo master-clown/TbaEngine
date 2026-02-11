@@ -6,6 +6,7 @@
 #include <Geometry2d/Line.h>
 #include <Geometry2d/Point2d.h>
 #include <Geometry2d/Triangle.h>
+#include <OpenGlContext/OpenGlPreconfigOptions.h>
 #include <Render2d/Renderer.h>
 #include <Renderer/Renderer.h>
 #include <SdlFramework/SdlFramework.h>
@@ -88,7 +89,7 @@ void GuiTest::_initWindow(framework::Framework& fr)
             .wndWidth = _graphicsOptions._renderTargetLogicalWidth,
             .wndHeight = _graphicsOptions._renderTargetLogicalHeigth,
         },
-        .rendererPreconfigOptions = makeUPtr<sdl_render_context::SdlRenderPreconfigOptions>(),
+        .rendererPreconfigOptions = makeUPtr<opengl_context::OpenGlPreconfigOptions>(),
     });
 }
 

@@ -31,5 +31,6 @@ namespace opengl_renderer {
     private:
         opengl_context::OpenGlContext& _openGlContext;
         uptr<OpenGlLibraryRaii> _openGlLibraryRaii;
+        uptr<render_2d::Renderer> _renderer2d;
     };
 }

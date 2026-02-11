@@ -15,9 +15,6 @@ namespace sdl_framework {
         uptr<render::Renderer> createRenderer(renderer_context::RendererContextRaii) override;
 
     private:
-        static uptr<render::Renderer> _createSdlRenderer(renderer_context::RendererContextRaii);
-
-    private:
         class SdlLibraryRaiiWrapper final {
         public:
             SdlLibraryRaiiWrapper();

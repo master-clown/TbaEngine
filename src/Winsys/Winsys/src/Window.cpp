@@ -13,6 +13,8 @@ Window::Window(WindowOptions options, uptr<renderer_context::RendererContextCrea
     : _windowOptions(std::move(options))
     , _rendererContextCreator(std::move(rendererContextCreator))
 {
+    if (_rendererContextCreator)
+        _rendererContextCreator->configureBeforeWindowCreation();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -21,6 +23,9 @@ Window::~Window() = default;
 //======================================================================================================================
 renderer_context::RendererContextRaii Window::createRendererContext()
 {
+    if (!_rendererContextCreator)
+        throw std::runtime_error("Cannot create RendererContext since a RendererContextCreator was not specified");
+
     return _rendererContextCreator->createRendererContext(*this);
 }
 

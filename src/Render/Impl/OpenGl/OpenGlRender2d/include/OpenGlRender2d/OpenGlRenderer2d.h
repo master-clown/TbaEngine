@@ -5,17 +5,17 @@
 #include <Common/Memory.h>
 
 //======================================================================================================================
-namespace sdl_winsys {
-    class SdlWindow;
+namespace opengl_context {
+    class OpenGlContext;
 }
 
 //======================================================================================================================
-namespace sdl_render {
+namespace opengl_render_2d {
     //==================================================================================================================
-    class SdlRenderer2d final : public render_2d::Renderer {
+    class OpenGlRenderer2d final : public render_2d::Renderer {
     public:
-        explicit SdlRenderer2d(sdl_winsys::SdlWindow&);
-        ~SdlRenderer2d();
+        explicit OpenGlRenderer2d(opengl_context::OpenGlContext&);
+        ~OpenGlRenderer2d();
 
         void clear(const content::Color&) override;
         void finalizeRender() override;
@@ -30,6 +30,8 @@ namespace sdl_render {
 
     private:
         struct Pimpl;
+
+        opengl_context::OpenGlContext& _openGlContext;
         uptr<Pimpl> _pimpl;
     };
 }
