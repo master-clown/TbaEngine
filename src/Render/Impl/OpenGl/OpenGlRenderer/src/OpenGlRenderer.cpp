@@ -1,13 +1,12 @@
 #include <OpenGlRenderer/OpenGlRenderer.h>
 
-#include "OpenGlLibraryRaii.h"
-
 #include <cassert>
 
 //==================================================================================================================
-opengl_render::OpenGlRenderer::OpenGlRenderer(winsys::Window& window)
-    : _openGlLibraryRaii(makeUPtr<opengl_render::OpenGlLibraryRaii>())
+opengl_render::OpenGlRenderer::OpenGlRenderer(renderer_context::RendererContextRaii rendererContext)
+    : render::Renderer(std::move(rendererContext))
 {
+    assert(getRendererContext().getRendererType() == renderer_context::RendererType::OpenGl);
 }
 
 //==================================================================================================================

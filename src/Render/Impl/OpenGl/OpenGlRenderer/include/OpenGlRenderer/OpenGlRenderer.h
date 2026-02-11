@@ -5,23 +5,11 @@
 #include <Common/Memory.h>
 
 //======================================================================================================================
-namespace winsys {
-    class Window;
-}
-
-//======================================================================================================================
-namespace opengl_render {
-    class OpenGlLibraryRaii;
-    class WindowPreparer;
-    class Context;
-}
-
-//======================================================================================================================
 namespace opengl_render {
     //==================================================================================================================
     class OpenGlRenderer final : public render::Renderer {
     public:
-        explicit OpenGlRenderer(uptr<WindowPreparer>);
+        explicit OpenGlRenderer(renderer_context::RendererContextRaii);
         ~OpenGlRenderer();
 
         void clear(const content::Color&) override;
@@ -31,9 +19,6 @@ namespace opengl_render {
         render_3d::Renderer& get3dRenderer() override;
 
     private:
-        uptr<OpenGlLibraryRaii> _openGlLibraryRaii;
-        uptr<WindowPreparer> _windowPreparer;
-        uptr<Context> _context;
         // uptr<render_2d::Renderer> _renderer2d;
     };
 }

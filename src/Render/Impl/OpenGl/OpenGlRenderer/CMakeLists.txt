@@ -23,6 +23,7 @@ target_sources(${TARGET_NAME}
     ${PUBLIC_HEADERS})
 target_link_libraries(${TARGET_NAME} PUBLIC
     Common
-    Renderer
+    OpenGlContext
     # OpenGlRender2d
+    Renderer
 )
