@@ -17,7 +17,8 @@ struct OpenGlContextOnSdl::_Pimpl final {
 
 //======================================================================================================================
 OpenGlContextOnSdl::OpenGlContextOnSdl()
-    : _pimpl(makeUPtr<_Pimpl>())
+    : opengl_context::OpenGlContext(reinterpret_cast<LoadOpenGlFunction>(&SDL_GL_GetProcAddress))
+    , _pimpl(makeUPtr<_Pimpl>())
 {
 }
 

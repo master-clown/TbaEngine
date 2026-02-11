@@ -1,13 +1,23 @@
 #pragma once
 
 #include <Common/Integers.h>
+#include <Common/Memory.h>
 #include <RendererContext/RendererContext.h>
+
+//======================================================================================================================
+namespace opengl_context {
+    class OpenGlLibraryRaii;
+}
 
 //======================================================================================================================
 namespace opengl_context {
     //==================================================================================================================
     class OpenGlContext : public renderer_context::RendererContext {
     public:
+        using LoadOpenGlFunction = void* (*)(const char* functionName);
+        explicit OpenGlContext(LoadOpenGlFunction);
+        ~OpenGlContext();
+
         //--------------------------------------------------------------------------------------------------------------
         renderer_context::RendererType getRendererType() const override final;
 
@@ -30,5 +40,8 @@ namespace opengl_context {
         };
 
         virtual void setGlProfile(GlProfile) = 0;
+
+    private:
+        uptr<OpenGlLibraryRaii> _openGlLibraryRaii;
     };
 }
