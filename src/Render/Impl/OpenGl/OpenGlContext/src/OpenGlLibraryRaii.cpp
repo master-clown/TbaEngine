@@ -5,7 +5,7 @@
 #include <cassert>
 
 //==================================================================================================================
-using namespace opengl_render;
+using namespace opengl_context;
 
 //==================================================================================================================
 OpenGlLibraryRaii::OpenGlLibraryRaii(const LibraryInitOptions& initOptions)

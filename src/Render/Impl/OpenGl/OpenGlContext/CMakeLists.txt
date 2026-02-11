@@ -10,6 +10,8 @@ list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
     OpenGlContext.cpp
+    OpenGlLibraryRaii.cpp
+    OpenGlLibraryRaii.h
     OpenGlPreconfigOptions.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
@@ -26,4 +28,7 @@ target_sources(${TARGET_NAME}
 target_link_libraries(${TARGET_NAME} PUBLIC
     Common
     RendererContext
+)
+target_link_libraries(${TARGET_NAME} PRIVATE
+    Glad
 )

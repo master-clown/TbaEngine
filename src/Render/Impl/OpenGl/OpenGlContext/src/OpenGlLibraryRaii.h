@@ -1,7 +1,7 @@
 #pragma once
 
 //======================================================================================================================
-namespace opengl_render {
+namespace opengl_context {
     class OpenGlLibraryRaii final {
     public:
         struct LibraryInitOptions final {

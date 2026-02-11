@@ -8,8 +8,6 @@ set(PUBLIC_HEADERS
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
-    OpenGlLibraryRaii.cpp
-    OpenGlLibraryRaii.h
     OpenGlRenderer.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
@@ -27,8 +25,4 @@ target_link_libraries(${TARGET_NAME} PUBLIC
     Common
     Renderer
     # OpenGlRender2d
-)
-target_link_libraries(${TARGET_NAME} PRIVATE
-    Glad
-    Winsys
 )
