@@ -3,12 +3,14 @@ cmake_minimum_required(VERSION 3.12)
 set(TARGET_NAME OpenGlContext)
 
 set(PUBLIC_HEADERS
+    OpenGlApi.h
     OpenGlContext.h
     OpenGlPreconfigOptions.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
+    OpenGlApi.cpp
     OpenGlContext.cpp
     OpenGlLibraryRaii.cpp
     OpenGlLibraryRaii.h
@@ -27,8 +29,6 @@ target_sources(${TARGET_NAME}
     ${PUBLIC_HEADERS})
 target_link_libraries(${TARGET_NAME} PUBLIC
     Common
-    RendererContext
-)
-target_link_libraries(${TARGET_NAME} PRIVATE
     Glad
+    RendererContext
 )
