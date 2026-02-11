@@ -1,17 +1,15 @@
 #include <OpenGlContext/OpenGlContext.h>
 
-#include "OpenGlLibraryRaii.h"
+#include <cassert>
 
 //======================================================================================================================
 using opengl_context::OpenGlContext;
-using opengl_context::OpenGlLibraryRaii;
 
 //======================================================================================================================
-OpenGlContext::OpenGlContext(LoadOpenGlFunction loadOpenGlFunction)
-    : _openGlLibraryRaii(makeUPtr<OpenGlLibraryRaii>(OpenGlLibraryRaii::LibraryInitOptions{
-          .loadOpenGlFunction = loadOpenGlFunction,
-      }))
+OpenGlContext::OpenGlContext(OpenGlFunctionsLoader openGlFunctionsLoader)
+    : _openGlFunctionsLoader(openGlFunctionsLoader)
 {
+    assert(_openGlFunctionsLoader);
 }
 
 //======================================================================================================================
@@ -21,4 +19,10 @@ OpenGlContext::~OpenGlContext() = default;
 renderer_context::RendererType OpenGlContext::getRendererType() const
 {
     return renderer_context::RendererType::OpenGl;
+}
+
+//======================================================================================================================
+auto OpenGlContext::getOpenGlFunctionsLoader() const noexcept -> OpenGlFunctionsLoader
+{
+    return _openGlFunctionsLoader;
 }

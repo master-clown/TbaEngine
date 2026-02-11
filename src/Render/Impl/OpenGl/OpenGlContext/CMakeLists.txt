@@ -12,8 +12,6 @@ list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 set(SOURCES
     OpenGlApi.cpp
     OpenGlContext.cpp
-    OpenGlLibraryRaii.cpp
-    OpenGlLibraryRaii.h
     OpenGlPreconfigOptions.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")

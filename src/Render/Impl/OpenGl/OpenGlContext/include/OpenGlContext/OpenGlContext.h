@@ -6,16 +6,11 @@
 
 //======================================================================================================================
 namespace opengl_context {
-    class OpenGlLibraryRaii;
-}
-
-//======================================================================================================================
-namespace opengl_context {
     //==================================================================================================================
     class OpenGlContext : public renderer_context::RendererContext {
     public:
-        using LoadOpenGlFunction = void* (*)(const char* functionName);
-        explicit OpenGlContext(LoadOpenGlFunction);
+        using OpenGlFunctionsLoader = void* (*)(const char* functionName);
+        explicit OpenGlContext(OpenGlFunctionsLoader);
         ~OpenGlContext();
 
         //--------------------------------------------------------------------------------------------------------------
@@ -41,7 +36,10 @@ namespace opengl_context {
 
         virtual void setGlProfile(GlProfile) = 0;
 
+        //--------------------------------------------------------------------------------------------------------------
+        OpenGlFunctionsLoader getOpenGlFunctionsLoader() const noexcept;
+
     private:
-        uptr<OpenGlLibraryRaii> _openGlLibraryRaii;
+        OpenGlFunctionsLoader _openGlFunctionsLoader = nullptr;
     };
 }

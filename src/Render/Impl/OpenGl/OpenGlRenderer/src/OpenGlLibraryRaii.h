@@ -1,13 +1,13 @@
 #pragma once
 
 //======================================================================================================================
-namespace opengl_context {
+namespace opengl_renderer {
     class OpenGlLibraryRaii final {
     public:
         struct LibraryInitOptions final {
-            using LoadOpenGlFunction = void* (*)(const char* functionName);
+            using OpenGlFunctionsLoader = void* (*)(const char* functionName);
 
-            LoadOpenGlFunction loadOpenGlFunction;
+            OpenGlFunctionsLoader openGlFunctionsLoader;
         };
 
         explicit OpenGlLibraryRaii(const LibraryInitOptions&);

@@ -5,7 +5,17 @@
 #include <Common/Memory.h>
 
 //======================================================================================================================
-namespace opengl_render {
+namespace opengl_context {
+    class OpenGlContext;
+}
+
+//======================================================================================================================
+namespace opengl_renderer {
+    class OpenGlLibraryRaii;
+}
+
+//======================================================================================================================
+namespace opengl_renderer {
     //==================================================================================================================
     class OpenGlRenderer final : public render::Renderer {
     public:
@@ -19,6 +29,7 @@ namespace opengl_render {
         render_3d::Renderer& get3dRenderer() override;
 
     private:
-        // uptr<render_2d::Renderer> _renderer2d;
+        opengl_context::OpenGlContext& _openGlContext;
+        uptr<OpenGlLibraryRaii> _openGlLibraryRaii;
     };
 }

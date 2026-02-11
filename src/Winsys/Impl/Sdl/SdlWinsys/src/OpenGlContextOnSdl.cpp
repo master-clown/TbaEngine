@@ -17,7 +17,7 @@ struct OpenGlContextOnSdl::_Pimpl final {
 
 //======================================================================================================================
 OpenGlContextOnSdl::OpenGlContextOnSdl()
-    : opengl_context::OpenGlContext(reinterpret_cast<LoadOpenGlFunction>(&SDL_GL_GetProcAddress))
+    : opengl_context::OpenGlContext(reinterpret_cast<OpenGlFunctionsLoader>(&SDL_GL_GetProcAddress))
     , _pimpl(makeUPtr<_Pimpl>())
 {
 }
@@ -54,7 +54,6 @@ void OpenGlContextOnSdl::swapBuffers()
 //======================================================================================================================
 void OpenGlContextOnSdl::setGlMajorVersion(uint32 majorValue)
 {
-    assert(_pimpl->context);
     if (!SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, majorValue))
         throw std::runtime_error(
             String("Failed to set OpenGL major version attrib on SDL framework: ") + SDL_GetError());
@@ -63,7 +62,6 @@ void OpenGlContextOnSdl::setGlMajorVersion(uint32 majorValue)
 //======================================================================================================================
 void OpenGlContextOnSdl::setGlMinorVersion(uint32 minorValue)
 {
-    assert(_pimpl->context);
     if (!SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, minorValue))
         throw std::runtime_error(
             String("Failed to set OpenGL minor version attrib on SDL framework: ") + SDL_GetError());
@@ -72,7 +70,6 @@ void OpenGlContextOnSdl::setGlMinorVersion(uint32 minorValue)
 //======================================================================================================================
 void OpenGlContextOnSdl::setGlProfile(GlProfile glProfile)
 {
-    assert(_pimpl->context);
     if (!SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
                              glProfile == GlProfile::Core ? SDL_GL_CONTEXT_PROFILE_CORE
                                                           : SDL_GL_CONTEXT_PROFILE_COMPATIBILITY))
