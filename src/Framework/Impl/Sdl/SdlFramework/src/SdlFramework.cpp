@@ -66,14 +66,7 @@ uptr<render::Renderer> SdlFramework::createRenderer(renderer_context::RendererCo
 //======================================================================================================================
 uptr<render::Renderer> SdlFramework::_createSdlRenderer(renderer_context::RendererContextRaii rendererContext)
 {
-    // TODO
-    // - Move to `SdlRenderer::ctor()?`
-    // - Do not pass any `Window` explicitly, it all is in the context
-    auto* sdlWindow = dynamic_cast<sdl_winsys::SdlWindow*>(rendererContext->getTargetWindow());
-    if (!sdlWindow)
-        throw std::runtime_error("SdlRenderer can be created only for target window of type 'SdlWindow'");
-
-    return makeUPtr<sdl_render::SdlRenderer>(*sdlWindow, std::move(rendererContext));
+    return makeUPtr<sdl_render::SdlRenderer>(std::move(rendererContext));
 }
 
 //======================================================================================================================

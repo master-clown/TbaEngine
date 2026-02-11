@@ -1,6 +1,7 @@
 #include <SdlRenderer/SdlRenderer.h>
 
 #include <SdlRender2d/SdlRenderer2d.h>
+#include <SdlWinsys/SdlWindow.h>
 
 #include <cassert>
 
@@ -8,9 +9,17 @@
 using sdl_render::SdlRenderer;
 
 //==================================================================================================================
-SdlRenderer::SdlRenderer(sdl_winsys::SdlWindow& sdlWindow, renderer_context::RendererContextRaii rendererContext)
+SdlRenderer::SdlRenderer(renderer_context::RendererContextRaii rendererContext)
     : render::Renderer(std::move(rendererContext))
-    , _renderer2d(makeUPtr<SdlRenderer2d>(sdlWindow))
+    , _sdlWindow([&] -> sdl_winsys::SdlWindow& {
+        auto* targetWindow = getRendererContext().getTargetWindow();
+        assert(targetWindow);
+        assert(dynamic_cast<sdl_winsys::SdlWindow*>(targetWindow) &&
+               "SdlRenderer can be used only on SDL windows");
+
+        return static_cast<sdl_winsys::SdlWindow&>(*targetWindow);
+    }())
+    , _renderer2d(makeUPtr<SdlRenderer2d>(_sdlWindow))
 {
     assert(getRendererContext().getRendererType() == renderer_context::RendererType::Sdl);
 }
