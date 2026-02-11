@@ -34,6 +34,7 @@ namespace render {
         virtual render_3d::Renderer& get3dRenderer() = 0;
 
         //--------------------------------------------------------------------------------------------------------------
+        renderer_context::RendererContext& getRendererContext();
         const renderer_context::RendererContext& getRendererContext() const;
 
     private:
