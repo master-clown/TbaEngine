@@ -16,7 +16,9 @@ namespace sdl_winsys {
     class SdlWindow final : public winsys::Window,
                             public event_sys::NativeEventListener {
     public:
-        SdlWindow(event_sys::NativeEventListeners&, winsys::WindowOptions);
+        SdlWindow(event_sys::NativeEventListeners&,
+                  winsys::WindowOptions,
+                  uptr<renderer_context::RendererContextCreator>);
         ~SdlWindow();
 
         Optional<app_event::AppEvent> transformToAppEvent(const event_sys::NativeEvent&) override;

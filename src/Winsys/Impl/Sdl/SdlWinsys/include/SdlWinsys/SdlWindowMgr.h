@@ -9,6 +9,6 @@ namespace sdl_winsys {
         explicit SdlWindowMgr(event_sys::NativeEventListeners&);
         ~SdlWindowMgr();
 
-        uptr<winsys::Window> createWindow(winsys::WindowOptions) override;
+        uptr<winsys::Window> createWindow(CreateWindowOptions) override;
     };
 }

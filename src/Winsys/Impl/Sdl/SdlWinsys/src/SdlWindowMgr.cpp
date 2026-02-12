@@ -1,6 +1,10 @@
 #include <SdlWinsys/SdlWindowMgr.h>
 
+#include "OpenGlContextCreator.h"
+
 #include <SdlWinsys/SdlWindow.h>
+
+#include <RendererContext/RendererPreconfigOptions.h>
 
 //======================================================================================================================
 using namespace sdl_winsys;
@@ -16,7 +20,30 @@ SdlWindowMgr::SdlWindowMgr(event_sys::NativeEventListeners& nativeEventListeners
 SdlWindowMgr::~SdlWindowMgr() = default;
 
 //======================================================================================================================
-uptr<Window> SdlWindowMgr::createWindow(WindowOptions options)
+uptr<Window> SdlWindowMgr::createWindow(CreateWindowOptions createWindowOptions)
 {
-    return std::make_unique<SdlWindow>(getNativeEventListeners(), std::move(options));
+    auto rendererContextCreator = [&] -> uptr<renderer_context::RendererContextCreator> {
+        if (!createWindowOptions.rendererPreconfigOptions.has_value())
+            return nullptr;
+
+        auto rendererPreconfigOptions = std::move(*createWindowOptions.rendererPreconfigOptions);
+        if (!rendererPreconfigOptions)
+            return nullptr;
+
+        using RenderType = renderer_context::RendererType;
+        const auto rendererType = rendererPreconfigOptions->getRendererType();
+
+        switch (rendererType) {
+        case RenderType::OpenGl: return makeUPtr<OpenGlContextCreator>(std::move(rendererPreconfigOptions));
+        default: break;
+        }
+
+        // TODO: add VERBOSE on not supporting passed renderer type
+
+        return nullptr;
+    }();
+
+    return std::make_unique<SdlWindow>(getNativeEventListeners(),
+                                       std::move(createWindowOptions.winOptions),
+                                       std::move(rendererContextCreator));
 }

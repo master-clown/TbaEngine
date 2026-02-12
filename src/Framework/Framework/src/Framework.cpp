@@ -28,7 +28,9 @@ auto Framework::createWindowWithRenderer(winsys::WindowOptions winOpts,
 {
     winOpts.initForRendererOfType = renderType;
 
-    auto window = getWindowMgr().createWindow(std::move(winOpts));
+    auto window = getWindowMgr().createWindow(winsys::WindowMgr::CreateWindowOptions{
+        .winOptions = std::move(winOpts),
+    });
     auto renderer = createRenderer(renderType, *window);
 
     return {.window = std::move(window), .renderer = std::move(renderer)};

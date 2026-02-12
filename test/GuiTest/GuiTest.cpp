@@ -81,10 +81,12 @@ void GuiTest::_render()
 //======================================================================================================================
 void GuiTest::_initWindow(framework::Framework& fr)
 {
-    _appWindow = fr.getWindowMgr().createWindow(winsys::WindowOptions{
-        .wndTitle = "Hello!",
-        .wndWidth = _graphicsOptions._renderTargetLogicalWidth,
-        .wndHeight = _graphicsOptions._renderTargetLogicalHeigth,
+    _appWindow = fr.getWindowMgr().createWindow({
+        .winOptions = winsys::WindowOptions{
+            .wndTitle = "Hello!",
+            .wndWidth = _graphicsOptions._renderTargetLogicalWidth,
+            .wndHeight = _graphicsOptions._renderTargetLogicalHeigth,
+        },
     });
 }
 
