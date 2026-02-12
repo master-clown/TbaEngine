@@ -15,6 +15,8 @@ set(SOURCES
     OpenGlContextCreator.h
     OpenGlContextOnSdl.cpp
     OpenGlContextOnSdl.h
+    SdlRenderContextCreator.cpp
+    SdlRenderContextCreator.h
     SdlWindow.cpp   
     SdlWindowMgr.cpp
 )
@@ -37,6 +39,7 @@ target_link_libraries(${TARGET_NAME} PRIVATE
     EventInfo
     OpenGlContext
     SdlEventSys
+    SdlRenderContext
     WinEvent
     SDL3::SDL3
 )
