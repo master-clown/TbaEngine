@@ -11,6 +11,8 @@ set(PUBLIC_HEADERS
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
+    OpenGlContextCreator.cpp
+    OpenGlContextCreator.h
     OpenGlContextOnSdl.cpp
     OpenGlContextOnSdl.h
     SdlWindow.cpp   
