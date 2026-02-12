@@ -9,6 +9,7 @@
 #include <Render2d/Renderer.h>
 #include <Renderer/Renderer.h>
 #include <SdlFramework/SdlFramework.h>
+#include <SdlRenderContext/SdlRenderPreconfigOptions.h>
 #include <Winsys/WindowMgr.h>
 
 //======================================================================================================================
@@ -87,13 +88,14 @@ void GuiTest::_initWindow(framework::Framework& fr)
             .wndWidth = _graphicsOptions._renderTargetLogicalWidth,
             .wndHeight = _graphicsOptions._renderTargetLogicalHeigth,
         },
+        .rendererPreconfigOptions = makeUPtr<sdl_render_context::SdlRenderPreconfigOptions>(),
     });
 }
 
 //======================================================================================================================
 void GuiTest::_initRenderer(framework::Framework& fr)
 {
-    _renderer = fr.createRenderer(renderer_context::RendererType::Sdl, *_appWindow);
+    _renderer = fr.createRenderer(_appWindow->createRendererContext());
     _renderer->get2dRenderer().setBaseRenderResolution(_graphicsOptions._renderTargetLogicalWidth,
                                                        _graphicsOptions._renderTargetLogicalHeigth);
 }

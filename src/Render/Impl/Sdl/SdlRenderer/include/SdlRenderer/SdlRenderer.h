@@ -14,7 +14,8 @@ namespace sdl_render {
     //==================================================================================================================
     class SdlRenderer final : public render::Renderer {
     public:
-        explicit SdlRenderer(sdl_winsys::SdlWindow&);
+        // TODO: Window must be accessible from the context
+        SdlRenderer(sdl_winsys::SdlWindow&, renderer_context::RendererContextRaii);
         ~SdlRenderer();
 
         void clear(const content::Color&) override;

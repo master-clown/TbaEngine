@@ -12,10 +12,10 @@ namespace sdl_framework {
         event_sys::EventMgr& getEventMgr() override;
         input::DeviceMgr& getDeviceMgr() override;
         winsys::WindowMgr& getWindowMgr() override;
-        uptr<render::Renderer> createRenderer(renderer_context::RendererType, TargetWindow&) override;
+        uptr<render::Renderer> createRenderer(renderer_context::RendererContextRaii) override;
 
     private:
-        static uptr<render::Renderer> _createSdlRenderer(TargetWindow&);
+        static uptr<render::Renderer> _createSdlRenderer(renderer_context::RendererContextRaii);
 
     private:
         class SdlLibraryRaiiWrapper final {

@@ -9,6 +9,9 @@ namespace opengl_context {
     class OpenGlContext : public renderer_context::RendererContext {
     public:
         //--------------------------------------------------------------------------------------------------------------
+        renderer_context::RendererType getRendererType() const override final;
+
+        //--------------------------------------------------------------------------------------------------------------
         virtual void makeGlContextAsCurrent() = 0;
 
         //--------------------------------------------------------------------------------------------------------------

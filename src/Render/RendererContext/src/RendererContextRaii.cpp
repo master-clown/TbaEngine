@@ -32,16 +32,37 @@ RendererContextRaii::~RendererContextRaii()
 }
 
 //======================================================================================================================
-RendererContext& RendererContextRaii::operator->()
+RendererContextRaii::RendererContextRaii(RendererContextRaii&&) = default;
+
+//======================================================================================================================
+RendererContextRaii& RendererContextRaii::operator=(RendererContextRaii&&) = default;
+
+//======================================================================================================================
+RendererContext& RendererContextRaii::operator*()
+{
+    return const_cast<RendererContext&>(static_cast<const RendererContextRaii&>(*this).operator*());
+}
+
+//======================================================================================================================
+const RendererContext& RendererContextRaii::operator*() const
 {
     if (!_context)
         throw std::runtime_error("Trying to use an empty RenderContext!");
 
-    return const_cast<RendererContext&>(static_cast<const RendererContextRaii&>(*this).operator->());
+    return *_context;
 }
 
 //======================================================================================================================
-const RendererContext& RendererContextRaii::operator->() const
+RendererContext* RendererContextRaii::operator->()
 {
-    return *_context;
+    return const_cast<RendererContext*>(static_cast<const RendererContextRaii&>(*this).operator->());
+}
+
+//======================================================================================================================
+const RendererContext* RendererContextRaii::operator->() const
+{
+    if (!_context)
+        throw std::runtime_error("Trying to use an empty RenderContext!");
+
+    return _context.get();
 }

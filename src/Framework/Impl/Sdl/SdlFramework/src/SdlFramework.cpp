@@ -1,6 +1,7 @@
 #include <SdlFramework/SdlFramework.h>
 
 #include <EventSys/EventMgr.h>
+#include <RendererContext/RendererContextRaii.h>
 #include <SdlEventSys/SdlEventProvider.h>
 #include <SdlInput/SdlDeviceMgr.h>
 #include <SdlRenderer/SdlRenderer.h>
@@ -49,13 +50,13 @@ winsys::WindowMgr& SdlFramework::getWindowMgr()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-uptr<render::Renderer> SdlFramework::createRenderer(const renderer_context::RendererType renderType,
-                                                    TargetWindow& targetWindow)
+uptr<render::Renderer> SdlFramework::createRenderer(renderer_context::RendererContextRaii rendererContext)
 {
     using Type = renderer_context::RendererType;
 
+    const auto renderType = rendererContext->getRendererType();
     switch (renderType) {
-    case Type::Sdl: return SdlFramework::_createSdlRenderer(targetWindow);
+    case Type::Sdl: return SdlFramework::_createSdlRenderer(std::move(rendererContext));
     default: break;
     }
 
@@ -63,13 +64,16 @@ uptr<render::Renderer> SdlFramework::createRenderer(const renderer_context::Rend
 }
 
 //======================================================================================================================
-uptr<render::Renderer> SdlFramework::_createSdlRenderer(TargetWindow& targetWindow)
+uptr<render::Renderer> SdlFramework::_createSdlRenderer(renderer_context::RendererContextRaii rendererContext)
 {
-    auto* sdlWindow = dynamic_cast<sdl_winsys::SdlWindow*>(&targetWindow);
+    // TODO
+    // - Move to `SdlRenderer::ctor()?`
+    // - Do not pass any `Window` explicitly, it all is in the context
+    auto* sdlWindow = dynamic_cast<sdl_winsys::SdlWindow*>(rendererContext->getTargetWindow());
     if (!sdlWindow)
         throw std::runtime_error("SdlRenderer can be created only for target window of type 'SdlWindow'");
 
-    return makeUPtr<sdl_render::SdlRenderer>(*sdlWindow);
+    return makeUPtr<sdl_render::SdlRenderer>(*sdlWindow, std::move(rendererContext));
 }
 
 //======================================================================================================================

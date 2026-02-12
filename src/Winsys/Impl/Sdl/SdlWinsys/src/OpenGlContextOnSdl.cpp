@@ -25,28 +25,6 @@ OpenGlContextOnSdl::OpenGlContextOnSdl()
 OpenGlContextOnSdl::~OpenGlContextOnSdl() = default;
 
 //======================================================================================================================
-void OpenGlContextOnSdl::initContext(winsys::Window& targetWindow)
-{
-    assert(dynamic_cast<SdlWindow*>(&targetWindow));
-
-    _sdlWindow = static_cast<SdlWindow*>(&targetWindow);
-    _pimpl->context = SDL_GL_CreateContext(&_sdlWindow->getRawWindow());
-    if (!_pimpl->context)
-        throw std::runtime_error(String("Failed to init OpenGL context on SDL framework: ") + SDL_GetError());
-}
-
-//======================================================================================================================
-void OpenGlContextOnSdl::freeContext()
-{
-    assert(_pimpl->context);
-    if (!SDL_GL_DestroyContext(_pimpl->context))
-        throw std::runtime_error(String("Failed to free OpenGL context on SDL framework: ") + SDL_GetError());
-
-    _pimpl->context = nullptr;
-    _sdlWindow = nullptr;
-}
-
-//======================================================================================================================
 void OpenGlContextOnSdl::makeGlContextAsCurrent()
 {
     assert(_pimpl->context);
@@ -98,4 +76,28 @@ void OpenGlContextOnSdl::setGlProfile(GlProfile glProfile)
                              glProfile == GlProfile::Core ? SDL_GL_CONTEXT_PROFILE_CORE
                                                           : SDL_GL_CONTEXT_PROFILE_COMPATIBILITY))
         throw std::runtime_error(String("Failed to set OpenGL profile attrib on SDL framework: ") + SDL_GetError());
+}
+
+//======================================================================================================================
+void OpenGlContextOnSdl::_initContext()
+{
+    auto* targetWindow = getTargetWindow();
+    assert(targetWindow);
+    assert(dynamic_cast<SdlWindow*>(targetWindow));
+
+    _sdlWindow = static_cast<SdlWindow*>(targetWindow);
+    _pimpl->context = SDL_GL_CreateContext(&_sdlWindow->getRawWindow());
+    if (!_pimpl->context)
+        throw std::runtime_error(String("Failed to init OpenGL context on SDL framework: ") + SDL_GetError());
+}
+
+//======================================================================================================================
+void OpenGlContextOnSdl::_freeContext()
+{
+    assert(_pimpl->context);
+    if (!SDL_GL_DestroyContext(_pimpl->context))
+        throw std::runtime_error(String("Failed to free OpenGL context on SDL framework: ") + SDL_GetError());
+
+    _pimpl->context = nullptr;
+    _sdlWindow = nullptr;
 }

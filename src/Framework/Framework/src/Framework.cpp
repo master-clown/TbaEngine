@@ -1,9 +1,5 @@
 #include <Framework/Framework.h>
 
-#include <Renderer/Renderer.h>
-#include <Winsys/WindowMgr.h>
-#include <Winsys/WindowOptions.h>
-
 #ifdef ENABLE_LOG
 #include <Input/LogCategory.h>
 #include <Logger/LogCategoryRegistry.hpp>
@@ -20,21 +16,6 @@ Framework::Framework()
 
 //======================================================================================================================
 Framework::~Framework() = default;
-
-//======================================================================================================================
-auto Framework::createWindowWithRenderer(winsys::WindowOptions winOpts,
-                                         const renderer_context::RendererType renderType)
-    -> WindowWithRenderer
-{
-    winOpts.initForRendererOfType = renderType;
-
-    auto window = getWindowMgr().createWindow(winsys::WindowMgr::CreateWindowOptions{
-        .winOptions = std::move(winOpts),
-    });
-    auto renderer = createRenderer(renderType, *window);
-
-    return {.window = std::move(window), .renderer = std::move(renderer)};
-}
 
 //======================================================================================================================
 void Framework::enableStaticLogCategories()

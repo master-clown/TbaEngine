@@ -13,12 +13,17 @@ namespace input {
     class DeviceMgr;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//======================================================================================================================
 namespace render {
     class Renderer;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//======================================================================================================================
+namespace renderer_context {
+    class RendererContextRaii;
+}
+
+//======================================================================================================================
 namespace winsys {
     class Window;
     class WindowMgr;
@@ -36,17 +41,7 @@ namespace framework {
         virtual event_sys::EventMgr& getEventMgr() = 0;
         virtual input::DeviceMgr& getDeviceMgr() = 0;
         virtual winsys::WindowMgr& getWindowMgr() = 0;
-
-        using TargetWindow = winsys::Window;
-        virtual uptr<render::Renderer> createRenderer(renderer_context::RendererType, TargetWindow&) = 0;
-
-        //==============================================================================================================
-        struct WindowWithRenderer final {
-            uptr<winsys::Window> window;
-            uptr<render::Renderer> renderer;
-        };
-
-        WindowWithRenderer createWindowWithRenderer(winsys::WindowOptions, renderer_context::RendererType);
+        virtual uptr<render::Renderer> createRenderer(renderer_context::RendererContextRaii) = 0;
 
         //--------------------------------------------------------------------------------------------------------------
         static void enableStaticLogCategories(); // can be called by anyone at any time

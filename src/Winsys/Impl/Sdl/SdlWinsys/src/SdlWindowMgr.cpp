@@ -1,6 +1,7 @@
 #include <SdlWinsys/SdlWindowMgr.h>
 
 #include "OpenGlContextCreator.h"
+#include "SdlRenderContextCreator.h"
 
 #include <SdlWinsys/SdlWindow.h>
 
@@ -35,6 +36,7 @@ uptr<Window> SdlWindowMgr::createWindow(CreateWindowOptions createWindowOptions)
 
         switch (rendererType) {
         case RenderType::OpenGl: return makeUPtr<OpenGlContextCreator>(std::move(rendererPreconfigOptions));
+        case RenderType::Sdl: return makeUPtr<SdlRenderContextCreator>(std::move(rendererPreconfigOptions));
         default: break;
         }
 

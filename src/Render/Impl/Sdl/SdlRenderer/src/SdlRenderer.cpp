@@ -5,35 +5,40 @@
 #include <cassert>
 
 //==================================================================================================================
-sdl_render::SdlRenderer::SdlRenderer(sdl_winsys::SdlWindow& sdlWindow)
-    : _renderer2d(makeUPtr<sdl_render::SdlRenderer2d>(sdlWindow))
+using sdl_render::SdlRenderer;
+
+//==================================================================================================================
+SdlRenderer::SdlRenderer(sdl_winsys::SdlWindow& sdlWindow, renderer_context::RendererContextRaii rendererContext)
+    : render::Renderer(std::move(rendererContext))
+    , _renderer2d(makeUPtr<SdlRenderer2d>(sdlWindow))
 {
+    assert(getRendererContext().getRendererType() == renderer_context::RendererType::Sdl);
 }
 
 //==================================================================================================================
-sdl_render::SdlRenderer::~SdlRenderer() = default;
+SdlRenderer::~SdlRenderer() = default;
 
 //==================================================================================================================
-void sdl_render::SdlRenderer::clear(const content::Color& color)
+void SdlRenderer::clear(const content::Color& color)
 {
     get2dRenderer().clear(color);
 }
 
 //==================================================================================================================
-void sdl_render::SdlRenderer::finalizeRender()
+void SdlRenderer::finalizeRender()
 {
     get2dRenderer().finalizeRender();
 }
 
 //==================================================================================================================
-render_2d::Renderer& sdl_render::SdlRenderer::get2dRenderer()
+render_2d::Renderer& SdlRenderer::get2dRenderer()
 {
     assert(_renderer2d);
     return *_renderer2d;
 }
 
 //==================================================================================================================
-render_3d::Renderer& sdl_render::SdlRenderer::get3dRenderer()
+render_3d::Renderer& SdlRenderer::get3dRenderer()
 {
     throw std::logic_error("Not implemented");
 }

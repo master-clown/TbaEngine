@@ -17,8 +17,6 @@ namespace sdl_winsys {
         ~OpenGlContextOnSdl();
 
         //--------------------------------------------------------------------------------------------------------------
-        void initContext(winsys::Window&) override;
-        void freeContext() override;
         void makeGlContextAsCurrent() override;
 
         //--------------------------------------------------------------------------------------------------------------
@@ -31,6 +29,10 @@ namespace sdl_winsys {
         void setGlMajorVersion(uint32) override;
         void setGlMinorVersion(uint32) override;
         void setGlProfile(GlProfile) override;
+
+    private:
+        void _initContext() override;
+        void _freeContext() override;
 
     private:
         struct _Pimpl;

@@ -17,8 +17,16 @@ namespace renderer_context {
         explicit RendererContextRaii(uptr<RendererContext>, TargetWindow&);
         ~RendererContextRaii();
 
-        RendererContext& operator->();
-        const RendererContext& operator->() const;
+        //--------------------------------------------------------------------------------------------------------------
+        RendererContextRaii(RendererContextRaii&&);
+        RendererContextRaii& operator=(RendererContextRaii&&);
+
+        //--------------------------------------------------------------------------------------------------------------
+        RendererContext& operator*();
+        const RendererContext& operator*() const;
+
+        RendererContext* operator->();
+        const RendererContext* operator->() const;
 
     private:
         uptr<RendererContext> _context;

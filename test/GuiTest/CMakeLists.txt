@@ -18,4 +18,5 @@ target_link_libraries(${TARGET_NAME} PRIVATE
     Geometry2d
     Render2d
     SdlFramework
+    SdlRenderContext
 )
