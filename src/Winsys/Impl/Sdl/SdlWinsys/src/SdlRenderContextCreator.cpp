@@ -13,7 +13,6 @@ using sdl_winsys::SdlRenderContextCreator;
 //======================================================================================================================
 SdlRenderContextCreator::SdlRenderContextCreator(uptr<renderer_context::RendererPreconfigOptions> preconfigOptions)
     : renderer_context::RendererContextCreator(std::move(preconfigOptions))
-    , _contextToCreate(makeUPtr<sdl_render_context::SdlRenderContext>())
 {
 }
 
@@ -29,6 +28,5 @@ void SdlRenderContextCreator::configureBeforeWindowCreation()
 //======================================================================================================================
 RendererContextRaii SdlRenderContextCreator::createRendererContext(TargetWindow& targetWindow)
 {
-    assert(_contextToCreate);
-    return RendererContextRaii(std::move(_contextToCreate), targetWindow);
+    return RendererContextRaii(makeUPtr<sdl_render_context::SdlRenderContext>(), targetWindow);
 }
