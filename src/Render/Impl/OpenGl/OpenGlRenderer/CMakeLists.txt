@@ -32,3 +32,7 @@ target_link_libraries(${TARGET_NAME} PUBLIC
 target_link_libraries(${TARGET_NAME} PRIVATE
     Glad
 )
+
+if(BUILD_TESTS)
+    add_subdirectory(test)
+endif()
