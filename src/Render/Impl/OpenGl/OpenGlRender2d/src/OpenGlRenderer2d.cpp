@@ -6,7 +6,7 @@
 #include <Geometry2d/Line.h>
 #include <Geometry2d/Point2d.h>
 #include <Geometry2d/Triangle.h>
-#include <OpenGlContext/OpenGlApi.h>
+#include <OpenGlApi/OpenGlApi.h>
 #include <OpenGlContext/OpenGlContext.h>
 
 //=====================================================================================================================

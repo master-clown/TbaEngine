@@ -1,16 +1,14 @@
 cmake_minimum_required(VERSION 3.12)
 
-set(TARGET_NAME OpenGlRender2d)
+set(TARGET_NAME OpenGlApi)
 
 set(PUBLIC_HEADERS
-    OpenGlRenderer2d.h
+    OpenGlApi.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
-    # Details/OpenGlTriangle.cpp
-    # Details/OpenGlTriangle.h
-    OpenGlRenderer2d.cpp
+    OpenGlApi.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
@@ -24,11 +22,5 @@ target_sources(${TARGET_NAME}
     FILES
     ${PUBLIC_HEADERS})
 target_link_libraries(${TARGET_NAME} PUBLIC
-    Common
-    OpenGlApi
-    OpenGlContext
-    Render2d
-)
-target_link_libraries(${TARGET_NAME} PRIVATE
-    Content
+    Glad
 )
