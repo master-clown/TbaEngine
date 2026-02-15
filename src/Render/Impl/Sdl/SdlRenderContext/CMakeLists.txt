@@ -27,6 +27,3 @@ target_link_libraries(${TARGET_NAME} PUBLIC
     Common
     RendererContext
 )
-target_link_libraries(${TARGET_NAME} PRIVATE
-    SdlWinsys
-)
