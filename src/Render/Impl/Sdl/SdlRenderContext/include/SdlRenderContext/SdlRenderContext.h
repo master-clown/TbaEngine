@@ -5,7 +5,7 @@
 //======================================================================================================================
 namespace sdl_render_context {
     //==================================================================================================================
-    class SdlRenderContext : public renderer_context::RendererContext {
+    class SdlRenderContext final : public renderer_context::RendererContext {
     public:
         //--------------------------------------------------------------------------------------------------------------
         renderer_context::RendererType getRendererType() const override final;
