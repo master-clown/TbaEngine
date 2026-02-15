@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Common/Stl/Optional.h>
 #include <Common/String.h>
 
 #include <cstdint>
