@@ -4,7 +4,7 @@
 
 //======================================================================================================================
 namespace opengl_context {
-    class OpenGlPreconfigOptions : public renderer_context::RendererPreconfigOptions {
+    class OpenGlPreconfigOptions final : public renderer_context::RendererPreconfigOptions {
     public:
         renderer_context::RendererType getRendererType() const override;
     };
