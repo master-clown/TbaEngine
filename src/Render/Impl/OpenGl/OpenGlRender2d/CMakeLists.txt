@@ -8,8 +8,6 @@ set(PUBLIC_HEADERS
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
-    # Details/OpenGlTriangle.cpp
-    # Details/OpenGlTriangle.h
     OpenGlRenderer2d.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
