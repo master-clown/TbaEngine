@@ -1,0 +1,68 @@
+@startuml
+
+skinparam defaultFontName monospaced
+
+'=======================================================================================================================
+package winsys {
+    '===================================================================================================================
+    abstract class WindowMgr {
+        + {abstract} createWindow(uptr<RendererPreconfigOptions>)
+    }
+
+    '===================================================================================================================
+    abstract class Window {
+        + ctor(uptr<RendererContextCreator>)
+    --
+        + createRendererContext() -> uptr
+    ==
+        - _rendererContextCreator
+    }
+}
+
+'-----------------------------------------------------------------------------------------------------------------------
+winsys.WindowMgr --> renderer_context.RendererPreconfigOptions
+winsys.Window *-- renderer_context.RendererContextCreator
+
+'=======================================================================================================================
+package renderer_context {
+    '===================================================================================================================
+    enum RendererType
+
+    '===================================================================================================================
+    abstract class RendererPreconfigOptions {
+        + {abstract} getRendererType()
+    }
+
+    '-------------------------------------------------------------------------------------------------------------------
+    RendererPreconfigOptions *-- RendererType
+
+    '===================================================================================================================
+    abstract class RendererContext {
+        + {abstract} initContext(const Window&)
+        + {abstract} freeContext()
+    }
+
+    '===================================================================================================================
+    class RendererContextRaii
+
+    '-------------------------------------------------------------------------------------------------------------------
+    RendererContextRaii *-- RendererContext
+
+    '===================================================================================================================
+    abstract class RendererContextCreator {
+        + {abstract} configureBeforeWindowCreation(const RendererPreconfigOptions&)
+        + {abstract} createRendererContext(const Window&) -> RendererContextRaii
+    --
+
+        + getRendererType()
+        + getRendererPreconfigOptions() -> const&
+    }
+
+    '-------------------------------------------------------------------------------------------------------------------
+    RendererContextCreator --> RendererPreconfigOptions
+    RendererContextCreator --> RendererContextRaii
+    RendererContextCreator --> winsys.Window
+}
+
+'=======================================================================================================================
+@enduml

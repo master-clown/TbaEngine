@@ -11,6 +11,12 @@ set(PUBLIC_HEADERS
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
+    OpenGlContextCreator.cpp
+    OpenGlContextCreator.h
+    OpenGlContextOnSdl.cpp
+    OpenGlContextOnSdl.h
+    SdlRenderContextCreator.cpp
+    SdlRenderContextCreator.h
     SdlWindow.cpp   
     SdlWindowMgr.cpp
 )
@@ -31,7 +37,9 @@ target_link_libraries(${TARGET_NAME} PUBLIC
 )
 target_link_libraries(${TARGET_NAME} PRIVATE
     EventInfo
+    OpenGlContext
     SdlEventSys
+    SdlRenderContext
     WinEvent
     SDL3::SDL3
 )

@@ -27,5 +27,9 @@ target_link_libraries(${TARGET_NAME} PUBLIC
     SdlRender2d
 )
 target_link_libraries(${TARGET_NAME} PRIVATE
-    Winsys
+    SdlWinsys
 )
+
+if(BUILD_TESTS)
+    add_subdirectory(test)
+endif()

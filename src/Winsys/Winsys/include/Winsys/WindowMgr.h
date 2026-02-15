@@ -3,6 +3,8 @@
 #include <Winsys/Window.h>
 
 #include <Common/Memory.h>
+#include <Common/Stl/Optional.h>
+#include <RendererContext/RendererPreconfigOptions.h>
 
 //======================================================================================================================
 namespace event_sys {
@@ -17,7 +19,12 @@ namespace winsys {
         virtual ~WindowMgr();
 
         //--------------------------------------------------------------------------------------------------------------
-        virtual uptr<Window> createWindow(WindowOptions) = 0;
+        struct CreateWindowOptions final {
+            WindowOptions winOptions;
+            Optional<uptr<renderer_context::RendererPreconfigOptions>> rendererPreconfigOptions = {};
+        };
+
+        virtual uptr<Window> createWindow(CreateWindowOptions) = 0;
 
         //--------------------------------------------------------------------------------------------------------------
         event_sys::NativeEventListeners& getNativeEventListeners();

@@ -6,9 +6,11 @@
 #include <Geometry2d/Line.h>
 #include <Geometry2d/Point2d.h>
 #include <Geometry2d/Triangle.h>
+#include <OpenGlContext/OpenGlPreconfigOptions.h>
 #include <Render2d/Renderer.h>
 #include <Renderer/Renderer.h>
 #include <SdlFramework/SdlFramework.h>
+#include <SdlRenderContext/SdlRenderPreconfigOptions.h>
 #include <Winsys/WindowMgr.h>
 
 //======================================================================================================================
@@ -81,17 +83,20 @@ void GuiTest::_render()
 //======================================================================================================================
 void GuiTest::_initWindow(framework::Framework& fr)
 {
-    _appWindow = fr.getWindowMgr().createWindow(winsys::WindowOptions{
-        .wndTitle = "Hello!",
-        .wndWidth = _graphicsOptions._renderTargetLogicalWidth,
-        .wndHeight = _graphicsOptions._renderTargetLogicalHeigth,
+    _appWindow = fr.getWindowMgr().createWindow({
+        .winOptions = winsys::WindowOptions{
+            .wndTitle = "Hello!",
+            .wndWidth = _graphicsOptions._renderTargetLogicalWidth,
+            .wndHeight = _graphicsOptions._renderTargetLogicalHeigth,
+        },
+        .rendererPreconfigOptions = makeUPtr<opengl_context::OpenGlPreconfigOptions>(),
     });
 }
 
 //======================================================================================================================
 void GuiTest::_initRenderer(framework::Framework& fr)
 {
-    _renderer = fr.createRenderer(render::RendererType::Sdl, *_appWindow);
+    _renderer = fr.createRenderer(_appWindow->createRendererContext());
     _renderer->get2dRenderer().setBaseRenderResolution(_graphicsOptions._renderTargetLogicalWidth,
                                                        _graphicsOptions._renderTargetLogicalHeigth);
 }

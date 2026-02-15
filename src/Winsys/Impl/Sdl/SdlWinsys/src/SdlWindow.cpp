@@ -3,6 +3,7 @@
 #include <AppEvent/AppEvent.h>
 #include <EventInfo/EventInfo.hpp>
 #include <EventSys/NativeEventListeners.h>
+#include <RendererContext/RendererContextCreator.h>
 #include <SdlEventSys/SdlNativeEvent.h>
 
 #include <SDL3/SDL_video.h>
@@ -15,16 +16,28 @@ using namespace sdl_winsys;
 using namespace winsys;
 
 //======================================================================================================================
-SdlWindow::SdlWindow(event_sys::NativeEventListeners& nativeEventListeners, WindowOptions optionsArg)
-    : winsys::Window(std::move(optionsArg))
+SdlWindow::SdlWindow(event_sys::NativeEventListeners& nativeEventListeners,
+                     WindowOptions optionsArg,
+                     uptr<renderer_context::RendererContextCreator> rendererContextCreator)
+    : winsys::Window(std::move(optionsArg), std::move(rendererContextCreator))
     , event_sys::NativeEventListener(nativeEventListeners)
 {
     const WindowOptions& options = getWindowOptions();
 
+    const auto sdlWindowCreationFlags = [&] {
+        SDL_WindowFlags flags = 0;
+
+        const auto optionalRendererType = _getBindedRendererType();
+        if (optionalRendererType && *optionalRendererType == renderer_context::RendererType::OpenGl)
+            flags |= SDL_WINDOW_OPENGL;
+
+        return flags;
+    }();
+
     _sdlWindow = SDL_CreateWindow(options.wndTitle.c_str(),
                                   options.wndWidth,
                                   options.wndHeight,
-                                  0);
+                                  sdlWindowCreationFlags);
 
     if (!_sdlWindow)
         throw std::runtime_error("Cannot create window (title=" + options.wndTitle + "): " + SDL_GetError());

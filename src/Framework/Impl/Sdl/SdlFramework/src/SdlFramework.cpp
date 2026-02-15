@@ -1,6 +1,8 @@
 #include <SdlFramework/SdlFramework.h>
 
 #include <EventSys/EventMgr.h>
+#include <OpenGlRenderer/OpenGlRenderer.h>
+#include <RendererContext/RendererContextRaii.h>
 #include <SdlEventSys/SdlEventProvider.h>
 #include <SdlInput/SdlDeviceMgr.h>
 #include <SdlRenderer/SdlRenderer.h>
@@ -49,27 +51,18 @@ winsys::WindowMgr& SdlFramework::getWindowMgr()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-uptr<render::Renderer> SdlFramework::createRenderer(const render::RendererType renderType,
-                                                    TargetWindow& targetWindow)
+uptr<render::Renderer> SdlFramework::createRenderer(renderer_context::RendererContextRaii rendererContext)
 {
-    using Type = render::RendererType;
+    using Type = renderer_context::RendererType;
 
+    const auto renderType = rendererContext->getRendererType();
     switch (renderType) {
-    case Type::Sdl: return SdlFramework::_createSdlRenderer(targetWindow);
+    case Type::OpenGl: return makeUPtr<opengl_renderer::OpenGlRenderer>(std::move(rendererContext));
+    case Type::Sdl: return makeUPtr<sdl_render::SdlRenderer>(std::move(rendererContext));
     default: break;
     }
 
     throw std::runtime_error("Unsupported renderer type is passed: " + str(renderType));
-}
-
-//======================================================================================================================
-uptr<render::Renderer> SdlFramework::_createSdlRenderer(TargetWindow& targetWindow)
-{
-    auto* sdlWindow = dynamic_cast<sdl_winsys::SdlWindow*>(&targetWindow);
-    if (!sdlWindow)
-        throw std::runtime_error("SdlRenderer can be created only for target window of type 'SdlWindow'");
-
-    return makeUPtr<sdl_render::SdlRenderer>(*sdlWindow);
 }
 
 //======================================================================================================================

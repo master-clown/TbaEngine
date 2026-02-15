@@ -48,7 +48,7 @@ void GuiAppTemplate::_render()
 //======================================================================================================================
 uptr<winsys::Window> GuiAppTemplate::_createWindow(const winsys::WindowOptions& windowOptions)
 {
-    return getFramework().getWindowMgr().createWindow(windowOptions);
+    return getFramework().getWindowMgr().createWindow({.winOptions = windowOptions});
 }
 
 //======================================================================================================================

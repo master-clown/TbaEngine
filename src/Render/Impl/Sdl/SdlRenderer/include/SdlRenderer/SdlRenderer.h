@@ -14,7 +14,7 @@ namespace sdl_render {
     //==================================================================================================================
     class SdlRenderer final : public render::Renderer {
     public:
-        explicit SdlRenderer(sdl_winsys::SdlWindow&);
+        explicit SdlRenderer(renderer_context::RendererContextRaii);
         ~SdlRenderer();
 
         void clear(const content::Color&) override;
@@ -24,6 +24,7 @@ namespace sdl_render {
         render_3d::Renderer& get3dRenderer() override;
 
     private:
+        sdl_winsys::SdlWindow& _sdlWindow;
         uptr<render_2d::Renderer> _renderer2d;
     };
 }

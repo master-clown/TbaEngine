@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Common/Memory.h>
-#include <Renderer/RendererType.h>
+#include <RendererContext/RendererType.h>
 
 //======================================================================================================================
 namespace event_sys {
@@ -13,14 +13,18 @@ namespace input {
     class DeviceMgr;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//======================================================================================================================
 namespace render {
     class Renderer;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//======================================================================================================================
+namespace renderer_context {
+    class RendererContextRaii;
+}
+
+//======================================================================================================================
 namespace winsys {
-    class Window;
     class WindowMgr;
 }
 
@@ -34,9 +38,7 @@ namespace framework {
         virtual event_sys::EventMgr& getEventMgr() = 0;
         virtual input::DeviceMgr& getDeviceMgr() = 0;
         virtual winsys::WindowMgr& getWindowMgr() = 0;
-
-        using TargetWindow = winsys::Window;
-        virtual uptr<render::Renderer> createRenderer(render::RendererType, TargetWindow&) = 0;
+        virtual uptr<render::Renderer> createRenderer(renderer_context::RendererContextRaii) = 0;
 
         //--------------------------------------------------------------------------------------------------------------
         static void enableStaticLogCategories(); // can be called by anyone at any time
