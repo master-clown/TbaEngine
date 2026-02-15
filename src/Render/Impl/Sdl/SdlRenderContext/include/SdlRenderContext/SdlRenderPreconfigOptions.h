@@ -4,7 +4,7 @@
 
 //======================================================================================================================
 namespace sdl_render_context {
-    class SdlRenderPreconfigOptions : public renderer_context::RendererPreconfigOptions {
+    class SdlRenderPreconfigOptions final : public renderer_context::RendererPreconfigOptions {
     public:
         renderer_context::RendererType getRendererType() const override;
     };
