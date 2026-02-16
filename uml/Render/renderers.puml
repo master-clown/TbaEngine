@@ -3,15 +3,7 @@
 skinparam defaultFontName monospaced
 
 '=======================================================================================================================
-package framework {
-    '===================================================================================================================
-    abstract class Framework {
-        + {abstract} createRenderer(render.RendererType) -> render.Renderer
-    }
-}
-
-'=======================================================================================================================
-package render {
+package renderer_context {
     '===================================================================================================================
     enum RendererType {
         OpenGl
@@ -21,9 +13,24 @@ package render {
     }
 
     '===================================================================================================================
+    abstract class RendererContext {
+        + {abstract} getRendererType()
+    }
+
+    '-------------------------------------------------------------------------------------------------------------------
+    RendererContext *-- RendererType
+}
+
+'=======================================================================================================================
+package render {
+    '===================================================================================================================
     abstract class Renderer {
-        + {abstract} clear(content.Color)
+        + ctor(RendererContext)
+    --
+        + {abstract} clear(Color)
         + {abstract} finalizeRender()
+    --
+        + getRendererContext() -> &
     --
         + {abstract} get2dRenderer() -> render_2d.Renderer&
         + {abstract} get3dRenderer() -> render_3d.Renderer&
@@ -40,13 +47,22 @@ package render {
     }
 
     '-------------------------------------------------------------------------------------------------------------------
+    Renderer *-- renderer_context.RendererContext
     Renderer *-- render_2d.Renderer
     Renderer *-- render_3d.Renderer
 }
 
 '=======================================================================================================================
-framework.Framework --> render.RendererType
-framework.Framework --> render.Renderer : creates
+package framework {
+    '===================================================================================================================
+    abstract class Framework {
+        + {abstract} createRenderer(RendererContext) -> render.Renderer
+    }
+
+    '-------------------------------------------------------------------------------------------------------------------
+    Framework --> renderer_context.RendererContext
+    Framework --> render.Renderer
+}
 
 '=======================================================================================================================
 @enduml
