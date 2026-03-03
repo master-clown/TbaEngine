@@ -1,0 +1,65 @@
+@startuml
+
+skinparam defaultFontName monospaced
+
+'=======================================================================================================================
+package render_2d {
+    '===================================================================================================================
+    abstract class GeometryBatch {
+        + {abstract} clear()
+    --
+        + {abstract} add(Line) -> LineId
+        + {abstract} add(Triangle) -> TriangleId
+        + {abstract} add(FontText) -> FontTextId
+        // ...
+    --
+        + {abstract} createBatchModifier()
+    }
+
+    '===================================================================================================================
+    abstract class GeometryBatchModifier {
+        + ctor(GeometryBatch&)
+    --
+        + {abstract} modify(LineId) -> LineModifier
+        + {abstract} modify(TriangleId) -> TriangleModifier
+        + {abstract} modify(FontTextId) -> FontTextModifier
+    --
+        + {abstract} commit()
+    }
+
+    '-------------------------------------------------------------------------------------------------------------------
+    GeometryBatchModifier o-- GeometryBatch
+
+    '===================================================================================================================
+    abstract class Renderer {
+        + {abstract} clear(Color)
+        + {abstract} finalizeRender()
+    --
+        + {abstract} createGeometryBatch()
+        + {abstract} renderGeometryBatch(GeometryBatch)
+    }
+
+    '-------------------------------------------------------------------------------------------------------------------
+    Renderer --> GeometryBatch
+}
+
+'=======================================================================================================================
+package render_3d {
+    '===================================================================================================================
+    abstract class GeometryBatch {
+        Similar to 2D
+    }
+
+    '===================================================================================================================
+    abstract class GeometryBatchModifier {
+        Similar to 2D
+    }
+
+    '===================================================================================================================
+    abstract class Renderer {
+        Similar to 2D
+    }
+}
+
+'=======================================================================================================================
+@enduml
