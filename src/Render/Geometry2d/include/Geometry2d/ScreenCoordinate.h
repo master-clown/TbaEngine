@@ -4,9 +4,9 @@
 
 //======================================================================================================================
 namespace geometry_2d {
-    // Coordinate on the "Screen CS"
-    // - Origin: top-left screen corner
+    // Normalized coordinates from the interval [-1.0, 1.0]
+    // - Origin: screen center
     // - Ox: to the right
-    // - Oy: down
-    using ScreenCoordinate = uint16;
+    // - Oy: upwards
+    using ScreenCoordinate = float;
 }

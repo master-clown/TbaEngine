@@ -36,12 +36,10 @@ void sdl_render::details::SdlTriangle::setFromTriangle(
         },
         triangle.contentTraits.faceContent));
 
-    const auto makeSdlVertex = [&faceSdlFColor](const geometry_2d::Point2d& pt) noexcept {
+    const auto makeSdlVertex = [this, &faceSdlFColor](const geometry_2d::Point2d& pt) noexcept {
+        const auto sdlPt = transformToSdlPointFunc(pt);
         return SDL_Vertex{
-            .position = SDL_FPoint{
-                .x = numericCast<float>(pt.x),
-                .y = numericCast<float>(pt.y),
-            },
+            .position = sdlPt,
             .color = faceSdlFColor,
             .tex_coord = {0},
         };

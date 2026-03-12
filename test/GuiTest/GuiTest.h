@@ -28,8 +28,8 @@ private:
 
 private:
     struct GraphicsOptions final {
-        geometry_2d::ScreenCoordinate _renderTargetLogicalWidth = 640;
-        geometry_2d::ScreenCoordinate _renderTargetLogicalHeigth = 480;
+        uint16 _renderTargetLogicalWidth = 640;
+        uint16 _renderTargetLogicalHeigth = 480;
     };
 
     uptr<winsys::Window> _appWindow;

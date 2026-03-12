@@ -51,25 +51,28 @@ void GuiTest::_render()
     auto& renderer2d = _renderer->get2dRenderer();
 
     const auto point = render_2d::RenderableGeometry<geometry_2d::Point2d>{
-        .primitive = geometry_2d::Point2d{.x = 400, .y = 200},
+        .primitive = geometry_2d::Point2d{.x = -0.9, .y = 0.9},
         .contentTraits = geometry_2d::ContentTraits<geometry_2d::Point2d>{
-            .color = content::Color{.r = 128},
+            .color = content::Color{.b = 255},
         },
     };
 
     const auto line = render_2d::RenderableGeometry<geometry_2d::Line>{
-        .primitive = geometry_2d::Line{.startPt = {.x = 100, .y = 100},
-                                       .finalPt = {.x = 400, .y = 400}},
+        .primitive = geometry_2d::Line{.startPt = {.x = 0.0, .y = 0.8},
+                                       .finalPt = {.x = -0.5, .y = -0.4}},
+        .contentTraits = geometry_2d::ContentTraits<geometry_2d::Line>{
+            .lineColor = {.r = 100},
+        },
     };
 
     const auto triangle = render_2d::RenderableGeometry<geometry_2d::Triangle>{
         .primitive = geometry_2d::Triangle{
-            .pt1 = {.x = 500, .y = 300},
-            .pt2 = {.x = 625, .y = 400},
-            .pt3 = {.x = 450, .y = 380},
+            .pt1 = {.x = 0.5, .y = -0.2},
+            .pt2 = {.x = 0.8, .y = -0.6},
+            .pt3 = {.x = 0.3, .y = -0.5},
         },
         .contentTraits = geometry_2d::ContentTraits<geometry_2d::Triangle>{
-            .faceContent = content::Color{.b = 200},
+            .faceContent = content::Color{.g = 255},
         },
     };
 
@@ -89,7 +92,7 @@ void GuiTest::_initWindow(framework::Framework& fr)
             .wndWidth = _graphicsOptions._renderTargetLogicalWidth,
             .wndHeight = _graphicsOptions._renderTargetLogicalHeigth,
         },
-        .rendererPreconfigOptions = makeUPtr<opengl_context::OpenGlPreconfigOptions>(),
+        .rendererPreconfigOptions = makeUPtr<sdl_render_context::SdlRenderPreconfigOptions>(),
     });
 }
 
