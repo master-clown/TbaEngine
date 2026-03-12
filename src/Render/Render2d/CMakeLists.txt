@@ -3,12 +3,14 @@ cmake_minimum_required(VERSION 3.12)
 set(TARGET_NAME Render2d)
 
 set(PUBLIC_HEADERS
+    GeometryBatch.h
     RenderableGeometry.h
     Renderer.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
+    GeometryBatch.cpp
     RenderableGeometry.cpp
     Renderer.cpp
 )
