@@ -9,7 +9,7 @@ fi
 function generateProfile() {
     buildType="$1"
 
-cat << EOF > ${targetDir}/gui_test_new_${buildType,,}
+cat << EOF > ${targetDir}/tba_engine_${buildType,,}
 [settings]
 arch=x86_64
 build_type=${buildType}
