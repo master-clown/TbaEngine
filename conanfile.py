@@ -2,8 +2,8 @@ from conan import ConanFile
 from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout, CMakeDeps
 
 
-class guiTestProjectRecipe(ConanFile):
-    name = "gui_test_project"
+class TbaEngineRecipe(ConanFile):
+    name = "tba_engine"
 
     options = {
         "enableLog": [True, False],

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(GuiTest LANGUAGES CXX C)
+project(TbaEngine LANGUAGES CXX C)
 
 set(CMAKE_CXX_STANDARD 26)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
