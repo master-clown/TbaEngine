@@ -20,7 +20,7 @@ class TbaEngineRecipe(ConanFile):
     generators = "CMakeDeps"
 
     def requirements(self):
-        self.requires("sdl/3.2.20", options={"shared": True})
+        self.requires("sdl/3.2.20", options={"shared": False})
         return
 
     def build_requirements(self):
