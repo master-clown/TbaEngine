@@ -9,16 +9,16 @@
 
 //======================================================================================================================
 // private macros
-#define _SHOULD_LOG(logMsgCategory, logMsgLevel)                                              \
+#define _TBA_SHOULD_LOG(logMsgCategory, logMsgLevel)                                          \
     (logMsgLevel <= logger::LogCategoryRegistry::getInstance().getLogLevel(logMsgCategory) && \
      logMsgLevel != logger::LogMessageLevel::Silent)
 
 //======================================================================================================================
-#define LOG_CATEGORIZED(logMsgCategory, logMsgLevel, ...)     \
-    {                                                         \
-        if (_SHOULD_LOG(logMsgCategory, logMsgLevel)) {       \
-            _LOG_IMPL_WITH_FORMATTING_SELECTION(__VA_ARGS__); \
-        }                                                     \
+#define LOG_CATEGORIZED(logMsgCategory, logMsgLevel, ...)         \
+    {                                                             \
+        if (_TBA_SHOULD_LOG(logMsgCategory, logMsgLevel)) {       \
+            _TBA_LOG_IMPL_WITH_FORMATTING_SELECTION(__VA_ARGS__); \
+        }                                                         \
     }
 
 //======================================================================================================================

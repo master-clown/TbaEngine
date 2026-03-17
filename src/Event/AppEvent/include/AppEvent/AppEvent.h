@@ -45,5 +45,5 @@ namespace app_event {
     };
 
     //==================================================================================================================
-    constexpr AppEvent noneAppEvent = AppEvent{AppEvent::NoneAppEvent{}};
+    inline const AppEvent noneAppEvent = AppEvent{AppEvent::NoneAppEvent{}};
 }

@@ -6,7 +6,7 @@ The project uses `Conan` package manager on top of `CMake`. The dependencies and
 
 ## `Conan` profiles
 
-Use [`generate-conan-profiles.sh`](https://github.com/master-clown/TbaEngine/blob/main/generate-conan-profiles.sh) to generate the profiles, which contain the stable build config. Handle the resulting
+Use [`generate-conan-profiles.py`](https://github.com/master-clown/TbaEngine/blob/main/generate-conan-profiles.py) to generate the profiles, which contain the stable build config. Handle the resulting
 profile files in accordance with `Conan` documentation. 
 
 ## Building
@@ -14,17 +14,18 @@ profile files in accordance with `Conan` documentation.
 The build command is standard:
 
 ```
-conan build -bf=${BUILD_DIR} \
+conan build -of=${BUILD_DIR} \
     --profile:all=${CONAN_PROFILE_NAME} \
     -o "&:enableLog=${ENABLE_LOG}" \
     -o "&:buildTests=${BUILD_TESTS}" \
     ${SRC_DIR}
 ```
 
-## Supported systems
+## Supported platforms
 
-As of now, the project is developed and tested on Linux platforms. Supposedly, it should be fine on other platforms
-supported by the project dependencies.
+As of now, the project is desktop-only. It is developed and tested primarily on Linux, Windows being a second priority. Platform-specific
+code will be avoided at all costs, which will allow easier transition to other systems in the future. The only limit here is due to the
+dependecies of the project.
 
 # Usage
 

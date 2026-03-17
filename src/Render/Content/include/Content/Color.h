@@ -2,7 +2,7 @@
 
 #include <Common/Integers.h>
 
-#include <numeric>
+#include <limits>
 
 //======================================================================================================================
 namespace content {
