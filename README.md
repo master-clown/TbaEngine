@@ -14,7 +14,7 @@ profile files in accordance with `Conan` documentation.
 The build command is standard:
 
 ```
-conan build -bf=${BUILD_DIR} \
+conan build -of=${BUILD_DIR} \
     --profile:all=${CONAN_PROFILE_NAME} \
     -o "&:enableLog=${ENABLE_LOG}" \
     -o "&:buildTests=${BUILD_TESTS}" \
