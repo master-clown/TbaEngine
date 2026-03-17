@@ -6,7 +6,7 @@ The project uses `Conan` package manager on top of `CMake`. The dependencies and
 
 ## `Conan` profiles
 
-Use [`generate-conan-profiles.sh`](https://github.com/master-clown/TbaEngine/blob/main/generate-conan-profiles.sh) to generate the profiles, which contain the stable build config. Handle the resulting
+Use [`generate-conan-profiles.py`](https://github.com/master-clown/TbaEngine/blob/main/generate-conan-profiles.py) to generate the profiles, which contain the stable build config. Handle the resulting
 profile files in accordance with `Conan` documentation. 
 
 ## Building
