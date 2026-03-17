@@ -23,8 +23,9 @@ conan build -of=${BUILD_DIR} \
 
 ## Supported platforms
 
-As of now, the project is developed and tested primarily on Linux. Windows is a second priority. Supposedly, it should be fine on other platforms
-as well, which are supported by the project dependencies.
+As of now, the project is desktop-only. It is developed and tested primarily on Linux, Windows being a second priority. Platform-specific
+code will be avoided at all costs, which will allow easier transition to other systems in the future. The only limit here is due to the
+dependecies of the project.
 
 # Usage
 
