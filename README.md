@@ -21,10 +21,10 @@ conan build -of=${BUILD_DIR} \
     ${SRC_DIR}
 ```
 
-## Supported systems
+## Supported platforms
 
-As of now, the project is developed and tested on Linux platforms. Supposedly, it should be fine on other platforms
-supported by the project dependencies.
+As of now, the project is developed and tested primarily on Linux. Windows is a second priority. Supposedly, it should be fine on other platforms
+as well, which are supported by the project dependencies.
 
 # Usage
 
