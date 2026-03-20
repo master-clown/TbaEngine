@@ -15,6 +15,7 @@ target_sources(${TARGET_NAME} PRIVATE ${TEST_SOURCES})
 target_link_libraries(${TARGET_NAME} PRIVATE 
     GuiAppTemplate
     OpenGlContext
+    Render2d
     SdlFramework
     GTest::gtest_main)
 
