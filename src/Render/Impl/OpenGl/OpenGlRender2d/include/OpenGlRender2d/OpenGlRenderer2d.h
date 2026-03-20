@@ -23,11 +23,6 @@ namespace opengl_render_2d {
         void setBaseRenderResolution(uint16 width, uint16 height) override;
 
         //--------------------------------------------------------------------------------------------------------------
-        void render(const render_2d::RenderableGeometry<geometry_2d::Point2d>&) override;
-        void render(const render_2d::RenderableGeometry<geometry_2d::Line>&) override;
-        void render(const render_2d::RenderableGeometry<geometry_2d::Triangle>&) override;
-
-        //--------------------------------------------------------------------------------------------------------------
         uptr<render_2d::GeometryBatch> createGeometryBatch() override;
         void renderGeometryBatch(const render_2d::GeometryBatch&) override;
 

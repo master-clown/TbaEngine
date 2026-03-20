@@ -91,21 +91,6 @@ void OpenGlRenderer2d::setBaseRenderResolution(const uint16 width, const uint16 
 }
 
 //=====================================================================================================================
-void OpenGlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Point2d>& pt)
-{
-}
-
-//=====================================================================================================================
-void OpenGlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Line>& line)
-{
-}
-
-//=====================================================================================================================
-void OpenGlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Triangle>& triangle)
-{
-}
-
-//=====================================================================================================================
 uptr<render_2d::GeometryBatch> OpenGlRenderer2d::createGeometryBatch()
 {
     return makeUPtr<OglGeometryBatch>();

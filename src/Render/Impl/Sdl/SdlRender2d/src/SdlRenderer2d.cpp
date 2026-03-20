@@ -92,21 +92,6 @@ void SdlRenderer2d::setBaseRenderResolution(const uint16 width, const uint16 hei
 }
 
 //=====================================================================================================================
-void SdlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Point2d>& pt)
-{
-}
-
-//=====================================================================================================================
-void SdlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Line>& line)
-{
-}
-
-//=====================================================================================================================
-void SdlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Triangle>& triangle)
-{
-}
-
-//=====================================================================================================================
 uptr<render_2d::GeometryBatch> SdlRenderer2d::createGeometryBatch()
 {
     return makeUPtr<SdlGeometryBatch>();

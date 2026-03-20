@@ -10,6 +10,11 @@ namespace render {
 }
 
 //======================================================================================================================
+namespace render_2d {
+    class GeometryBatch;
+}
+
+//======================================================================================================================
 class GuiTest final : public framework::RenderableApplication {
 public:
     GuiTest();
@@ -35,4 +40,5 @@ private:
     uptr<winsys::Window> _appWindow;
     uptr<render::Renderer> _renderer;
     GraphicsOptions _graphicsOptions;
+    uptr<render_2d::GeometryBatch> _simple2dGeometryBatch;
 };

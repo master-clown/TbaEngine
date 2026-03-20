@@ -40,20 +40,7 @@ namespace render_2d {
         virtual void setBaseRenderResolution(uint16 width, uint16 height) = 0;
 
         //--------------------------------------------------------------------------------------------------------------
-        // TODO: remove
-        virtual void render(const RenderableGeometry<geometry_2d::Point2d>&) = 0;
-        virtual void render(const RenderableGeometry<geometry_2d::Line>&) = 0;
-        virtual void render(const RenderableGeometry<geometry_2d::Triangle>&) = 0;
-
-        //--------------------------------------------------------------------------------------------------------------
-        // TODO: make pure
-        virtual uptr<GeometryBatch> createGeometryBatch()
-        {
-            return nullptr;
-        }
-
-        virtual void renderGeometryBatch(const GeometryBatch&)
-        {
-        }
+        virtual uptr<GeometryBatch> createGeometryBatch() = 0;
+        virtual void renderGeometryBatch(const GeometryBatch&) = 0;
     };
 }
