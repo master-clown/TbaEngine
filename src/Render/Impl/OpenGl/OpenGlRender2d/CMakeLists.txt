@@ -10,6 +10,8 @@ list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 set(SOURCES
     OglBuffer.cpp
     OglBuffer.h
+    OglVertexBuffer.cpp
+    OglVertexBuffer.h
     OglVertexInfo.cpp
     OglVertexInfo.h
     OpenGlRenderer2d.cpp
