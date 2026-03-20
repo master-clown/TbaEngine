@@ -1,11 +1,15 @@
 #include "SdlTriangle.h"
 
+#include "PrimitiveVariant.h"
+
 #include <Common/NumericCast.hpp>
-#include <Common/OverloadMultiplexor.h>
 #include <Content/Color.h>
 #include <Geometry2d/Triangle.h>
 
-#include <stdexcept>
+#include <cassert>
+
+//======================================================================================================================
+using namespace sdl_render_2d::details;
 
 //======================================================================================================================
 namespace {
@@ -24,17 +28,11 @@ namespace {
 }
 
 //======================================================================================================================
-void sdl_render::details::SdlTriangle::setFromTriangle(
-    const render_2d::RenderableGeometry<geometry_2d::Triangle>& triangle)
+void SdlTriangle::setFromPrimitiveVariant(const PrimitiveVariant& primitive)
 {
-    const auto faceSdlFColor = makeSdlFColor(std::visit(
-        OverloadMultiplexor{
-            [this](const content::Color& color) { return color; },
-            [](const auto&) {
-                throw std::runtime_error("Unsupported kind of Content for geometry_2d::Triangle");
-            },
-        },
-        triangle.contentTraits.faceContent));
+    assert(primitive.type == PrimitiveVariant::PrimitiveType::Triangle);
+
+    const auto faceSdlFColor = makeSdlFColor(primitive.mainColor);
 
     const auto makeSdlVertex = [this, &faceSdlFColor](const geometry_2d::Point2d& pt) noexcept {
         const auto sdlPt = transformToSdlPointFunc(pt);
@@ -45,7 +43,8 @@ void sdl_render::details::SdlTriangle::setFromTriangle(
         };
     };
 
-    sdlVertexes[0] = makeSdlVertex(triangle.primitive.pt1);
-    sdlVertexes[1] = makeSdlVertex(triangle.primitive.pt2);
-    sdlVertexes[2] = makeSdlVertex(triangle.primitive.pt3);
+    const auto& coordArray = primitive.primitiveCoordArray;
+    sdlVertexes[0] = makeSdlVertex({.x = coordArray[0], .y = coordArray[1]});
+    sdlVertexes[1] = makeSdlVertex({.x = coordArray[2], .y = coordArray[3]});
+    sdlVertexes[2] = makeSdlVertex({.x = coordArray[4], .y = coordArray[5]});
 }

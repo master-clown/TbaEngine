@@ -5,12 +5,17 @@
 #include <Common/Memory.h>
 
 //======================================================================================================================
+namespace sdl_render_2d::details {
+    class PrimitiveVariant;
+}
+
+//======================================================================================================================
 namespace sdl_winsys {
     class SdlWindow;
 }
 
 //======================================================================================================================
-namespace sdl_render {
+namespace sdl_render_2d {
     //==================================================================================================================
     class SdlRenderer2d final : public render_2d::Renderer {
     public:
@@ -27,7 +32,16 @@ namespace sdl_render {
         void render(const render_2d::RenderableGeometry<geometry_2d::Line>&) override;
         void render(const render_2d::RenderableGeometry<geometry_2d::Triangle>&) override;
 
+        //--------------------------------------------------------------------------------------------------------------
+        uptr<render_2d::GeometryBatch> createGeometryBatch() override;
+        void renderGeometryBatch(const render_2d::GeometryBatch&) override;
+
     private:
+        void _renderAsPoint2d(const details::PrimitiveVariant&);
+        void _renderAsLine(const details::PrimitiveVariant&);
+        void _renderAsTriangle(const details::PrimitiveVariant&);
+
+        //--------------------------------------------------------------------------------------------------------------
         // Origin: top-left corner
         // Ox: to the right
         // Oy: downwards

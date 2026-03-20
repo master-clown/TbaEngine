@@ -9,17 +9,17 @@
 #include <SDL3/SDL.h>
 
 //======================================================================================================================
-namespace geometry_2d {
-    struct Triangle;
+namespace sdl_render_2d::details {
+    class PrimitiveVariant;
 }
 
 //======================================================================================================================
-namespace sdl_render::details {
+namespace sdl_render_2d::details {
     //==================================================================================================================
     struct SdlTriangle final {
         std::function<SDL_FPoint(const geometry_2d::Point2d&)> transformToSdlPointFunc;
         Array<SDL_Vertex, 3> sdlVertexes;
 
-        void setFromTriangle(const render_2d::RenderableGeometry<geometry_2d::Triangle>&);
+        void setFromPrimitiveVariant(const PrimitiveVariant&);
     };
 }

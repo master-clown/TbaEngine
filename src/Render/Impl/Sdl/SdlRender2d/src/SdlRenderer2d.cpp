@@ -1,6 +1,8 @@
 #include <SdlRender2d/SdlRenderer2d.h>
 
+#include "Details/PrimitiveVariant.h"
 #include "Details/SdlTriangle.h"
+#include "SdlGeometryBatch.h"
 
 #include <Common/NumericCast.hpp>
 #include <Common/String.h>
@@ -12,8 +14,12 @@
 
 #include <SDL3/SDL.h>
 
+#include <cassert>
+
 //=====================================================================================================================
-using sdl_render::SdlRenderer2d;
+using sdl_render_2d::SdlGeometryBatch;
+using sdl_render_2d::SdlRenderer2d;
+using sdl_render_2d::details::PrimitiveVariant;
 
 //=====================================================================================================================
 struct SdlRenderer2d::Pimpl final {
@@ -88,28 +94,75 @@ void SdlRenderer2d::setBaseRenderResolution(const uint16 width, const uint16 hei
 //=====================================================================================================================
 void SdlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Point2d>& pt)
 {
-    const auto& color = pt.contentTraits.color;
-    SDL_SetRenderDrawColor(_pimpl->renderer, color.r, color.g, color.b, color.a);
-
-    const auto sdlPt = _toSdlScreenPoint2d(pt.primitive);
-    SDL_RenderPoint(_pimpl->renderer, sdlPt.x, sdlPt.y);
 }
 
 //=====================================================================================================================
 void SdlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Line>& line)
 {
-    const auto& color = line.contentTraits.lineColor;
-    SDL_SetRenderDrawColor(_pimpl->renderer, color.r, color.g, color.b, color.a);
-
-    const auto sdlStartPt = _toSdlScreenPoint2d(line.primitive.startPt);
-    const auto sdlFinalPt = _toSdlScreenPoint2d(line.primitive.finalPt);
-    SDL_RenderLine(_pimpl->renderer, sdlStartPt.x, sdlStartPt.y, sdlFinalPt.x, sdlFinalPt.y);
 }
 
 //=====================================================================================================================
 void SdlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Triangle>& triangle)
 {
-    _pimpl->sdlTriangle.setFromTriangle(triangle);
+}
+
+//=====================================================================================================================
+uptr<render_2d::GeometryBatch> SdlRenderer2d::createGeometryBatch()
+{
+    return makeUPtr<SdlGeometryBatch>();
+}
+
+//=====================================================================================================================
+void SdlRenderer2d::renderGeometryBatch(const render_2d::GeometryBatch& geometryBatch)
+{
+    assert(dynamic_cast<const SdlGeometryBatch*>(&geometryBatch));
+    const auto& sdlGeometryBatch = static_cast<const SdlGeometryBatch&>(geometryBatch);
+
+    using PrimitiveType = PrimitiveVariant::PrimitiveType;
+
+    for (const auto& primitive : sdlGeometryBatch._getPrimitives()) {
+        if (primitive.type == PrimitiveType::Point)
+            _renderAsPoint2d(primitive);
+        else if (primitive.type == PrimitiveType::Line)
+            _renderAsLine(primitive);
+        else if (primitive.type == PrimitiveType::Triangle)
+            _renderAsTriangle(primitive);
+    }
+}
+
+//=====================================================================================================================
+void SdlRenderer2d::_renderAsPoint2d(const PrimitiveVariant& primitive)
+{
+    assert(primitive.type == PrimitiveVariant::PrimitiveType::Point);
+
+    const auto& color = primitive.mainColor;
+    SDL_SetRenderDrawColor(_pimpl->renderer, color.r, color.g, color.b, color.a);
+
+    const auto& coordArray = primitive.primitiveCoordArray;
+    const auto sdlPt = _toSdlScreenPoint2d({.x = coordArray[0], .y = coordArray[1]});
+
+    SDL_RenderPoint(_pimpl->renderer, sdlPt.x, sdlPt.y);
+}
+
+//=====================================================================================================================
+void SdlRenderer2d::_renderAsLine(const PrimitiveVariant& primitive)
+{
+    assert(primitive.type == PrimitiveVariant::PrimitiveType::Line);
+
+    const auto& color = primitive.mainColor;
+    SDL_SetRenderDrawColor(_pimpl->renderer, color.r, color.g, color.b, color.a);
+
+    const auto& coordArray = primitive.primitiveCoordArray;
+    const auto sdlStartPt = _toSdlScreenPoint2d({.x = coordArray[0], .y = coordArray[1]});
+    const auto sdlFinalPt = _toSdlScreenPoint2d({.x = coordArray[2], .y = coordArray[3]});
+
+    SDL_RenderLine(_pimpl->renderer, sdlStartPt.x, sdlStartPt.y, sdlFinalPt.x, sdlFinalPt.y);
+}
+
+//=====================================================================================================================
+void SdlRenderer2d::_renderAsTriangle(const PrimitiveVariant& primitive)
+{
+    _pimpl->sdlTriangle.setFromPrimitiveVariant(primitive);
 
     SDL_RenderGeometry(_pimpl->renderer,
                        (SDL_Texture*)nullptr,
