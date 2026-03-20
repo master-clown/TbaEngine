@@ -18,7 +18,6 @@ namespace gui_app_template {
         winsys::Window& _getWindow();
         const winsys::Window& _getWindow() const;
 
-    private:
         void _init() override;
         ShouldQuit _iterate(const app_event::AppEvent&) override;
         void _render() override;
