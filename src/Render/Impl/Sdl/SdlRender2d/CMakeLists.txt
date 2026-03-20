@@ -12,6 +12,8 @@ set(SOURCES
     Details/SdlTriangle.h
     Details/PrimitiveVariant.cpp
     Details/PrimitiveVariant.h
+    SdlGeometryBatch.cpp
+    SdlGeometryBatch.h
     SdlRenderer2d.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
