@@ -8,6 +8,8 @@ set(PUBLIC_HEADERS
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
+    OglBuffer.cpp
+    OglBuffer.h
     OpenGlRenderer2d.cpp
     ShaderPipeline.cpp
     ShaderPipeline.h
