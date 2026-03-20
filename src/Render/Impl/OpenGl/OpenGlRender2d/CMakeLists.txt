@@ -13,6 +13,9 @@ set(SOURCES
     OpenGlRenderer2d.cpp
     ShaderPipeline.cpp
     ShaderPipeline.h
+    TypedOglBuffer.cpp
+    TypedOglBuffer.h
+    TypedOglBuffer.hpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
