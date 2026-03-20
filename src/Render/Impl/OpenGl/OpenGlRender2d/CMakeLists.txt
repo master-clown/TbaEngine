@@ -12,6 +12,8 @@ set(SOURCES
     OglBuffer.h
     OglIndexBuffer.cpp
     OglIndexBuffer.h
+    OglVertexArrayObject.cpp
+    OglVertexArrayObject.h
     OglVertexBuffer.cpp
     OglVertexBuffer.h
     OglVertexInfo.cpp
