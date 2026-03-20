@@ -1,19 +1,60 @@
 #include <OpenGlRender2d/OpenGlRenderer2d.h>
 
+#include "OglGeometryBatch.h"
+#include "ShaderPipeline.h"
+
 #include <Common/NumericCast.hpp>
 #include <Common/String.h>
 #include <Content/Color.h>
-#include <Geometry2d/Line.h>
-#include <Geometry2d/Point2d.h>
-#include <Geometry2d/Triangle.h>
 #include <OpenGlApi/OpenGlApi.h>
 #include <OpenGlContext/OpenGlContext.h>
 
+#include <cassert>
+#include <string_view>
+
 //=====================================================================================================================
-using opengl_render_2d::OpenGlRenderer2d;
+using namespace opengl_render_2d;
+
+//=====================================================================================================================
+static constexpr std::string_view basicVertexShader = R"(
+#version 420 core
+
+layout(location = 0) out vec4 outVertexColor;
+
+layout(location = 0) in vec2 inVertexPosition; // NDC coordinate system
+layout(location = 1) in vec4 inVertexColor;
+
+void main() 
+{
+    gl_Position = vec4(inVertexPosition, 0.0, 1.0);
+    outVertexColor = inVertexColor;
+}
+)";
+
+//=====================================================================================================================
+static constexpr std::string_view basicFragmentShader = R"(
+#version 420 core
+
+layout(location = 0) out vec4 fragmentColor;
+
+layout(location = 0) in vec4 inVertexColor;
+
+void main()
+{
+	fragmentColor = inVertexColor;
+}
+)";
 
 //=====================================================================================================================
 struct OpenGlRenderer2d::Pimpl final {
+    uptr<ShaderPipeline> colorOnlyShaderPipeline;
+
+    Pimpl()
+        : colorOnlyShaderPipeline(makeUPtr<ShaderPipeline>(
+              String{basicVertexShader},
+              String{basicFragmentShader}))
+    {
+    }
 };
 
 //=====================================================================================================================
@@ -44,8 +85,7 @@ void OpenGlRenderer2d::finalizeRender()
 }
 
 //=====================================================================================================================
-void OpenGlRenderer2d::setBaseRenderResolution(const geometry_2d::ScreenCoordinate width,
-                                               const geometry_2d::ScreenCoordinate height)
+void OpenGlRenderer2d::setBaseRenderResolution(const uint16 width, const uint16 height)
 {
     glViewport(0, 0, numericCast<GLsizei>(width), numericCast<GLsizei>(height));
 }
@@ -53,38 +93,43 @@ void OpenGlRenderer2d::setBaseRenderResolution(const geometry_2d::ScreenCoordina
 //=====================================================================================================================
 void OpenGlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Point2d>& pt)
 {
-    /*
-    const auto& color = pt.contentTraits.color;
-    SDL_SetRenderDrawColor(_pimpl->renderer, color.r, color.g, color.b, color.a);
-    SDL_RenderPoint(_pimpl->renderer, numericCast<float>(pt.primitive.x), numericCast<float>(pt.primitive.y));
-    */
 }
 
 //=====================================================================================================================
 void OpenGlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Line>& line)
 {
-    /*
-    const auto& color = line.contentTraits.lineColor;
-    SDL_SetRenderDrawColor(_pimpl->renderer, color.r, color.g, color.b, color.a);
-    SDL_RenderLine(_pimpl->renderer,
-                   numericCast<float>(line.primitive.startPt.x),
-                   numericCast<float>(line.primitive.startPt.y),
-                   numericCast<float>(line.primitive.finalPt.x),
-                   numericCast<float>(line.primitive.finalPt.y));
-    */
 }
 
 //=====================================================================================================================
 void OpenGlRenderer2d::render(const render_2d::RenderableGeometry<geometry_2d::Triangle>& triangle)
 {
-    /*
-    _pimpl->sdlTriangle.setFromTriangle(triangle);
+}
 
-    SDL_RenderGeometry(_pimpl->renderer,
-                       (SDL_Texture*)nullptr,
-                       &_pimpl->sdlTriangle.sdlVertexes[0],
-                       _pimpl->sdlTriangle.sdlVertexes.size(),
-                       (int*)nullptr,
+//=====================================================================================================================
+uptr<render_2d::GeometryBatch> OpenGlRenderer2d::createGeometryBatch()
+{
+    return makeUPtr<OglGeometryBatch>();
+}
+
+//=====================================================================================================================
+void OpenGlRenderer2d::renderGeometryBatch(const render_2d::GeometryBatch& geometryBatch)
+{
+    assert(dynamic_cast<const OglGeometryBatch*>(&geometryBatch));
+    const auto& oglGeometryBatch = static_cast<const OglGeometryBatch&>(geometryBatch);
+
+    const auto renderPrimitives = [&oglGeometryBatch](const OglIndexBuffer& indexBuffer,
+                                                      const GLenum oglPrimitiveType) {
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer.getEboId());
+        glDrawElements(oglPrimitiveType,
+                       indexBuffer.getUnderlyingBuffer().getItemCount(),
+                       indexBuffer.getOglIndexType(),
                        0);
-    */
+    };
+
+    _pimpl->colorOnlyShaderPipeline->use();
+    oglGeometryBatch.vao.use();
+
+    renderPrimitives(oglGeometryBatch.pointIndexBuffer, GL_POINTS);
+    renderPrimitives(oglGeometryBatch.lineIndexBuffer, GL_LINES);
+    renderPrimitives(oglGeometryBatch.triangleIndexBuffer, GL_TRIANGLES);
 }
