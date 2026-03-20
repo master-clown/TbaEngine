@@ -10,6 +10,8 @@ list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 set(SOURCES
     OglBuffer.cpp
     OglBuffer.h
+    OglGeometryBatch.cpp
+    OglGeometryBatch.h
     OglIndexBuffer.cpp
     OglIndexBuffer.h
     OglVertexArrayObject.cpp
