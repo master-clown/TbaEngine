@@ -32,3 +32,7 @@ target_link_libraries(${TARGET_NAME} PRIVATE
     Common
     Content
 )
+
+if(BUILD_TESTS)
+    add_subdirectory(test)
+endif()
