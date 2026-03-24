@@ -4,11 +4,14 @@ set(TARGET_NAME GuiAppTemplate)
 
 set(PUBLIC_HEADERS
     GuiAppTemplate.h
+    GuiAppWithRenderer.h
+    GuiAppWithRenderer.hpp
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
     GuiAppTemplate.cpp
+    GuiAppWithRenderer.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
@@ -23,6 +26,7 @@ target_sources(${TARGET_NAME}
     ${PUBLIC_HEADERS})
 target_link_libraries(${TARGET_NAME} PUBLIC 
     Framework
+    Render2d
     Winsys
 )
 target_link_libraries(${TARGET_NAME} PRIVATE 
