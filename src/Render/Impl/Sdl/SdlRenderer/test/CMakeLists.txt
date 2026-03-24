@@ -14,7 +14,6 @@ add_executable(${TARGET_NAME})
 target_sources(${TARGET_NAME} PRIVATE ${TEST_SOURCES})
 target_link_libraries(${TARGET_NAME} PRIVATE 
     GuiAppTemplate
-    Render2d
     SdlRenderContext
     SdlFramework
     GTest::gtest_main)
