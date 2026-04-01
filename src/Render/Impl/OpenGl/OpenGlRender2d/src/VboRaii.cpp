@@ -1,6 +1,7 @@
 #include "VboRaii.h"
 
 #include <Common/String.h>
+#include <OpenGlApi/ErrorCheck.h>
 // TODO: single cpp for avoiding many inclusions of this header?
 #include <OpenGlApi/OpenGlApi.h>
 
@@ -36,9 +37,7 @@ VboRaii::VboRaii(const BufferSizeInBytes bufferSizeInBytes, const IsMappable isM
         return 0; // TODO: check if indeed no bits are required
     }();
     glNamedBufferStorage(_bufferId, _currentSizeInBytes, nullptr, bufferUsageFlags);
-    if (const auto lastGlError = glGetError(); lastGlError != GL_NO_ERROR)
-        throw std::runtime_error(strFormat("Failed to glNamedBufferStorage(). OGL Error code: {}",
-                                           lastGlError));
+    opengl_api::checkOperationSuccess("VboRaii::ctor(): glNamedBufferStorage()");
 
     if (isMappable)
         _bufferMappingPtr = nullptr;

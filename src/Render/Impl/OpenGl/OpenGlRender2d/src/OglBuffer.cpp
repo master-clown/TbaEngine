@@ -1,6 +1,7 @@
 #include "OglBuffer.h"
 
 #include <Common/String.h>
+#include <OpenGlApi/ErrorCheck.h>
 // TODO: single cpp for avoiding many inclusions of this header?
 #include <OpenGlApi/OpenGlApi.h>
 
@@ -70,9 +71,7 @@ void OglBuffer::_extendBuffer(const BufferSizeInBytes newSize)
                              ReadOffset{0},
                              WriteOffset{0},
                              _currentBuffer.getVboSizeInBytes());
-    if (const auto lastGlError = glGetError(); lastGlError != GL_NO_ERROR)
-        throw std::runtime_error(strFormat("Failed to save backup by glCopyNamedBufferSubData(). OGL Error code: {}",
-                                           lastGlError));
+    opengl_api::checkOperationSuccess("Save backup by glCopyNamedBufferSubData()");
 
     _currentBuffer = VboRaii(newSize, VboRaii::IsMappable{true});
 
@@ -81,9 +80,7 @@ void OglBuffer::_extendBuffer(const BufferSizeInBytes newSize)
                              ReadOffset{0},
                              WriteOffset{0},
                              backupBuffer.getVboSizeInBytes());
-    if (const auto lastGlError = glGetError(); lastGlError != GL_NO_ERROR)
-        throw std::runtime_error(strFormat("Failed to load backup by glCopyNamedBufferSubData(). OGL Error code: {}",
-                                           lastGlError));
+    opengl_api::checkOperationSuccess("Load backup by glCopyNamedBufferSubData()");
 
     _currentBuffer.createVboMapping();
 }

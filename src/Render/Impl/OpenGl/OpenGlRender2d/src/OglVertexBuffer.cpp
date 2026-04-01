@@ -1,5 +1,6 @@
 #include "OglVertexBuffer.h"
 
+#include <OpenGlApi/ErrorCheck.h>
 // TODO: single cpp for avoiding many inclusions of this header?
 #include <OpenGlApi/OpenGlApi.h>
 
@@ -55,4 +56,5 @@ void OglVertexBuffer::_rebindVboToVao() const
     static constexpr GLuint vboBindingPoint = 0;
 
     glVertexArrayVertexBuffer(_vaoId, vboBindingPoint, _buffer.getBufferRawId(), 0, sizeof(OglVertexInfo));
+    opengl_api::checkOperationSuccess("OglVertexBuffer::_rebindVboToVao(): glVertexArrayVertexBuffer()");
 }
