@@ -13,10 +13,15 @@ namespace opengl_render_2d {
     //==================================================================================================================
     template <TriviallyCopyable BufferItem>
     class TypedOglBuffer final : public OglBuffer {
-    public:
-        using NewBufferItemIndex = size_t;
+        using Super = OglBuffer;
 
+    public:
+        using Super::Super;
+
+        //--------------------------------------------------------------------------------------------------------------
         void clear();
+
+        using NewBufferItemIndex = size_t;
         NewBufferItemIndex append(const BufferItem&);
 
         struct ItemUnsafePtr final {
