@@ -21,8 +21,6 @@ void OglIndexBuffer::_staticAssertsOnTypedefs() noexcept
 OglIndexBuffer::OglIndexBuffer(const VaoId vaoId)
 {
     // TODO: assert(vao.isBinded());
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffer.getBufferRawId());
 }
 
 //======================================================================================================================
