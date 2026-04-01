@@ -19,20 +19,22 @@ void OglVertexBuffer::_staticAssertsOnTypedefs() noexcept
 
 //======================================================================================================================
 OglVertexBuffer::OglVertexBuffer(const VaoId vaoId)
+    : _vaoId(vaoId)
+    , _buffer(OglBuffer::BufferExtendedCallback{[this] { _rebindVboToVao(); }})
 {
     // TODO: assert(vao.isBinded());
 
+    _rebindVboToVao();
+
     static constexpr GLuint vboBindingPoint = 0;
 
-    glVertexArrayVertexBuffer(vaoId, vboBindingPoint, _buffer.getBufferRawId(), 0, sizeof(OglVertexInfo));
+    glEnableVertexArrayAttrib(_vaoId, 0);
+    glVertexArrayAttribFormat(_vaoId, 0, 2, GL_FLOAT, GL_TRUE, offsetof(OglVertexInfo, x));
+    glVertexArrayAttribBinding(_vaoId, 0, vboBindingPoint);
 
-    glEnableVertexArrayAttrib(vaoId, 0);
-    glVertexArrayAttribFormat(vaoId, 0, 2, GL_FLOAT, GL_TRUE, offsetof(OglVertexInfo, x));
-    glVertexArrayAttribBinding(vaoId, 0, vboBindingPoint);
-
-    glEnableVertexArrayAttrib(vaoId, 1);
-    glVertexArrayAttribFormat(vaoId, 1, 4, GL_UNSIGNED_BYTE, GL_TRUE, offsetof(OglVertexInfo, r));
-    glVertexArrayAttribBinding(vaoId, 1, vboBindingPoint);
+    glEnableVertexArrayAttrib(_vaoId, 1);
+    glVertexArrayAttribFormat(_vaoId, 1, 4, GL_UNSIGNED_BYTE, GL_TRUE, offsetof(OglVertexInfo, r));
+    glVertexArrayAttribBinding(_vaoId, 1, vboBindingPoint);
 }
 
 //======================================================================================================================
@@ -45,4 +47,12 @@ auto OglVertexBuffer::getVboId() const -> VboRawId
 TypedOglBuffer<OglVertexInfo>& OglVertexBuffer::getUnderlyingBuffer()
 {
     return _buffer;
+}
+
+//======================================================================================================================
+void OglVertexBuffer::_rebindVboToVao() const
+{
+    static constexpr GLuint vboBindingPoint = 0;
+
+    glVertexArrayVertexBuffer(_vaoId, vboBindingPoint, _buffer.getBufferRawId(), 0, sizeof(OglVertexInfo));
 }

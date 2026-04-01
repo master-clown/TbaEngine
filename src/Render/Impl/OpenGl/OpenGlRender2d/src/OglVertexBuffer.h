@@ -18,9 +18,11 @@ namespace opengl_render_2d {
         TypedOglBuffer<OglVertexInfo>& getUnderlyingBuffer();
 
     private:
+        void _rebindVboToVao() const;
         static void _staticAssertsOnTypedefs() noexcept;
 
     private:
+        VaoId _vaoId;
         TypedOglBuffer<OglVertexInfo> _buffer;
     };
 }
