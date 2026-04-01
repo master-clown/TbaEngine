@@ -29,7 +29,7 @@ VboRaii::VboRaii(const BufferSizeInBytes bufferSizeInBytes, const MapOnCreation 
         if (mapOnCreation)
             return GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT;
 
-        return 0;
+        return 0; // TODO: check if indeed no bits are required
     }();
     glNamedBufferStorage(_bufferId, _currentSizeInBytes, nullptr, bufferUsageFlags);
     if (const auto lastGlError = glGetError(); lastGlError != GL_NO_ERROR)
