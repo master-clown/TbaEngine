@@ -10,8 +10,11 @@ namespace opengl_render_2d {
     class VboRaii final {
     public:
         using BufferSizeInBytes = long;
-        using MapOnCreation = bool;
-        VboRaii(BufferSizeInBytes, MapOnCreation = false);
+        using IsMappable = bool;
+        VboRaii(BufferSizeInBytes, IsMappable = false);
+
+        struct MapOnCreation { };
+        VboRaii(BufferSizeInBytes, MapOnCreation);
 
         //--------------------------------------------------------------------------------------------------------------
         VboRaii(VboRaii&&);
@@ -23,6 +26,9 @@ namespace opengl_render_2d {
 
         //--------------------------------------------------------------------------------------------------------------
         ~VboRaii();
+
+        //--------------------------------------------------------------------------------------------------------------
+        void createVboMapping();
 
         //--------------------------------------------------------------------------------------------------------------
         BufferSizeInBytes getVboSizeInBytes() const;

@@ -21,7 +21,7 @@ OglBuffer::OglBuffer(BufferExtendedCallback bufferExtendedCallback)
 
               return defaultInitialSize;
           }(),
-          VboRaii::MapOnCreation{true})
+          VboRaii::MapOnCreation{})
 {
 }
 
@@ -74,7 +74,7 @@ void OglBuffer::_extendBuffer(const BufferSizeInBytes newSize)
         throw std::runtime_error(strFormat("Failed to save backup by glCopyNamedBufferSubData(). OGL Error code: {}",
                                            lastGlError));
 
-    _currentBuffer = VboRaii(newSize, VboRaii::MapOnCreation{true});
+    _currentBuffer = VboRaii(newSize, VboRaii::IsMappable{true});
 
     glCopyNamedBufferSubData(backupBuffer.getVboId(),
                              _currentBuffer.getVboId(),
@@ -84,4 +84,6 @@ void OglBuffer::_extendBuffer(const BufferSizeInBytes newSize)
     if (const auto lastGlError = glGetError(); lastGlError != GL_NO_ERROR)
         throw std::runtime_error(strFormat("Failed to load backup by glCopyNamedBufferSubData(). OGL Error code: {}",
                                            lastGlError));
+
+    _currentBuffer.createVboMapping();
 }

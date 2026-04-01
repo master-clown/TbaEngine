@@ -13,6 +13,10 @@
 using opengl_render_2d::VboRaii;
 
 //======================================================================================================================
+static constexpr uint32 mappedBufferUsageFlags =
+    GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT;
+
+//======================================================================================================================
 void VboRaii::_staticAssertsOnTypedefs() noexcept
 {
     static_assert(std::is_same_v<BufferSizeInBytes, GLsizeiptr>);
@@ -20,14 +24,14 @@ void VboRaii::_staticAssertsOnTypedefs() noexcept
 }
 
 //======================================================================================================================
-VboRaii::VboRaii(const BufferSizeInBytes bufferSizeInBytes, const MapOnCreation mapOnCreation)
+VboRaii::VboRaii(const BufferSizeInBytes bufferSizeInBytes, const IsMappable isMappable)
     : _currentSizeInBytes(bufferSizeInBytes)
 {
     glCreateBuffers(1, &_bufferId);
 
     const auto bufferUsageFlags = [&] -> uint32 {
-        if (mapOnCreation)
-            return GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT;
+        if (isMappable)
+            return mappedBufferUsageFlags;
 
         return 0; // TODO: check if indeed no bits are required
     }();
@@ -36,14 +40,15 @@ VboRaii::VboRaii(const BufferSizeInBytes bufferSizeInBytes, const MapOnCreation 
         throw std::runtime_error(strFormat("Failed to glNamedBufferStorage(). OGL Error code: {}",
                                            lastGlError));
 
-    if (mapOnCreation) {
-        _bufferMappingPtr = glMapNamedBufferRange(_bufferId, 0, _currentSizeInBytes, bufferUsageFlags);
-        if (!*_bufferMappingPtr)
-            throw std::runtime_error(strFormat("Failed to map vbo(id={}) for {} bytes. OGL Error code: {}",
-                                               _bufferId,
-                                               _currentSizeInBytes,
-                                               glGetError()));
-    }
+    if (isMappable)
+        _bufferMappingPtr = nullptr;
+}
+
+//======================================================================================================================
+VboRaii::VboRaii(const BufferSizeInBytes bufferSizeInBytes, MapOnCreation)
+    : VboRaii(bufferSizeInBytes, IsMappable{true})
+{
+    createVboMapping();
 }
 
 //======================================================================================================================
@@ -77,6 +82,27 @@ VboRaii& VboRaii::operator=(VboRaii&& other)
 VboRaii::~VboRaii()
 {
     _release();
+}
+
+//======================================================================================================================
+void VboRaii::createVboMapping()
+{
+    if (!_bufferMappingPtr)
+        return;
+
+    if (*_bufferMappingPtr) {
+        assert(false && "Is it really crucial to call this function twice?");
+
+        glUnmapNamedBuffer(_bufferId);
+        _bufferMappingPtr = {};
+    }
+
+    _bufferMappingPtr = glMapNamedBufferRange(_bufferId, 0, _currentSizeInBytes, mappedBufferUsageFlags);
+    if (!*_bufferMappingPtr)
+        throw std::runtime_error(strFormat("Failed to map vbo(id={}) for {} bytes. OGL Error code: {}",
+                                           _bufferId,
+                                           _currentSizeInBytes,
+                                           glGetError()));
 }
 
 //======================================================================================================================
