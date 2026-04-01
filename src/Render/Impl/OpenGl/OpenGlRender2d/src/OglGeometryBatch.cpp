@@ -19,8 +19,10 @@ OglGeometryBatch::OglGeometryBatch()
 void OglGeometryBatch::clear()
 {
     vertexBuffer.getUnderlyingBuffer().clear();
+
     triangleIndexBuffer.getUnderlyingBuffer().clear();
     lineIndexBuffer.getUnderlyingBuffer().clear();
+    pointIndexBuffer.getUnderlyingBuffer().clear();
 }
 
 //======================================================================================================================
@@ -59,8 +61,6 @@ void OglGeometryBatch::add(const render_2d::RenderableGeometry<geometry_2d::Tria
 OglIndexBuffer::Index OglGeometryBatch::_addNewVertex(const geometry_2d::Point2d& pt,
                                                       const content::Color& color)
 {
-    using NdcCoord = OglVertexInfo::NdcCoord;
-
     const auto newVertexIndex = vertexBuffer.getUnderlyingBuffer().append(OglVertexInfo{
         .x = pt.x,
         .y = pt.y,
