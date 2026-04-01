@@ -26,6 +26,8 @@ set(SOURCES
     TypedOglBuffer.cpp
     TypedOglBuffer.h
     TypedOglBuffer.hpp
+    VboRaii.cpp
+    VboRaii.h
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
