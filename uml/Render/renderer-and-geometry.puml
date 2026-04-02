@@ -6,25 +6,22 @@ skinparam defaultFontName monospaced
 package render_2d {
     '===================================================================================================================
     abstract class GeometryBatch {
-        + {abstract} clear()
-    --
-        + {abstract} add(Line) -> LineId
-        + {abstract} add(Triangle) -> TriangleId
-        + {abstract} add(FontText) -> FontTextId
-        // ...
-    --
-        + {abstract} createBatchModifier()
+        + {abstract} modify(std::function<void(GeometryBatchModifier&)>)
     }
 
     '===================================================================================================================
     abstract class GeometryBatchModifier {
         + ctor(GeometryBatch&)
     --
+        + {abstract} clear()
+    --
+        + {abstract} add(Line) -> LineId
+        + {abstract} add(Triangle) -> TriangleId
+        + {abstract} add(FontText) -> FontTextId
+    --
         + {abstract} modify(LineId) -> LineModifier
         + {abstract} modify(TriangleId) -> TriangleModifier
         + {abstract} modify(FontTextId) -> FontTextModifier
-    --
-        + {abstract} commit()
     }
 
     '-------------------------------------------------------------------------------------------------------------------
