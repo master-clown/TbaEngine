@@ -94,7 +94,7 @@ void OpenGlRenderer2d::setBaseRenderResolution(const uint16 width, const uint16 
 //=====================================================================================================================
 uptr<render_2d::GeometryBatch> OpenGlRenderer2d::createGeometryBatch()
 {
-    return makeUPtr<OglGeometryBatch>();
+    return makeUPtr<OglGeometryBatch>(_openGlContext.getGpuOperationsCompletedEvent());
 }
 
 //=====================================================================================================================

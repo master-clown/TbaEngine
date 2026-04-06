@@ -2,6 +2,7 @@
 
 #include "OpenGlLibraryRaii.h"
 
+#include <OpenGlApi/GpuOperationsCompletedEvent.h>
 #include <OpenGlContext/OpenGlContext.h>
 #include <OpenGlRender2d/OpenGlRenderer2d.h>
 
@@ -40,6 +41,8 @@ void OpenGlRenderer::clear(const content::Color& color)
 void OpenGlRenderer::finalizeRender()
 {
     get2dRenderer().finalizeRender();
+
+    _openGlContext.getGpuOperationsCompletedEvent().reset();
 }
 
 //==================================================================================================================

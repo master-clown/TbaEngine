@@ -8,6 +8,11 @@
 #include <Render2d/GeometryBatch.h>
 
 //======================================================================================================================
+namespace opengl_api {
+    class GpuOperationsCompletedEvent;
+}
+
+//======================================================================================================================
 namespace opengl_render_2d {
     class OglGeometryBatchModifier;
 }
@@ -16,7 +21,7 @@ namespace opengl_render_2d {
 namespace opengl_render_2d {
     class OglGeometryBatch final : public render_2d::GeometryBatch {
     public:
-        OglGeometryBatch();
+        explicit OglGeometryBatch(opengl_api::GpuOperationsCompletedEvent&);
         ~OglGeometryBatch();
 
         //--------------------------------------------------------------------------------------------------------------
@@ -27,6 +32,7 @@ namespace opengl_render_2d {
         static constexpr auto _defaultDepthValue = 0.5f;
 
         //--------------------------------------------------------------------------------------------------------------
+        opengl_api::GpuOperationsCompletedEvent& _gpuOperationsCompletedEvent;
         uptr<render_2d::GeometryBatchModifier> _modifier;
 
         //--------------------------------------------------------------------------------------------------------------
