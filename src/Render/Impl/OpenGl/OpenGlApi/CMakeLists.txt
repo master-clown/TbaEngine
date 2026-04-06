@@ -4,12 +4,14 @@ set(TARGET_NAME OpenGlApi)
 
 set(PUBLIC_HEADERS
     ErrorCheck.h
+    GpuOperationsCompletedEvent.h
     OpenGlApi.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
     ErrorCheck.cpp
+    GpuOperationsCompletedEvent.cpp
     OpenGlApi.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
