@@ -2,6 +2,7 @@
 
 #include "OglGeometryBatch.h"
 #include "ShaderPipeline.h"
+#include "TypedOglBuffer.hpp"
 
 #include <Common/NumericCast.hpp>
 #include <Common/String.h>
@@ -112,9 +113,9 @@ void OpenGlRenderer2d::renderGeometryBatch(const render_2d::GeometryBatch& geome
     };
 
     _pimpl->colorOnlyShaderPipeline->use();
-    oglGeometryBatch.vao.use();
+    oglGeometryBatch._vao.use();
 
-    renderPrimitives(oglGeometryBatch.pointIndexBuffer, GL_POINTS);
-    renderPrimitives(oglGeometryBatch.lineIndexBuffer, GL_LINES);
-    renderPrimitives(oglGeometryBatch.triangleIndexBuffer, GL_TRIANGLES);
+    renderPrimitives(oglGeometryBatch._pointIndexBuffer, GL_POINTS);
+    renderPrimitives(oglGeometryBatch._lineIndexBuffer, GL_LINES);
+    renderPrimitives(oglGeometryBatch._triangleIndexBuffer, GL_TRIANGLES);
 }

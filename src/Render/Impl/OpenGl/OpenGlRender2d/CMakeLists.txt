@@ -12,6 +12,8 @@ set(SOURCES
     OglBuffer.h
     OglGeometryBatch.cpp
     OglGeometryBatch.h
+    OglGeometryBatchModifier.cpp
+    OglGeometryBatchModifier.h
     OglIndexBuffer.cpp
     OglIndexBuffer.h
     OglVertexArrayObject.cpp

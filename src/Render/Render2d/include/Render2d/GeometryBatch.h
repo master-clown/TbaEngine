@@ -1,12 +1,10 @@
 #pragma once
 
-#include <Render2d/RenderableGeometry.h>
+#include <functional>
 
 //======================================================================================================================
-namespace geometry_2d {
-    struct Point2d;
-    struct Line;
-    struct Triangle;
+namespace render_2d {
+    class GeometryBatchModifier;
 }
 
 //======================================================================================================================
@@ -16,12 +14,6 @@ namespace render_2d {
         virtual ~GeometryBatch();
 
         //--------------------------------------------------------------------------------------------------------------
-        virtual void clear() = 0;
-
-        //--------------------------------------------------------------------------------------------------------------
-        // TODO: add bulk operations (to allocate the memory only once)
-        virtual void add(const RenderableGeometry<geometry_2d::Point2d>&) = 0;
-        virtual void add(const RenderableGeometry<geometry_2d::Line>&) = 0;
-        virtual void add(const RenderableGeometry<geometry_2d::Triangle>&) = 0;
+        virtual void modify(const std::function<void(GeometryBatchModifier&)>&) = 0;
     };
 }

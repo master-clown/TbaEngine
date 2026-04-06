@@ -4,6 +4,7 @@
 #include <GuiAppTemplate/GuiAppWithRenderer.hpp>
 #include <OpenGlContext/OpenGlPreconfigOptions.h>
 #include <Render2d/GeometryBatch.h>
+#include <Render2d/GeometryBatchModifier.h>
 #include <Render2d/Renderer.h>
 #include <Renderer/Renderer.h>
 #include <SdlFramework/SdlFramework.h>
@@ -22,7 +23,7 @@
 //======================================================================================================================
 namespace {
     //==================================================================================================================
-    using InitSceneGeometryBatch = std::function<void(render_2d::GeometryBatch&)>;
+    using InitSceneGeometryBatch = std::function<void(render_2d::GeometryBatchModifier&)>;
 
     //==================================================================================================================
     template <class RendererPreconfigOptions>
@@ -45,7 +46,7 @@ namespace {
             auto& renderer2d = this->getRenderer().get2dRenderer();
             _sceneGeometryBatch = renderer2d.createGeometryBatch();
 
-            _initSceneGeometryBatch(*_sceneGeometryBatch);
+            _sceneGeometryBatch->modify(_initSceneGeometryBatch);
         }
 
         void _render() override
@@ -96,7 +97,7 @@ namespace {
 //======================================================================================================================
 TEST_CASE(DrawSimpleGeometryIn2d)
 {
-    const auto initSceneGeometryBatch = [](render_2d::GeometryBatch& geometryBatch) {
+    const auto initSceneGeometryBatch = [](render_2d::GeometryBatchModifier& modifier) {
         const auto point = render_2d::RenderableGeometry<geometry_2d::Point2d>{
             .primitive = geometry_2d::Point2d{.x = -0.9, .y = 0.9},
             .contentTraits = geometry_2d::ContentTraits<geometry_2d::Point2d>{
@@ -123,9 +124,9 @@ TEST_CASE(DrawSimpleGeometryIn2d)
             },
         };
 
-        geometryBatch.add(point);
-        geometryBatch.add(line);
-        geometryBatch.add(triangle);
+        modifier.add(point);
+        modifier.add(line);
+        modifier.add(triangle);
     };
 
     testAllRenderers("Check that simple 2D geometry renders correctly", initSceneGeometryBatch);
@@ -136,7 +137,7 @@ TEST_CASE(DrawSameTriangle100000Times)
 {
     static constexpr auto trianglesCount = 100'000;
 
-    const auto initSceneGeometryBatch = [](render_2d::GeometryBatch& geometryBatch) {
+    const auto initSceneGeometryBatch = [](render_2d::GeometryBatchModifier& modifier) {
         const auto triangle = render_2d::RenderableGeometry<geometry_2d::Triangle>{
             .primitive = geometry_2d::Triangle{
                 .pt1 = {.x = 0.5, .y = -0.2},
@@ -149,7 +150,7 @@ TEST_CASE(DrawSameTriangle100000Times)
         };
 
         for (int i = 0; i < trianglesCount; ++i)
-            geometryBatch.add(triangle);
+            modifier.add(triangle);
     };
 
     testAllRenderers(strFormat("Draw of {} same triangles", trianglesCount),

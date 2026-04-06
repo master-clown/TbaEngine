@@ -8,6 +8,7 @@
 #include <Geometry2d/Triangle.h>
 #include <OpenGlContext/OpenGlPreconfigOptions.h>
 #include <Render2d/GeometryBatch.h>
+#include <Render2d/GeometryBatchModifier.h>
 #include <Render2d/Renderer.h>
 #include <Renderer/Renderer.h>
 #include <SdlFramework/SdlFramework.h>
@@ -38,7 +39,7 @@ void GuiTest::_init()
     auto& renderer2d = _renderer->get2dRenderer();
 
     _simple2dGeometryBatch = renderer2d.createGeometryBatch();
-    {
+    _simple2dGeometryBatch->modify([&](render_2d::GeometryBatchModifier& modifier) {
         const auto point = render_2d::RenderableGeometry<geometry_2d::Point2d>{
             .primitive = geometry_2d::Point2d{.x = -0.9, .y = 0.9},
             .contentTraits = geometry_2d::ContentTraits<geometry_2d::Point2d>{
@@ -65,10 +66,10 @@ void GuiTest::_init()
             },
         };
 
-        _simple2dGeometryBatch->add(point);
-        _simple2dGeometryBatch->add(line);
-        _simple2dGeometryBatch->add(triangle);
-    }
+        modifier.add(point);
+        modifier.add(line);
+        modifier.add(triangle);
+    });
 }
 
 //======================================================================================================================
