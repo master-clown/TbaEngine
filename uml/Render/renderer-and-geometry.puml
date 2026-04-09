@@ -17,11 +17,9 @@ package render_2d {
     --
         + {abstract} add(Line) -> LineId
         + {abstract} add(Triangle) -> TriangleId
-        + {abstract} add(FontText) -> FontTextId
     --
         + {abstract} modify(LineId) -> LineModifier
         + {abstract} modify(TriangleId) -> TriangleModifier
-        + {abstract} modify(FontTextId) -> FontTextModifier
     }
 
     '-------------------------------------------------------------------------------------------------------------------
@@ -29,9 +27,6 @@ package render_2d {
 
     '===================================================================================================================
     abstract class Renderer {
-        + {abstract} clear(Color)
-        + {abstract} finalizeRender()
-    --
         + {abstract} createGeometryBatch()
         + {abstract} renderGeometryBatch(GeometryBatch)
     }
