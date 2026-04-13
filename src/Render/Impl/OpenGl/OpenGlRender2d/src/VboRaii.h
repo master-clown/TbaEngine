@@ -11,7 +11,7 @@ namespace opengl_render_2d {
     public:
         using BufferSizeInBytes = long;
         using IsMappable = bool;
-        VboRaii(BufferSizeInBytes, IsMappable = false);
+        explicit VboRaii(BufferSizeInBytes, IsMappable = false);
 
         struct MapOnCreation { };
         VboRaii(BufferSizeInBytes, MapOnCreation);
