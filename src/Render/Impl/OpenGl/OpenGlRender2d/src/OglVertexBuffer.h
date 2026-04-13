@@ -10,7 +10,7 @@ namespace opengl_render_2d {
         using VaoId = uint32;
 
         // TODO: use `const VertexArrayObject&` instead of `VaoId`
-        explicit OglVertexBuffer(const VaoId vaoId);
+        explicit OglVertexBuffer(VaoId);
 
         using VboRawId = OglBuffer::BufferRawId;
         VboRawId getVboId() const;
@@ -19,6 +19,8 @@ namespace opengl_render_2d {
 
     private:
         void _rebindVboToVao() const;
+
+        //--------------------------------------------------------------------------------------------------------------
         static void _staticAssertsOnTypedefs() noexcept;
 
     private:
