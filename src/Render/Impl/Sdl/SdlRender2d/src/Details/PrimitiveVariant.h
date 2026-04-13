@@ -1,10 +1,9 @@
 #pragma once
 
-#include <Content/Color.h>
-#include <Geometry2d/ScreenCoordinate.h>
-
 #include <Common/Integers.h>
 #include <Common/Stl/Array.h>
+#include <Content/Color.h>
+#include <Geometry2d/ScreenCoordinate.h>
 
 //======================================================================================================================
 namespace sdl_render_2d::details {
