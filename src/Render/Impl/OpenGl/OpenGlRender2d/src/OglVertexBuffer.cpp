@@ -1,7 +1,6 @@
 #include "OglVertexBuffer.h"
 
 #include <OpenGlApi/ErrorCheck.h>
-// TODO: single cpp for avoiding many inclusions of this header?
 #include <OpenGlApi/OpenGlApi.h>
 
 #include <type_traits>

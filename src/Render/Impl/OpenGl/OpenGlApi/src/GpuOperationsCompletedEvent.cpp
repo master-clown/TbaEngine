@@ -1,6 +1,5 @@
 #include <OpenGlApi/GpuOperationsCompletedEvent.h>
 
-// TODO: single cpp for avoiding many inclusions of this header?
 #include <OpenGlApi/OpenGlApi.h>
 
 #include <Common/Integers.h>
