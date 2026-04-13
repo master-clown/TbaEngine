@@ -29,12 +29,7 @@ VboRaii::VboRaii(const BufferSizeInBytes bufferSizeInBytes, const IsMappable isM
 {
     glCreateBuffers(1, &_bufferId);
 
-    const auto bufferUsageFlags = [&] -> uint32 {
-        if (isMappable)
-            return mappedBufferUsageFlags;
-
-        return 0; // TODO: check if indeed no bits are required
-    }();
+    const auto bufferUsageFlags = isMappable ? mappedBufferUsageFlags : 0;
     glNamedBufferStorage(_bufferId, _currentSizeInBytes, nullptr, bufferUsageFlags);
     opengl_api::checkOperationSuccess("VboRaii::ctor(): glNamedBufferStorage()");
 
