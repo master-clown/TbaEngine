@@ -1,0 +1,2 @@
+# To make github show C++ as the project language
+*.c linguist-detectable=false
