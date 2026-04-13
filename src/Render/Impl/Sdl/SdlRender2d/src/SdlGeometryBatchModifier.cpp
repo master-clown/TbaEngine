@@ -1,8 +1,7 @@
 #include "SdlGeometryBatchModifier.h"
 
-#include "SdlGeometryBatch.h"
-
 #include "Details/PrimitiveVariant.h"
+#include "SdlGeometryBatch.h"
 
 #include <Geometry2d/Line.h>
 #include <Geometry2d/Point2d.h>
