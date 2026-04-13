@@ -28,14 +28,23 @@ namespace {
 }
 
 //======================================================================================================================
-void SdlTriangle::setFromPrimitiveVariant(const PrimitiveVariant& primitive)
+SdlTriangle::SdlTriangle(SdlFPointFromPoint2d sdlFPointFromPoint2d)
+    : _transformToSdlPointFunc(std::move(sdlFPointFromPoint2d))
 {
+    assert(_transformToSdlPointFunc);
+}
+
+//======================================================================================================================
+auto SdlTriangle::convertPrimitiveVariantToSdlVertexArray(const PrimitiveVariant& primitive) -> SdlVertexArray&
+{
+    thread_local SdlVertexArray sdlVertexes;
+
     assert(primitive.type == PrimitiveVariant::PrimitiveType::Triangle);
 
     const auto faceSdlFColor = makeSdlFColor(primitive.mainColor);
 
     const auto makeSdlVertex = [this, &faceSdlFColor](const geometry_2d::Point2d& pt) noexcept {
-        const auto sdlPt = transformToSdlPointFunc(pt);
+        const auto sdlPt = _transformToSdlPointFunc(pt);
         return SDL_Vertex{
             .position = sdlPt,
             .color = faceSdlFColor,
@@ -47,4 +56,6 @@ void SdlTriangle::setFromPrimitiveVariant(const PrimitiveVariant& primitive)
     sdlVertexes[0] = makeSdlVertex({.x = coordArray[0], .y = coordArray[1]});
     sdlVertexes[1] = makeSdlVertex({.x = coordArray[2], .y = coordArray[3]});
     sdlVertexes[2] = makeSdlVertex({.x = coordArray[4], .y = coordArray[5]});
+
+    return sdlVertexes;
 }

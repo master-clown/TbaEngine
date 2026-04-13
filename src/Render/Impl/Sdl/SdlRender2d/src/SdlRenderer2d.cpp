@@ -28,11 +28,13 @@ struct SdlRenderer2d::Pimpl final {
         uint16 height = 0;
     };
 
+    details::SdlTriangle sdlTriangle;
     SDL_Renderer* renderer = nullptr;
     ScreenSize currentScreenSize;
-    details::SdlTriangle sdlTriangle; // not thread-safe
 
-    explicit Pimpl(sdl_winsys::SdlWindow& sdlWindow)
+    Pimpl(sdl_winsys::SdlWindow& sdlWindow,
+          details::SdlTriangle::SdlFPointFromPoint2d sdlFPointFromPoint2d)
+        : sdlTriangle(std::move(sdlFPointFromPoint2d))
     {
         const auto& winOptions = sdlWindow.getWindowOptions();
 
@@ -51,12 +53,12 @@ struct SdlRenderer2d::Pimpl final {
 
 //=====================================================================================================================
 SdlRenderer2d::SdlRenderer2d(sdl_winsys::SdlWindow& sdlWindow)
-    : _pimpl(makeUPtr<Pimpl>(sdlWindow))
+    : _pimpl(makeUPtr<Pimpl>(sdlWindow,
+                             [this](const geometry_2d::Point2d& pt) {
+                                 const auto sdlPt = _toSdlScreenPoint2d(pt);
+                                 return SDL_FPoint{.x = sdlPt.x, .y = sdlPt.y};
+                             }))
 {
-    _pimpl->sdlTriangle.transformToSdlPointFunc = [this](const geometry_2d::Point2d& pt) {
-        const auto sdlPt = _toSdlScreenPoint2d(pt);
-        return SDL_FPoint{.x = sdlPt.x, .y = sdlPt.y};
-    };
 }
 
 //=====================================================================================================================
@@ -147,12 +149,12 @@ void SdlRenderer2d::_renderAsLine(const PrimitiveVariant& primitive)
 //=====================================================================================================================
 void SdlRenderer2d::_renderAsTriangle(const PrimitiveVariant& primitive)
 {
-    _pimpl->sdlTriangle.setFromPrimitiveVariant(primitive);
+    auto& sdlVertexArray = _pimpl->sdlTriangle.convertPrimitiveVariantToSdlVertexArray(primitive);
 
     SDL_RenderGeometry(_pimpl->renderer,
                        (SDL_Texture*)nullptr,
-                       &_pimpl->sdlTriangle.sdlVertexes[0],
-                       _pimpl->sdlTriangle.sdlVertexes.size(),
+                       &sdlVertexArray[0],
+                       sdlVertexArray.size(),
                        (int*)nullptr,
                        0);
 }

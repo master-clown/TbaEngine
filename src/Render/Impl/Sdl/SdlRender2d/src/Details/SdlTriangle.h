@@ -16,10 +16,16 @@ namespace sdl_render_2d::details {
 //======================================================================================================================
 namespace sdl_render_2d::details {
     //==================================================================================================================
-    struct SdlTriangle final {
-        std::function<SDL_FPoint(const geometry_2d::Point2d&)> transformToSdlPointFunc;
-        Array<SDL_Vertex, 3> sdlVertexes;
+    class SdlTriangle final {
+    public:
+        using SdlFPointFromPoint2d = std::function<SDL_FPoint(const geometry_2d::Point2d&)>;
+        explicit SdlTriangle(SdlFPointFromPoint2d);
 
-        void setFromPrimitiveVariant(const PrimitiveVariant&);
+        //--------------------------------------------------------------------------------------------------------------
+        using SdlVertexArray = Array<SDL_Vertex, 3>;
+        SdlVertexArray& convertPrimitiveVariantToSdlVertexArray(const PrimitiveVariant&);
+
+    private:
+        SdlFPointFromPoint2d _transformToSdlPointFunc;
     };
 }
