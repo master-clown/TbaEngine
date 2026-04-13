@@ -32,7 +32,7 @@ struct SdlRenderer2d::Pimpl final {
     ScreenSize currentScreenSize;
     details::SdlTriangle sdlTriangle; // not thread-safe
 
-    Pimpl(sdl_winsys::SdlWindow& sdlWindow)
+    explicit Pimpl(sdl_winsys::SdlWindow& sdlWindow)
     {
         const auto& winOptions = sdlWindow.getWindowOptions();
 
