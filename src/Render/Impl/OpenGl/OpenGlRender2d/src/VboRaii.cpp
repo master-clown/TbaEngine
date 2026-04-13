@@ -119,8 +119,9 @@ Optional<void*> VboRaii::getVboMappingPtr() const
 //======================================================================================================================
 void VboRaii::_release()
 {
-    const auto isBufferMapped = _bufferMappingPtr.has_value();
     assert(!_bufferMappingPtr || _bufferMappingPtr.value());
+
+    const auto isBufferMapped = _bufferMappingPtr.has_value();
 
     if (!_bufferId) {
         assert(!isBufferMapped);
