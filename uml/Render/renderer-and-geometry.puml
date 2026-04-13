@@ -15,8 +15,8 @@ package render_2d {
     --
         + {abstract} clear()
     --
-        + {abstract} add(Line) -> LineId
-        + {abstract} add(Triangle) -> TriangleId
+        + {abstract} append(Line) -> LineId
+        + {abstract} append(Triangle) -> TriangleId
     --
         + {abstract} modify(LineId) -> LineModifier
         + {abstract} modify(TriangleId) -> TriangleModifier
