@@ -1,8 +1,8 @@
 #include "OglGeometryBatch.h"
 
-#include <OpenGlApi/GpuOperationsCompletedEvent.h>
-
 #include "OglGeometryBatchModifier.h"
+
+#include <OpenGlApi/GpuOperationsCompletedEvent.h>
 
 #include <cassert>
 
