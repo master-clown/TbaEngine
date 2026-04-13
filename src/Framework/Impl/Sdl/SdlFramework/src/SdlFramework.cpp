@@ -58,7 +58,7 @@ uptr<render::Renderer> SdlFramework::createRenderer(renderer_context::RendererCo
     const auto renderType = rendererContext->getRendererType();
     switch (renderType) {
     case Type::OpenGl: return makeUPtr<opengl_renderer::OpenGlRenderer>(std::move(rendererContext));
-    case Type::Sdl: return makeUPtr<sdl_render::SdlRenderer>(std::move(rendererContext));
+    case Type::Sdl: return makeUPtr<sdl_renderer::SdlRenderer>(std::move(rendererContext));
     default: break;
     }
 

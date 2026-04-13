@@ -6,7 +6,7 @@
 #include <cassert>
 
 //==================================================================================================================
-using sdl_render::SdlRenderer;
+using sdl_renderer::SdlRenderer;
 
 //==================================================================================================================
 SdlRenderer::SdlRenderer(renderer_context::RendererContextRaii rendererContext)
