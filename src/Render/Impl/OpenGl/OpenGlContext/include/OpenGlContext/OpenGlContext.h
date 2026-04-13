@@ -5,6 +5,11 @@
 #include <RendererContext/RendererContext.h>
 
 //======================================================================================================================
+namespace opengl_api {
+    class GpuOperationsCompletedEvent;
+}
+
+//======================================================================================================================
 namespace opengl_context {
     //==================================================================================================================
     class OpenGlContext : public renderer_context::RendererContext {
@@ -39,7 +44,11 @@ namespace opengl_context {
         //--------------------------------------------------------------------------------------------------------------
         OpenGlFunctionsLoader getOpenGlFunctionsLoader() const noexcept;
 
+        //--------------------------------------------------------------------------------------------------------------
+        opengl_api::GpuOperationsCompletedEvent& getGpuOperationsCompletedEvent();
+
     private:
         OpenGlFunctionsLoader _openGlFunctionsLoader = nullptr;
+        uptr<opengl_api::GpuOperationsCompletedEvent> _gpuOperationsCompletedEvent;
     };
 }

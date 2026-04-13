@@ -16,6 +16,6 @@ namespace geometry_2d {
     //==================================================================================================================
     template <>
     struct ContentTraits<Point2d> final {
-        content::Color color;
+        content::Color color = content::Color::white;
     };
 }

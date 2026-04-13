@@ -10,6 +10,11 @@ namespace render {
 }
 
 //======================================================================================================================
+namespace render_2d {
+    class GeometryBatch;
+}
+
+//======================================================================================================================
 class GuiTest final : public framework::RenderableApplication {
 public:
     GuiTest();
@@ -28,11 +33,12 @@ private:
 
 private:
     struct GraphicsOptions final {
-        geometry_2d::ScreenCoordinate _renderTargetLogicalWidth = 640;
-        geometry_2d::ScreenCoordinate _renderTargetLogicalHeigth = 480;
+        uint16 _renderTargetLogicalWidth = 640;
+        uint16 _renderTargetLogicalHeigth = 480;
     };
 
     uptr<winsys::Window> _appWindow;
     uptr<render::Renderer> _renderer;
     GraphicsOptions _graphicsOptions;
+    uptr<render_2d::GeometryBatch> _simple2dGeometryBatch;
 };

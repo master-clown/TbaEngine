@@ -10,6 +10,12 @@ list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 set(SOURCES
     Details/SdlTriangle.cpp
     Details/SdlTriangle.h
+    Details/PrimitiveVariant.cpp
+    Details/PrimitiveVariant.h
+    SdlGeometryBatch.cpp
+    SdlGeometryBatch.h
+    SdlGeometryBatchModifier.cpp
+    SdlGeometryBatchModifier.h
     SdlRenderer2d.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")

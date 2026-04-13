@@ -8,7 +8,28 @@ set(PUBLIC_HEADERS
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
+    OglBuffer.cpp
+    OglBuffer.h
+    OglGeometryBatch.cpp
+    OglGeometryBatch.h
+    OglGeometryBatchModifier.cpp
+    OglGeometryBatchModifier.h
+    OglIndexBuffer.cpp
+    OglIndexBuffer.h
+    OglVertexArrayObject.cpp
+    OglVertexArrayObject.h
+    OglVertexBuffer.cpp
+    OglVertexBuffer.h
+    OglVertexInfo.cpp
+    OglVertexInfo.h
     OpenGlRenderer2d.cpp
+    ShaderPipeline.cpp
+    ShaderPipeline.h
+    TypedOglBuffer.cpp
+    TypedOglBuffer.h
+    TypedOglBuffer.hpp
+    VboRaii.cpp
+    VboRaii.h
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 

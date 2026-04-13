@@ -1,5 +1,6 @@
 #include <GuiAppTemplate/GuiAppTemplate.h>
 
+#include <Renderer/Renderer.h>
 #include <SdlFramework/SdlFramework.h>
 #include <SdlRenderContext/SdlRenderPreconfigOptions.h>
 #include <Winsys/WindowMgr.h>

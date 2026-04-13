@@ -45,58 +45,37 @@ package content {
 '=======================================================================================================================
 package render_2d {
     '===================================================================================================================
-    package geom_prim {
-        class Line
-        class Triangle
-    }
-
-    '-------------------------------------------------------------------------------------------------------------------
-    geom_prim o-- content.Content
-
-    '===================================================================================================================
-    package text {
-        class FontText
-    }
-
-    '-------------------------------------------------------------------------------------------------------------------
-    text o-- content.Content
+    abstract class GeometryBatch
     
     '===================================================================================================================
     abstract class Renderer {
-        + {abstract} draw(geom_prim::Line)
-        + {abstract} draw(geom_prim::Triangle)
-        + {abstract} draw(text::FontText)
-        // ...
+        + {abstract} clear(Color)
+        + {abstract} finalizeRender()
+    --
+        + {abstract} createGeometryBatch()
+        + {abstract} renderGeometryBatch(GeometryBatch)
     }
 
     '-------------------------------------------------------------------------------------------------------------------
-    Renderer --> geom_prim
-    Renderer --> text
+    Renderer --> GeometryBatch
 }
 
 '=======================================================================================================================
 package render_3d {
     '===================================================================================================================
-    package geom_prim {
-        class Line
-        class Triangle
-        class Tetrahedron
-        class Brick
-    }
-
-    '-------------------------------------------------------------------------------------------------------------------
-    geom_prim o-- content.Content
+    abstract class GeometryBatch
     
     '===================================================================================================================
     abstract class Renderer {
-        + {abstract} draw(geom_prim::Line)
-        // ...
-        + {abstract} draw(geom_prim::Tetrahedron)
-        // ...
+        + {abstract} clear(Color)
+        + {abstract} finalizeRender()
+    --
+        + {abstract} createGeometryBatch()
+        + {abstract} renderGeometryBatch(GeometryBatch)
     }
 
     '-------------------------------------------------------------------------------------------------------------------
-    Renderer --> geom_prim
+    Renderer --> GeometryBatch
 }
 
 '=======================================================================================================================
@@ -106,26 +85,21 @@ package render {
 
     '===================================================================================================================
     abstract class Renderable2D extends Renderable {
-        + {abstract} draw(render_2d::Renderer)
+        + {abstract} addToGeometryBatch(render_2d::GeometryBatch)
     }
 
     '-------------------------------------------------------------------------------------------------------------------
-    Renderable2D --> render_2d.Renderer
-
-    '-------------------------------------------------------------------------------------------------------------------
-    Renderable2D *-- render_2d.geom_prim
-    Renderable2D *-- render_2d.text
+    Renderable2D o-- render_2d.GeometryBatch
+    Renderable2D *-- content.Content
 
     '===================================================================================================================
     abstract class Renderable3D extends Renderable {
-        + {abstract} draw(render_3d::Renderer)
+        + {abstract} addToGeometryBatch(render_3d::GeometryBatch)
     }
 
     '-------------------------------------------------------------------------------------------------------------------
-    Renderable3D --> render_3d.Renderer
-
-    '-------------------------------------------------------------------------------------------------------------------
-    Renderable3D *-- render_3d.geom_prim
+    Renderable3D o-- render_3d.GeometryBatch
+    Renderable3D *-- content.Content
 
     '===================================================================================================================
     abstract class RenderableObject

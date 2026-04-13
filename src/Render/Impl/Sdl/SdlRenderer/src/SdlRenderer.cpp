@@ -6,7 +6,7 @@
 #include <cassert>
 
 //==================================================================================================================
-using sdl_render::SdlRenderer;
+using sdl_renderer::SdlRenderer;
 
 //==================================================================================================================
 SdlRenderer::SdlRenderer(renderer_context::RendererContextRaii rendererContext)
@@ -19,7 +19,7 @@ SdlRenderer::SdlRenderer(renderer_context::RendererContextRaii rendererContext)
 
         return static_cast<sdl_winsys::SdlWindow&>(*targetWindow);
     }())
-    , _renderer2d(makeUPtr<SdlRenderer2d>(_sdlWindow))
+    , _renderer2d(makeUPtr<sdl_render_2d::SdlRenderer2d>(_sdlWindow))
 {
     assert(getRendererContext().getRendererType() == renderer_context::RendererType::Sdl);
 }

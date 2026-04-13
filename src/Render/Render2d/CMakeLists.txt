@@ -3,12 +3,16 @@ cmake_minimum_required(VERSION 3.12)
 set(TARGET_NAME Render2d)
 
 set(PUBLIC_HEADERS
+    GeometryBatch.h
+    GeometryBatchModifier.h
     RenderableGeometry.h
     Renderer.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
+    GeometryBatch.cpp
+    GeometryBatchModifier.cpp
     RenderableGeometry.cpp
     Renderer.cpp
 )
@@ -30,3 +34,7 @@ target_link_libraries(${TARGET_NAME} PRIVATE
     Common
     Content
 )
+
+if(BUILD_TESTS)
+    add_subdirectory(test)
+endif()

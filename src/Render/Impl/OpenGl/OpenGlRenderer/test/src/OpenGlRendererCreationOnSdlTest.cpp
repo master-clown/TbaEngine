@@ -1,6 +1,7 @@
 #include <GuiAppTemplate/GuiAppTemplate.h>
 
 #include <OpenGlContext/OpenGlPreconfigOptions.h>
+#include <Renderer/Renderer.h>
 #include <SdlFramework/SdlFramework.h>
 #include <Winsys/WindowMgr.h>
 
