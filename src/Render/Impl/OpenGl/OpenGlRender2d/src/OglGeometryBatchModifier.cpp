@@ -28,7 +28,7 @@ void OglGeometryBatchModifier::clear()
 }
 
 //======================================================================================================================
-void OglGeometryBatchModifier::add(const render_2d::RenderableGeometry<geometry_2d::Point2d>& pt)
+void OglGeometryBatchModifier::append(const render_2d::RenderableGeometry<geometry_2d::Point2d>& pt)
 {
     const auto newVertexIndex = _addNewVertex(pt.primitive, pt.contentTraits.color);
 
@@ -36,7 +36,7 @@ void OglGeometryBatchModifier::add(const render_2d::RenderableGeometry<geometry_
 }
 
 //======================================================================================================================
-void OglGeometryBatchModifier::add(const render_2d::RenderableGeometry<geometry_2d::Line>& lineGeometry)
+void OglGeometryBatchModifier::append(const render_2d::RenderableGeometry<geometry_2d::Line>& lineGeometry)
 {
     const auto& color = lineGeometry.contentTraits.lineColor;
     const auto startVertexIndex = _addNewVertex(lineGeometry.primitive.startPt, color);
@@ -47,7 +47,7 @@ void OglGeometryBatchModifier::add(const render_2d::RenderableGeometry<geometry_
 }
 
 //======================================================================================================================
-void OglGeometryBatchModifier::add(const render_2d::RenderableGeometry<geometry_2d::Triangle>& triangleGeometry)
+void OglGeometryBatchModifier::append(const render_2d::RenderableGeometry<geometry_2d::Triangle>& triangleGeometry)
 {
     const auto& color = std::get<content::Color>(triangleGeometry.contentTraits.faceContent);
     const auto vertex1Index = _addNewVertex(triangleGeometry.primitive.pt1, color);

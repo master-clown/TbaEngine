@@ -28,7 +28,7 @@ void SdlGeometryBatchModifier::clear()
 }
 
 //======================================================================================================================
-void SdlGeometryBatchModifier::add(const RenderableGeometry<geometry_2d::Point2d>& point)
+void SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2d::Point2d>& point)
 {
     _batch._getPrimitives().push_back({
         .primitiveCoordArray = {point.primitive.x, point.primitive.y},
@@ -38,7 +38,7 @@ void SdlGeometryBatchModifier::add(const RenderableGeometry<geometry_2d::Point2d
 }
 
 //======================================================================================================================
-void SdlGeometryBatchModifier::add(const RenderableGeometry<geometry_2d::Line>& line)
+void SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2d::Line>& line)
 {
     const auto& startPt = line.primitive.startPt;
     const auto& finalPt = line.primitive.finalPt;
@@ -51,7 +51,7 @@ void SdlGeometryBatchModifier::add(const RenderableGeometry<geometry_2d::Line>& 
 }
 
 //======================================================================================================================
-void SdlGeometryBatchModifier::add(const RenderableGeometry<geometry_2d::Triangle>& triangle)
+void SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2d::Triangle>& triangle)
 {
     const auto& pt1 = triangle.primitive.pt1;
     const auto& pt2 = triangle.primitive.pt2;

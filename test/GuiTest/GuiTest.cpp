@@ -66,9 +66,9 @@ void GuiTest::_init()
             },
         };
 
-        modifier.add(point);
-        modifier.add(line);
-        modifier.add(triangle);
+        modifier.append(point);
+        modifier.append(line);
+        modifier.append(triangle);
     });
 }
 

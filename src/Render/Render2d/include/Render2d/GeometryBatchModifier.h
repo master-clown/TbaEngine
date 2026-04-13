@@ -20,8 +20,8 @@ namespace render_2d {
 
         //--------------------------------------------------------------------------------------------------------------
         // TODO: add bulk operations (to allocate the memory only once)
-        virtual void add(const RenderableGeometry<geometry_2d::Point2d>&) = 0;
-        virtual void add(const RenderableGeometry<geometry_2d::Line>&) = 0;
-        virtual void add(const RenderableGeometry<geometry_2d::Triangle>&) = 0;
+        virtual void append(const RenderableGeometry<geometry_2d::Point2d>&) = 0;
+        virtual void append(const RenderableGeometry<geometry_2d::Line>&) = 0;
+        virtual void append(const RenderableGeometry<geometry_2d::Triangle>&) = 0;
     };
 }

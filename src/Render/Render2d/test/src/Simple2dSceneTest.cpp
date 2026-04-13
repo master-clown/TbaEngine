@@ -124,9 +124,9 @@ TEST_CASE(DrawSimpleGeometryIn2d)
             },
         };
 
-        modifier.add(point);
-        modifier.add(line);
-        modifier.add(triangle);
+        modifier.append(point);
+        modifier.append(line);
+        modifier.append(triangle);
     };
 
     testAllRenderers("Check that simple 2D geometry renders correctly", initSceneGeometryBatch);
@@ -150,7 +150,7 @@ TEST_CASE(DrawSameTriangle100000Times)
         };
 
         for (int i = 0; i < trianglesCount; ++i)
-            modifier.add(triangle);
+            modifier.append(triangle);
     };
 
     testAllRenderers(strFormat("Draw of {} same triangles", trianglesCount),
