@@ -60,8 +60,8 @@ void OglGeometryBatchModifier::append(const render_2d::RenderableGeometry<geomet
 }
 
 //======================================================================================================================
-OglIndexBuffer::Index OglGeometryBatchModifier::_addNewVertex(const geometry_2d::Point2d& pt,
-                                                              const content::Color& color)
+auto OglGeometryBatchModifier::_addNewVertex(const geometry_2d::Point2d& pt,
+                                             const content::Color& color) -> _VertexIndex
 {
     const auto newVertexIndex = _batch._vertexBuffer.getUnderlyingBuffer().append(OglVertexInfo{
         .x = pt.x,
@@ -72,5 +72,5 @@ OglIndexBuffer::Index OglGeometryBatchModifier::_addNewVertex(const geometry_2d:
         .a = color.a,
     });
 
-    return numericCast<OglIndexBuffer::Index>(newVertexIndex);
+    return numericCast<_VertexIndex>(newVertexIndex);
 }

@@ -29,7 +29,8 @@ namespace opengl_render_2d {
         void append(const render_2d::RenderableGeometry<geometry_2d::Triangle>&) override;
 
     private:
-        OglIndexBuffer::Index _addNewVertex(const geometry_2d::Point2d&, const content::Color&);
+        using _VertexIndex = OglIndexBuffer::Index;
+        _VertexIndex _addNewVertex(const geometry_2d::Point2d&, const content::Color&);
 
     private:
         OglGeometryBatch& _batch;
