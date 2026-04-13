@@ -1,8 +1,7 @@
 #include "SdlGeometryBatch.h"
 
-#include "SdlGeometryBatchModifier.h"
-
 #include "Details/PrimitiveVariant.h"
+#include "SdlGeometryBatchModifier.h"
 
 #include <cassert>
 
