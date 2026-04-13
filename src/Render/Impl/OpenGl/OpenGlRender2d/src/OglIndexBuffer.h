@@ -5,8 +5,8 @@
 //======================================================================================================================
 namespace opengl_render_2d {
     //==================================================================================================================
-    // TODO: allow to work with multiple indexes at once (like `TypedOglBuffer<Line/TriagnleIndexes>`)
-    // TODO: add `TypedOglBuffer::append(vector<BufferItem>)` for that
+    // TODO: allow to work with batches of indexes
+    //  (add `TypedOglBuffer::append(vector<BufferItem>)` for that)
     class OglIndexBuffer final {
     public:
         using VaoId = uint32;
