@@ -24,9 +24,9 @@ namespace opengl_render_2d {
         void clear() override;
 
         //--------------------------------------------------------------------------------------------------------------
-        void append(const render_2d::RenderableGeometry<geometry_2d::Point2d>&) override;
-        void append(const render_2d::RenderableGeometry<geometry_2d::Line>&) override;
-        void append(const render_2d::RenderableGeometry<geometry_2d::Triangle>&) override;
+        render_2d::PrimitiveId append(const render_2d::RenderableGeometry<geometry_2d::Point2d>&) override;
+        render_2d::PrimitiveId append(const render_2d::RenderableGeometry<geometry_2d::Line>&) override;
+        render_2d::PrimitiveId append(const render_2d::RenderableGeometry<geometry_2d::Triangle>&) override;
 
     private:
         using _VertexIndex = OglIndexBuffer::Index;
