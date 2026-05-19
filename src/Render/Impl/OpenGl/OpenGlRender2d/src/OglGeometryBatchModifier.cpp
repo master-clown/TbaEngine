@@ -14,6 +14,8 @@
 //======================================================================================================================
 using namespace opengl_render_2d;
 
+using render_2d::PrimitiveId;
+
 //======================================================================================================================
 OglGeometryBatchModifier::OglGeometryBatchModifier(OglGeometryBatch& batch,
                                                    const texture_storage::TextureStorage& textureStorage)
@@ -33,15 +35,17 @@ void OglGeometryBatchModifier::clear()
 }
 
 //======================================================================================================================
-void OglGeometryBatchModifier::append(const render_2d::RenderableGeometry<geometry_2d::Point2d>& pt)
+PrimitiveId OglGeometryBatchModifier::append(const render_2d::RenderableGeometry<geometry_2d::Point2d>& pt)
 {
     const auto newVertexIndex = _addNewVertex(pt.primitive, pt.contentTraits.color);
 
     _batch._pointIndexBuffer.getUnderlyingBuffer().append(numericCast<OglIndexBuffer::Index>(newVertexIndex));
+
+    return PrimitiveId::generate<geometry_2d::Point2d>();
 }
 
 //======================================================================================================================
-void OglGeometryBatchModifier::append(const render_2d::RenderableGeometry<geometry_2d::Line>& lineGeometry)
+PrimitiveId OglGeometryBatchModifier::append(const render_2d::RenderableGeometry<geometry_2d::Line>& lineGeometry)
 {
     const auto& color = lineGeometry.contentTraits.lineColor;
     const auto startVertexIndex = _addNewVertex(lineGeometry.primitive.startPt, color);
@@ -49,10 +53,12 @@ void OglGeometryBatchModifier::append(const render_2d::RenderableGeometry<geomet
 
     _batch._lineIndexBuffer.getUnderlyingBuffer().append(startVertexIndex);
     _batch._lineIndexBuffer.getUnderlyingBuffer().append(finalVertexIndex);
+
+    return PrimitiveId::generate<geometry_2d::Line>();
 }
 
 //======================================================================================================================
-void OglGeometryBatchModifier::append(const render_2d::RenderableGeometry<geometry_2d::Triangle>& triangleGeometry)
+PrimitiveId OglGeometryBatchModifier::append(const render_2d::RenderableGeometry<geometry_2d::Triangle>& triangleGeometry)
 {
     const auto& content = triangleGeometry.contentTraits.faceContent;
     const auto& texCoords = triangleGeometry.contentTraits.textureCoords;
@@ -63,6 +69,8 @@ void OglGeometryBatchModifier::append(const render_2d::RenderableGeometry<geomet
     _batch._triangleIndexBuffer.getUnderlyingBuffer().append(vertex1Index);
     _batch._triangleIndexBuffer.getUnderlyingBuffer().append(vertex2Index);
     _batch._triangleIndexBuffer.getUnderlyingBuffer().append(vertex3Index);
+
+    return PrimitiveId::generate<geometry_2d::Triangle>();
 }
 
 //======================================================================================================================

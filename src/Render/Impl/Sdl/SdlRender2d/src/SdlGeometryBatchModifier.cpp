@@ -13,6 +13,7 @@
 #include <cassert>
 
 //======================================================================================================================
+using render_2d::PrimitiveId;
 using render_2d::RenderableGeometry;
 using sdl_render_2d::SdlGeometryBatchModifier;
 using sdl_render_2d::details::PrimitiveVariant;
@@ -32,17 +33,19 @@ void SdlGeometryBatchModifier::clear()
 }
 
 //======================================================================================================================
-void SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2d::Point2d>& point)
+PrimitiveId SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2d::Point2d>& point)
 {
     _batch._getPrimitives().push_back({
         .primitivePoints = {point.primitive},
         .color = point.contentTraits.color,
         .type = PrimitiveVariant::PrimitiveType::Point,
     });
+
+    return PrimitiveId::generate<geometry_2d::Point2d>();
 }
 
 //======================================================================================================================
-void SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2d::Line>& line)
+PrimitiveId SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2d::Line>& line)
 {
     const auto& startPt = line.primitive.startPt;
     const auto& finalPt = line.primitive.finalPt;
@@ -52,10 +55,12 @@ void SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2d::Line
         .color = line.contentTraits.lineColor,
         .type = PrimitiveVariant::PrimitiveType::Line,
     });
+
+    return PrimitiveId::generate<geometry_2d::Line>();
 }
 
 //======================================================================================================================
-void SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2d::Triangle>& triangle)
+PrimitiveId SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2d::Triangle>& triangle)
 {
     const auto& pt1 = triangle.primitive.pt1;
     const auto& pt2 = triangle.primitive.pt2;
@@ -85,4 +90,6 @@ void SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2d::Tria
         triangle.contentTraits.faceContent);
 
     _batch._getPrimitives().push_back(std::move(primitive));
+
+    return PrimitiveId::generate<geometry_2d::Triangle>();
 }
