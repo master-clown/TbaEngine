@@ -40,6 +40,7 @@ namespace render_2d {
         virtual void setBaseRenderResolution(uint16 width, uint16 height) = 0;
 
         //--------------------------------------------------------------------------------------------------------------
+        // TODO: move to a separate interface? There is demand (e.g. from RenderScene)
         virtual uptr<GeometryBatch> createGeometryBatch() = 0;
         virtual void renderGeometryBatch(const GeometryBatch&) = 0;
     };
