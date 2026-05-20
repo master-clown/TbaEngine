@@ -32,13 +32,14 @@ namespace render_2d {
         static PrimitiveId _generateNewId(RawId primitiveType);
 
         //--------------------------------------------------------------------------------------------------------------
-        static constexpr uint8 _idBitOffset = 0;
-        static constexpr uint8 _primitiveTypeBitOffset = 30;
+        static constexpr uint8 _bitOffsetForId = 0;
+        static constexpr uint8 _numOfBitsForPrimitiveType = 2;
+        static constexpr uint8 _bitOffsetForPrimitiveType = CHAR_BIT * sizeof(RawId) - _numOfBitsForPrimitiveType;
 
-        static constexpr RawId _primitiveTypeBitPattern = std::numeric_limits<RawId>::max() >> _primitiveTypeBitOffset;
-        static constexpr uint8 _maxAvailablePrimitiveTypes = _primitiveTypeBitPattern + 1; // from zero
+        static constexpr uint8 _numOfAvailablePrimitiveTypes = 1 << _numOfBitsForPrimitiveType;
+        static constexpr uint8 _bitPatternForPrimitiveType = (1 << _numOfBitsForPrimitiveType) - 1;
 
-        static constexpr RawId _primitiveTypeMask = _primitiveTypeBitPattern << _primitiveTypeBitOffset;
+        static constexpr RawId _primitiveTypeMask = _bitPatternForPrimitiveType << _bitOffsetForPrimitiveType;
         static constexpr RawId _idMask = ~_primitiveTypeMask;
 
         static void _staticAssertsForInvariants();
