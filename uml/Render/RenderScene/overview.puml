@@ -28,7 +28,7 @@ package render_scene {
     Renderable *-- Renderable3d
 
     abstract class RenderableBlueprint {
-        - {abstract} _buildRenderable(Renderable2d, 3d)
+        + {abstract} makeRenderable(TracedGeometryBatchModifier2d&, 3d)
     }
 
     class RenderScene {
