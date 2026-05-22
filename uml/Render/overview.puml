@@ -3,58 +3,50 @@
 skinparam defaultFontName monospaced
 
 '=======================================================================================================================
-package content {
+package texture {
     '===================================================================================================================
-    class Color 
-
-    '===================================================================================================================
-    abstract class UpdatableContent {
-        + {abstract} update()
-    }
-
-    abstract class Texture extends UpdatableContent 
-    abstract class Image extends UpdatableContent
-    abstract class Gif extends UpdatableContent
-    abstract class Video extends UpdatableContent
-
-    '===================================================================================================================
-    class Content {
-        Color
-        uptr<Texture>
-        // ...
-    }
-
-    note left : std::variant
+    abstract class Texture
+    abstract class TextureCreator
 
     '-------------------------------------------------------------------------------------------------------------------
-    Content *-- Color 
-    Content *-- UpdatableContent  
+    TextureCreator --> Texture
+}
 
+'=======================================================================================================================
+package texture_storage {
     '===================================================================================================================
-    class ContentStorage
+    class TextureId
+    class TextureStorage
 
-    note top
-        For media reusage 
-        TODO: different renderers require 
-          different ways of creating content. 
-          How to befriend Storage and 
-          content creators? 
-    end note
+    '-------------------------------------------------------------------------------------------------------------------
+    TextureStorage *-- TextureId
+    TextureStorage *-- texture.Texture
+}
+
+'=======================================================================================================================
+package content {
+    '===================================================================================================================
+    class Content
+
+    '-------------------------------------------------------------------------------------------------------------------
+    Content *-- Color : or
+    Content *-- StaticTexture : or
+
+    '-------------------------------------------------------------------------------------------------------------------
+    StaticTexture *-- texture_storage.TextureId
+}
+
+'=======================================================================================================================
+package renderer_context {
+    '===================================================================================================================
+    abstract class RendererContext
 }
 
 '=======================================================================================================================
 package render_2d {
     '===================================================================================================================
     abstract class GeometryBatch
-    
-    '===================================================================================================================
-    abstract class Renderer {
-        + {abstract} clear(Color)
-        + {abstract} finalizeRender()
-    --
-        + {abstract} createGeometryBatch()
-        + {abstract} renderGeometryBatch(GeometryBatch)
-    }
+    abstract class Renderer
 
     '-------------------------------------------------------------------------------------------------------------------
     Renderer --> GeometryBatch
@@ -64,15 +56,7 @@ package render_2d {
 package render_3d {
     '===================================================================================================================
     abstract class GeometryBatch
-    
-    '===================================================================================================================
-    abstract class Renderer {
-        + {abstract} clear(Color)
-        + {abstract} finalizeRender()
-    --
-        + {abstract} createGeometryBatch()
-        + {abstract} renderGeometryBatch(GeometryBatch)
-    }
+    abstract class Renderer
 
     '-------------------------------------------------------------------------------------------------------------------
     Renderer --> GeometryBatch
@@ -81,31 +65,14 @@ package render_3d {
 '=======================================================================================================================
 package render {
     '===================================================================================================================
-    abstract class Renderable
-
-    '===================================================================================================================
-    abstract class Renderable2D extends Renderable {
-        + {abstract} addToGeometryBatch(render_2d::GeometryBatch)
-    }
+    abstract class Renderer
 
     '-------------------------------------------------------------------------------------------------------------------
-    Renderable2D o-- render_2d.GeometryBatch
-    Renderable2D *-- content.Content
-
-    '===================================================================================================================
-    abstract class Renderable3D extends Renderable {
-        + {abstract} addToGeometryBatch(render_3d::GeometryBatch)
-    }
-
-    '-------------------------------------------------------------------------------------------------------------------
-    Renderable3D o-- render_3d.GeometryBatch
-    Renderable3D *-- content.Content
-
-    '===================================================================================================================
-    abstract class RenderableObject
-
-    '-------------------------------------------------------------------------------------------------------------------
-    RenderableObject --> Renderable : "factory for"
+    Renderer *-- renderer_context.RendererContext
+    Renderer *-- texture_storage.TextureStorage : temporarily
+    Renderer *-- texture.TextureCreator
+    Renderer *-- render_2d.Renderer
+    Renderer *-- render_3d.Renderer
 }
 
 '=======================================================================================================================
