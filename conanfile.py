@@ -21,6 +21,7 @@ class TbaEngineRecipe(ConanFile):
 
     def requirements(self):
         self.requires("sdl/3.2.20", options={"shared": False})
+        # as single .h file: self.requires("stb_image/2.30")
         return
 
     def build_requirements(self):
