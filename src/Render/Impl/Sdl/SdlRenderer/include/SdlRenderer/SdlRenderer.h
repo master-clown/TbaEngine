@@ -23,6 +23,8 @@ namespace sdl_renderer {
         render_2d::Renderer& get2dRenderer() override;
         render_3d::Renderer& get3dRenderer() override;
 
+        texture::TextureCreator& getTextureCreator() override;
+
     private:
         sdl_winsys::SdlWindow& _sdlWindow;
         uptr<render_2d::Renderer> _renderer2d;

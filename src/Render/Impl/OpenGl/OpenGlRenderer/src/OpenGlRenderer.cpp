@@ -57,3 +57,9 @@ render_3d::Renderer& OpenGlRenderer::get3dRenderer()
 {
     throw std::logic_error("Not implemented");
 }
+
+//==================================================================================================================
+texture::TextureCreator& OpenGlRenderer::getTextureCreator()
+{
+    throw std::logic_error("Not implemented");
+}

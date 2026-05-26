@@ -51,3 +51,9 @@ render_3d::Renderer& SdlRenderer::get3dRenderer()
 {
     throw std::logic_error("Not implemented");
 }
+
+//==================================================================================================================
+texture::TextureCreator& SdlRenderer::getTextureCreator()
+{
+    throw std::logic_error("Not implemented");
+}
