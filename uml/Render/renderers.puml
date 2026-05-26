@@ -62,8 +62,8 @@ package render {
 
     '-------------------------------------------------------------------------------------------------------------------
     Renderer *-- renderer_context.RendererContext
-    Renderer *-- texture_storage.TextureStorage
-    Renderer *-- texture.TextureCreator : temporarily
+    Renderer *-- texture_storage.TextureStorage : temporarily
+    Renderer *-- texture.TextureCreator
     Renderer *-- render_2d.Renderer
     Renderer *-- render_3d.Renderer
 }
