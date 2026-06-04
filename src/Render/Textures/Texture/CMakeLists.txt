@@ -6,6 +6,7 @@ set(PUBLIC_HEADERS
     Texture.h
     TextureCreator.h
     TextureData.h
+    TextureSampler.h
     TextureSamplingParameters.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
@@ -14,6 +15,7 @@ set(SOURCES
     Texture.cpp
     TextureCreator.cpp
     TextureData.cpp
+    TextureSampler.cpp
     TextureSamplingParameters.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
