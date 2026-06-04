@@ -12,9 +12,9 @@ namespace texture {
 
 //======================================================================================================================
 namespace texture {
-    class TextureCreator {
+    class TexturingObjectsCreator {
     public:
-        virtual ~TextureCreator();
+        virtual ~TexturingObjectsCreator();
 
         virtual uptr<Texture> create(const TextureData&) = 0;
         virtual uptr<TextureSampler> createSampler(const TextureSamplingParameters&) = 0;

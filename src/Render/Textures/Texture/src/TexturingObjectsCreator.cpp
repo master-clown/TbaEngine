@@ -1,4 +1,4 @@
-#include <Texture/TextureCreator.h>
+#include <Texture/TexturingObjectsCreator.h>
 
 //======================================================================================================================
-texture::TextureCreator::~TextureCreator() = default;
+texture::TexturingObjectsCreator::~TexturingObjectsCreator() = default;
