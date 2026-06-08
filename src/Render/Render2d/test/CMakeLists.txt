@@ -5,6 +5,8 @@ find_package(GTest REQUIRED)
 set(TARGET_NAME Render2dTest)
 
 set(TEST_SOURCES
+    GeometryBatchRenderingApp.cpp
+    GeometryBatchRenderingApp.h
     Simple2dSceneTest.cpp
 )
 list(TRANSFORM TEST_SOURCES PREPEND "src/")

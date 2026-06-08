@@ -1,15 +1,10 @@
 #include <Geometry2d/Line.h>
 #include <Geometry2d/Point2d.h>
 #include <Geometry2d/Triangle.h>
-#include <GuiAppTemplate/GuiAppWithRenderer.hpp>
 #include <OpenGlContext/OpenGlPreconfigOptions.h>
-#include <Render2d/GeometryBatch.h>
-#include <Render2d/GeometryBatchModifier.h>
-#include <Render2d/Renderer.h>
-#include <Renderer/Renderer.h>
-#include <SdlFramework/SdlFramework.h>
 #include <SdlRenderContext/SdlRenderPreconfigOptions.h>
-#include <Winsys/WindowMgr.h>
+
+#include "GeometryBatchRenderingApp.h"
 
 #include <gtest/gtest.h>
 
@@ -19,56 +14,7 @@
 #define TEST_SUITE_NAME Simple2dSceneTest
 #define STRINGIFY_(x) #x
 #define STRINGIFY(x) STRINGIFY_(x)
-
-//======================================================================================================================
-namespace {
-    //==================================================================================================================
-    using InitSceneGeometryBatch = std::function<void(render_2d::GeometryBatchModifier&)>;
-
-    //==================================================================================================================
-    template <class RendererPreconfigOptions>
-    class GeometryBatchRenderingApp final : public gui_app_template::GuiAppWithRenderer<RendererPreconfigOptions> {
-        using Super = gui_app_template::GuiAppWithRenderer<RendererPreconfigOptions>;
-
-    public:
-        explicit GeometryBatchRenderingApp(const String& caseDescription,
-                                           InitSceneGeometryBatch initSceneGeometryBatch)
-            : Super(winsys::WindowOptions{
-                  .wndTitle = STRINGIFY(TEST_SUITE_NAME) + String(" - ") + caseDescription,
-              })
-            , _initSceneGeometryBatch(std::move(initSceneGeometryBatch))
-        {
-        }
-
-    private:
-        void _initAppWithRenderer() override
-        {
-            auto& renderer2d = this->getRenderer().get2dRenderer();
-            _sceneGeometryBatch = renderer2d.createGeometryBatch();
-
-            _sceneGeometryBatch->modify(_initSceneGeometryBatch);
-        }
-
-        void _render() override
-        {
-            this->getRenderer().clear(content::Color::black);
-
-            auto& renderer2d = this->getRenderer().get2dRenderer();
-            renderer2d.renderGeometryBatch(*_sceneGeometryBatch);
-
-            this->getRenderer().finalizeRender();
-        }
-
-        uptr<framework::Framework> _createFramework() override
-        {
-            return makeUPtr<sdl_framework::SdlFramework>();
-        }
-
-    private:
-        uptr<render_2d::GeometryBatch> _sceneGeometryBatch;
-        InitSceneGeometryBatch _initSceneGeometryBatch;
-    };
-}
+#define MAKE_WND_TITLE(caseDesc) (STRINGIFY(TEST_SUITE_NAME) + String(" - ") + caseDesc)
 
 //======================================================================================================================
 namespace {
@@ -77,14 +23,14 @@ namespace {
     {
         {
             GeometryBatchRenderingApp<sdl_render_context::SdlRenderPreconfigOptions> app(
-                "SDL renderer. " + testDescription,
+                MAKE_WND_TITLE("SDL renderer. " + testDescription),
                 initSceneGeometryBatch);
             EXPECT_NO_THROW(app.run());
         }
 
         {
             GeometryBatchRenderingApp<opengl_context::OpenGlPreconfigOptions> app(
-                "OpenGL renderer. " + testDescription,
+                MAKE_WND_TITLE("OpenGL renderer. " + testDescription),
                 initSceneGeometryBatch);
             EXPECT_NO_THROW(app.run());
         }
