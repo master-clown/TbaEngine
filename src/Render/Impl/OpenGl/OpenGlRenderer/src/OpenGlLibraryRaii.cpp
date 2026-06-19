@@ -16,7 +16,14 @@ OpenGlLibraryRaii::OpenGlLibraryRaii(const LibraryInitOptions& initOptions)
 
     if (!gladLoadGLLoader(initOptions.openGlFunctionsLoader))
         throw std::runtime_error("Failed to initialize OpenGL library with gladLoadGLLoader()");
+
+    _checkRequiredExtensions();
 }
 
 //==================================================================================================================
 OpenGlLibraryRaii::~OpenGlLibraryRaii() = default;
+
+//==================================================================================================================
+void OpenGlLibraryRaii::_checkRequiredExtensions() const
+{
+}
