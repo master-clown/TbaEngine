@@ -10,15 +10,14 @@ namespace opengl_texture {
 
 //======================================================================================================================
 namespace opengl_texture {
-    class OpenGlTexturingObjectsCreator final : public texture::TexturingObjectsCreator {
+    class OglTexturingObjectsCreator final : public texture::TexturingObjectsCreator {
     public:
-        OpenGlTexturingObjectsCreator();
-        ~OpenGlTexturingObjectsCreator();
+        explicit OglTexturingObjectsCreator(OglTextureHandles&);
 
         uptr<texture::Texture> createTexture(const texture::TextureData&) override;
         uptr<texture::TextureSampler> createSampler(const texture::TextureSamplingParameters&) override;
 
     private:
-        uptr<OglTextureHandles> _textureHandles;
+        OglTextureHandles& _textureHandles;
     };
 }

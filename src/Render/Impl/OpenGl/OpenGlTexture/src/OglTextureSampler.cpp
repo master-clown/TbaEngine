@@ -50,6 +50,7 @@ OglTextureSampler::OglTextureSampler(const texture::TextureSamplingParameters& p
 //======================================================================================================================
 OglTextureSampler::~OglTextureSampler()
 {
+    // TODO: Is it OK to reset the current sampler this way, or it is better to do it through TexturingMgr?
     if (_textureHandles._getCurrentlyActiveSampler() == this)
         _textureHandles.setSamplerForAllTextures(nullptr);
 }
