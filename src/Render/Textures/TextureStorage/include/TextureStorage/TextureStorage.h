@@ -17,16 +17,19 @@ namespace texture {
 namespace texture_storage {
     class TextureStorage final {
     public:
-        TextureStorage();
-        ~TextureStorage();
-
+        void clear();
         TextureId add(uptr<texture::Texture>);
 
         texture::Texture& get(TextureId);
         const texture::Texture& get(TextureId) const;
 
+        // TODO: store it somewhere (Framework? At user side at all?) and pass by refs
+        static TextureStorage& getInstance();
+
     private:
-        HashMap<TextureId, uptr<texture::Texture>> _textures;
-        std::atomic<TextureId> _nextId = 1;
+        using _TextureRawId = TextureId::Id;
+
+        HashMap<_TextureRawId, uptr<texture::Texture>> _textures;
+        std::atomic<_TextureRawId> _nextId = 1;
     };
 }

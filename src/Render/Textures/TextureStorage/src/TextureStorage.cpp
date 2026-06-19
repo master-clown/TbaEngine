@@ -11,10 +11,10 @@ using texture_storage::TextureStorage;
 using texture::Texture;
 
 //======================================================================================================================
-TextureStorage::TextureStorage() = default;
-
-//======================================================================================================================
-TextureStorage::~TextureStorage() = default;
+void TextureStorage::clear()
+{
+    _textures.clear();
+}
 
 //======================================================================================================================
 TextureId TextureStorage::add(uptr<Texture> tex)
@@ -25,7 +25,7 @@ TextureId TextureStorage::add(uptr<Texture> tex)
     [[maybe_unused]] const auto [it, hasEmplaced] = _textures.emplace(id, std::move(tex));
     assert(hasEmplaced);
 
-    return id;
+    return TextureId{.id = id};
 }
 
 //======================================================================================================================
@@ -41,4 +41,11 @@ const Texture& TextureStorage::get(const TextureId id) const
     assert(it != _textures.cend());
 
     return *it->second;
+}
+
+//======================================================================================================================
+TextureStorage& TextureStorage::getInstance()
+{
+    static TextureStorage instance;
+    return instance;
 }

@@ -4,5 +4,12 @@
 
 //======================================================================================================================
 namespace texture_storage {
-    using TextureId = uint32;
+    struct TextureId final {
+        using Id = uint32;
+        static constexpr Id noneTextureId = 0;
+
+        Id id = noneTextureId;
+
+        operator const Id&() const;
+    };
 }
