@@ -8,11 +8,13 @@ class TbaEngineRecipe(ConanFile):
     options = {
         "enableLog": [True, False],
         "buildTests": [True, False],
+        "openGlUseBindlessTextures": [True, False],
         "fPIC": [True, False]
     }
     default_options = {
         "enableLog": False,
         "buildTests": False,
+        "openGlUseBindlessTextures": False,
         "fPIC": True
     }
 
@@ -39,6 +41,7 @@ class TbaEngineRecipe(ConanFile):
 
         tc.variables["ENABLE_LOG"] = self.options.enableLog
         tc.variables["BUILD_TESTS"] = self.options.buildTests
+        tc.variables["OPENGL_USE_BINDLESS_TEXTURES"] = self.options.openGlUseBindlessTextures
 
         tc.generate()
 
