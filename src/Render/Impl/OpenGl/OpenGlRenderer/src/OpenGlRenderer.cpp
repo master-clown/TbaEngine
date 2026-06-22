@@ -59,7 +59,7 @@ render_3d::Renderer& OpenGlRenderer::get3dRenderer()
 }
 
 //==================================================================================================================
-texture::TextureCreator& OpenGlRenderer::getTextureCreator()
+texture::TexturingMgr& OpenGlRenderer::getTexturingMgr()
 {
     throw std::logic_error("Not implemented");
 }

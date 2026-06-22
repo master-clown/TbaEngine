@@ -28,7 +28,7 @@ namespace opengl_renderer {
         render_2d::Renderer& get2dRenderer() override;
         render_3d::Renderer& get3dRenderer() override;
 
-        texture::TextureCreator& getTextureCreator() override;
+        texture::TexturingMgr& getTexturingMgr() override;
 
     private:
         opengl_context::OpenGlContext& _openGlContext;

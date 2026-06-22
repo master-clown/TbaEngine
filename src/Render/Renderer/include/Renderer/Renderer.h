@@ -19,7 +19,7 @@ namespace render_3d {
 
 //======================================================================================================================
 namespace texture {
-    class TexturingObjectsCreator;
+    class TexturingMgr;
 }
 
 //======================================================================================================================
@@ -38,7 +38,7 @@ namespace render {
         virtual render_2d::Renderer& get2dRenderer() = 0;
         virtual render_3d::Renderer& get3dRenderer() = 0;
 
-        virtual texture::TexturingObjectsCreator& getTexturingObjectsCreator() = 0;
+        virtual texture::TexturingMgr& getTexturingMgr() = 0;
 
         //--------------------------------------------------------------------------------------------------------------
         renderer_context::RendererContext& getRendererContext();
