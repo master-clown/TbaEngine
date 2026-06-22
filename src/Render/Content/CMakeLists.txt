@@ -23,6 +23,9 @@ target_sources(${TARGET_NAME}
     BASE_DIRS include
     FILES
     ${PUBLIC_HEADERS})
-target_link_libraries(${TARGET_NAME} PRIVATE 
+target_link_libraries(${TARGET_NAME} PUBLIC
+    TextureStorage
+)
+target_link_libraries(${TARGET_NAME} PRIVATE
     Common
 )
