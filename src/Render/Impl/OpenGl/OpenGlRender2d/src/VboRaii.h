@@ -9,8 +9,13 @@
 namespace opengl_render_2d {
     class VboRaii final {
     public:
+#ifdef _WIN64
+        using BufferSizeInBytes = long long;
+#else
         using BufferSizeInBytes = long;
+#endif
         using IsMappable = bool;
+
         explicit VboRaii(BufferSizeInBytes, IsMappable = false);
 
         struct MapOnCreation { };
