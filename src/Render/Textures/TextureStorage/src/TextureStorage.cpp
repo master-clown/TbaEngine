@@ -11,6 +11,12 @@ using texture_storage::TextureStorage;
 using texture::Texture;
 
 //======================================================================================================================
+TextureStorage::TextureStorage() = default;
+
+//======================================================================================================================
+TextureStorage::~TextureStorage() = default;
+
+//======================================================================================================================
 void TextureStorage::clear()
 {
     _textures.clear();
@@ -41,11 +47,4 @@ const Texture& TextureStorage::get(const TextureId id) const
     assert(it != _textures.cend());
 
     return *it->second;
-}
-
-//======================================================================================================================
-TextureStorage& TextureStorage::getInstance()
-{
-    static TextureStorage instance;
-    return instance;
 }
