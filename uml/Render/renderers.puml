@@ -22,9 +22,13 @@ package renderer_context {
 }
 
 '=======================================================================================================================
-package texture {
-    '===================================================================================================================
-    abstract class TextureCreator
+package render_2d {
+    abstract class Renderer
+}
+
+'=======================================================================================================================
+package render_3d {
+    abstract class Renderer
 }
 
 '=======================================================================================================================
@@ -37,7 +41,7 @@ package render {
         + {abstract} finalizeRender()
     --
         + getRendererContext() -> &
-        + getTextureCreator() -> &
+        + getTexturingMgr() -> &
         + getTextureStorage() -> &
     --
         + {abstract} get2dRenderer() -> render_2d.Renderer&
@@ -45,18 +49,7 @@ package render {
     }
 
     '-------------------------------------------------------------------------------------------------------------------
-    package render_2d {
-        abstract class Renderer
-    }
-
-    '-------------------------------------------------------------------------------------------------------------------
-    package render_3d {
-        abstract class Renderer
-    }
-
-    '-------------------------------------------------------------------------------------------------------------------
     Renderer *-- renderer_context.RendererContext
-    Renderer *-- texture.TextureCreator
     Renderer *-- render_2d.Renderer
     Renderer *-- render_3d.Renderer
 }
