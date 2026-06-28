@@ -13,7 +13,7 @@ set(TEST_SOURCES
 list(TRANSFORM TEST_SOURCES PREPEND "src/")
 
 set(TEST_RESOURCES
-    container.png
+    container.jpg
 )
 
 add_executable(${TARGET_NAME})

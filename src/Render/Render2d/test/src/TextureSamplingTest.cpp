@@ -26,6 +26,8 @@
 #define STRINGIFY(x) STRINGIFY_(x)
 #define MAKE_WND_TITLE(caseDesc) (STRINGIFY(TEST_SUITE_NAME) + String(" - ") + caseDesc)
 
+static constexpr auto containerTextureFilePath = "./resources/container.jpg";
+
 //======================================================================================================================
 namespace {
     //==================================================================================================================
@@ -48,7 +50,7 @@ namespace {
 //======================================================================================================================
 TEST_CASE(DrawRectangleTexturedAsContainer)
 {
-    static const auto textureFile = std::filesystem::canonical("./resources/container.png");
+    static const auto textureFile = std::filesystem::canonical(containerTextureFilePath);
 
     const auto initSceneGeometryBatch = [](render::Renderer& renderer,
                                            render_2d::GeometryBatchModifier& modifier) {
@@ -85,7 +87,7 @@ namespace {
         texturingMgr.setCurrentTextureSampler(*sampler);
 
         const auto texId = [&] {
-            static const auto textureFile = std::filesystem::canonical("./resources/container.png");
+            static const auto textureFile = std::filesystem::canonical(containerTextureFilePath);
 
             const auto textureData = texture_loader::TextureLoader{}.loadFromFile(textureFile);
             return renderer.getTextureStorage().add(texturingObjectsCreator.createTexture(textureData));
