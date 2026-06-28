@@ -24,7 +24,7 @@ OpenGlRenderer::OpenGlRenderer(renderer_context::RendererContextRaii rendererCon
     , _openGlLibraryRaii(makeUPtr<OpenGlLibraryRaii>(OpenGlLibraryRaii::LibraryInitOptions{
           .openGlFunctionsLoader = _openGlContext.getOpenGlFunctionsLoader(),
       }))
-    , _renderer2d(makeUPtr<opengl_render_2d::OpenGlRenderer2d>(_openGlContext))
+    , _renderer2d(makeUPtr<opengl_render_2d::OpenGlRenderer2d>(_openGlContext, getTextureStorage()))
 {
     assert(getRendererContext().getRendererType() == renderer_context::RendererType::OpenGl);
 }

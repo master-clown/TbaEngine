@@ -10,9 +10,10 @@
 using namespace opengl_render_2d;
 
 //======================================================================================================================
-OglGeometryBatch::OglGeometryBatch(opengl_api::GpuOperationsCompletedEvent& gpuOperationsCompletedEvent)
+OglGeometryBatch::OglGeometryBatch(opengl_api::GpuOperationsCompletedEvent& gpuOperationsCompletedEvent,
+                                   const texture_storage::TextureStorage& textureStorage)
     : _gpuOperationsCompletedEvent(gpuOperationsCompletedEvent)
-    , _modifier(makeUPtr<OglGeometryBatchModifier>(*this))
+    , _modifier(makeUPtr<OglGeometryBatchModifier>(*this, textureStorage))
     , _vao(OglVertexArrayObject::BindAfterCreation{})
     , _vertexBuffer(_vao.getRawId())
     , _triangleIndexBuffer(_vao.getRawId())
