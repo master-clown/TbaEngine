@@ -14,12 +14,10 @@ using opengl_texture::OglTextureSampler;
 //======================================================================================================================
 namespace {
     using OglAddressMode = GLint;
-    constexpr OglAddressMode convertAddressMode(const texture::TextureSamplingParameters::AddressMode mode) noexcept;
+    constexpr OglAddressMode convertAddressMode(texture::TextureSamplingParameters::AddressMode) noexcept;
 
     using OglFiltering = GLint;
-    constexpr OglFiltering convertMagnifyFiltering(const texture::TextureSamplingParameters::Filtering mode) noexcept;
-
-    using OglFiltering = GLint;
+    constexpr OglFiltering convertMagnifyFiltering(texture::TextureSamplingParameters::Filtering) noexcept;
     constexpr OglFiltering convertMinifyFiltering(
         const texture::TextureSamplingParameters::Filtering pixelMode,
         const texture::TextureSamplingParameters::Filtering mipmapMode) noexcept;
@@ -35,6 +33,7 @@ OglTextureSampler::OglTextureSampler(const texture::TextureSamplingParameters& p
     , _oglSamplerId([] {
         GLuint newId = 0;
         glCreateSamplers(1, &newId);
+        opengl_api::checkOperationSuccess("glCreateSamplers(1, &newId)");
         return newId;
     }())
 {
@@ -65,6 +64,7 @@ auto OglTextureSampler::getOglSamplerId() const -> OglSamplerId
 void OglTextureSampler::OnSamplerDestruction::operator()(const OglSamplerId& id) const noexcept
 {
     glDeleteSamplers(1, &id);
+    opengl_api::logOnOperationFailure(strFormat("glDeleteSamplers(id={})", id));
 }
 
 //======================================================================================================================
