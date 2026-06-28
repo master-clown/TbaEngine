@@ -41,7 +41,7 @@ void OglTextureHandles::setSamplerForAllTextures(OglTextureSamplerPtrOrNull samp
     _currentlyActiveSampler = sampler;
 
     for (auto& [textureId, textureHandle] : _handles)
-        _handles.insert_or_assign(textureId, _makeHandle(textureId));
+        textureHandle = _makeHandle(textureId);
 }
 
 //======================================================================================================================
