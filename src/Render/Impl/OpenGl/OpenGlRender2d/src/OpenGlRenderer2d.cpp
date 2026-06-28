@@ -19,10 +19,10 @@ using namespace opengl_render_2d;
 
 //=====================================================================================================================
 struct OpenGlRenderer2d::Pimpl final {
-    uptr<ShaderPipeline> colorOnlyShaderPipeline;
+    uptr<ShaderPipeline> shaderPipeline;
 
     Pimpl()
-        : colorOnlyShaderPipeline(makeUPtr<ShaderPipeline>(
+        : shaderPipeline(makeUPtr<ShaderPipeline>(
               String{OglVertexBuffer::getVertexShaderText()},
               String{OglVertexBuffer::getFragmentShaderText()}))
     {
@@ -85,7 +85,7 @@ void OpenGlRenderer2d::renderGeometryBatch(const render_2d::GeometryBatch& geome
                        0);
     };
 
-    _pimpl->colorOnlyShaderPipeline->use();
+    _pimpl->shaderPipeline->use();
     oglGeometryBatch._vao.use();
 
     renderPrimitives(oglGeometryBatch._pointIndexBuffer, GL_POINTS);
