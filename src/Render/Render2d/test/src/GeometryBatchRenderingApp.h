@@ -7,6 +7,10 @@
 #include <Render2d/Renderer.h>
 #include <Renderer/Renderer.h>
 #include <SdlFramework/SdlFramework.h>
+#include <Texture/TextureSampler.h>
+#include <Texture/TextureSamplingParameters.h>
+#include <Texture/TexturingMgr.h>
+#include <Texture/TexturingObjectsCreator.h>
 #include <Winsys/WindowOptions.h>
 
 #include <functional>
@@ -32,7 +36,11 @@ public:
 private:
     void _initAppWithRenderer() override
     {
-        auto& renderer2d = this->getRenderer().get2dRenderer();
+        auto& renderer = this->getRenderer();
+        _defaultTextureSampler = renderer.getTexturingMgr().getTexturingObjectsCreator().createSampler({});
+        renderer.getTexturingMgr().setCurrentTextureSampler(*_defaultTextureSampler);
+
+        auto& renderer2d = renderer.get2dRenderer();
         _sceneGeometryBatch = renderer2d.createGeometryBatch();
 
         _sceneGeometryBatch->modify([this](render_2d::GeometryBatchModifier& modifier) {
@@ -56,6 +64,7 @@ private:
     }
 
 private:
+    uptr<texture::TextureSampler> _defaultTextureSampler;
     uptr<render_2d::GeometryBatch> _sceneGeometryBatch;
     InitSceneGeometryBatch _initSceneGeometryBatch;
 };

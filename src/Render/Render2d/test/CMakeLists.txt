@@ -20,6 +20,7 @@ target_link_libraries(${TARGET_NAME} PRIVATE
     Render2d
     SdlFramework
     SdlRenderContext
+    Texture
     GTest::gtest_main)
 
 include(GoogleTest)
