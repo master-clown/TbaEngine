@@ -5,6 +5,7 @@
 #include <OpenGlApi/GpuOperationsCompletedEvent.h>
 #include <OpenGlContext/OpenGlContext.h>
 #include <OpenGlRender2d/OpenGlRenderer2d.h>
+#include <OpenGlTexture/OpenGlTexturingMgr.h>
 
 #include <cassert>
 
@@ -13,7 +14,7 @@ using opengl_renderer::OpenGlRenderer;
 
 //==================================================================================================================
 OpenGlRenderer::OpenGlRenderer(renderer_context::RendererContextRaii rendererContext)
-    : render::Renderer(std::move(rendererContext))
+    : render::Renderer(std::move(rendererContext), makeUPtr<opengl_texture::OpenGlTexturingMgr>())
     , _openGlContext([&] -> opengl_context::OpenGlContext& {
         auto& context = getRendererContext();
         assert(dynamic_cast<opengl_context::OpenGlContext*>(&context));
@@ -54,12 +55,6 @@ render_2d::Renderer& OpenGlRenderer::get2dRenderer()
 
 //==================================================================================================================
 render_3d::Renderer& OpenGlRenderer::get3dRenderer()
-{
-    throw std::logic_error("Not implemented");
-}
-
-//==================================================================================================================
-texture::TexturingMgr& OpenGlRenderer::getTexturingMgr()
 {
     throw std::logic_error("Not implemented");
 }

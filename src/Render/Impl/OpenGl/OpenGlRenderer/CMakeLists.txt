@@ -27,6 +27,7 @@ target_link_libraries(${TARGET_NAME} PUBLIC
     Common
     OpenGlContext
     OpenGlRender2d
+    OpenGlTexture
     Renderer
 )
 target_link_libraries(${TARGET_NAME} PRIVATE
