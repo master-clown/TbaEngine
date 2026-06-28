@@ -17,6 +17,7 @@
 
 //======================================================================================================================
 using InitSceneGeometryBatch = std::function<void(render::Renderer&, render_2d::GeometryBatchModifier&)>;
+using UseTexturing = bool;
 
 //======================================================================================================================
 template <class RendererPreconfigOptions>
@@ -25,11 +26,13 @@ class GeometryBatchRenderingApp final : public gui_app_template::GuiAppWithRende
 
 public:
     GeometryBatchRenderingApp(const String& wndTitle,
-                              InitSceneGeometryBatch initSceneGeometryBatch)
+                              InitSceneGeometryBatch initSceneGeometryBatch,
+                              UseTexturing useTexturing)
         : Super(winsys::WindowOptions{
               .wndTitle = wndTitle,
           })
         , _initSceneGeometryBatch(std::move(initSceneGeometryBatch))
+        , _useTexturing(useTexturing)
     {
     }
 
@@ -37,8 +40,11 @@ private:
     void _initAppWithRenderer() override
     {
         auto& renderer = this->getRenderer();
-        _defaultTextureSampler = renderer.getTexturingMgr().getTexturingObjectsCreator().createSampler({});
-        renderer.getTexturingMgr().setCurrentTextureSampler(*_defaultTextureSampler);
+
+        if (_useTexturing) {
+            _defaultTextureSampler = renderer.getTexturingMgr().getTexturingObjectsCreator().createSampler({});
+            renderer.getTexturingMgr().setCurrentTextureSampler(*_defaultTextureSampler);
+        }
 
         auto& renderer2d = renderer.get2dRenderer();
         _sceneGeometryBatch = renderer2d.createGeometryBatch();
@@ -67,4 +73,5 @@ private:
     uptr<texture::TextureSampler> _defaultTextureSampler;
     uptr<render_2d::GeometryBatch> _sceneGeometryBatch;
     InitSceneGeometryBatch _initSceneGeometryBatch;
+    UseTexturing _useTexturing;
 };
