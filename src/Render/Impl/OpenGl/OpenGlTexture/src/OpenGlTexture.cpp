@@ -22,11 +22,6 @@ namespace {
     constexpr std::pair<OglSizedPixelFormat, OglPixelFormat> pixelFormatFromNumOfChannels(uint8 numOfChannels) noexcept;
 
     //==================================================================================================================
-    template <class Uint>
-    constexpr int fastLog2(Uint x) noexcept
-        requires std::is_unsigned_v<Uint>;
-
-    //==================================================================================================================
     constexpr int numOfMipmapLevelsFromTextureSize(uint32 width, uint32 height) noexcept;
 }
 
@@ -42,7 +37,6 @@ OpenGlTexture::OpenGlTexture(const texture::TextureData& textureData, OglTexture
 {
     using MipmapLevel = GLint;
     using TexelOffset = GLint;
-    using BorderParam = GLint;
     using PixelDataType = GLenum;
 
     const MipmapLevel numOfMipmapLevels = numOfMipmapLevelsFromTextureSize(textureData.width, textureData.height);
@@ -69,7 +63,7 @@ OpenGlTexture::OpenGlTexture(const texture::TextureData& textureData, OglTexture
     opengl_api::checkOperationSuccess(strFormat("glTextureSubImage2D(_oglTextureId={})",
                                                 _oglTextureId.getUnderlying()));
 
-    // TODO: generate mipmaps? Or control it with a parameter?
+    // TODO: Control mipmap generation with parameters
     glGenerateTextureMipmap(_oglTextureId);
     opengl_api::checkOperationSuccess(strFormat("glGenerateTextureMipmap(_oglTextureId={})",
                                                 _oglTextureId.getUnderlying()));
