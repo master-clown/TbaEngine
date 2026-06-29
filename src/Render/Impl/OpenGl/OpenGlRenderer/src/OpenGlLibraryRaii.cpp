@@ -16,7 +16,18 @@ OpenGlLibraryRaii::OpenGlLibraryRaii(const LibraryInitOptions& initOptions)
 
     if (!gladLoadGLLoader(initOptions.openGlFunctionsLoader))
         throw std::runtime_error("Failed to initialize OpenGL library with gladLoadGLLoader()");
+
+    _checkRequiredExtensions();
 }
 
 //==================================================================================================================
 OpenGlLibraryRaii::~OpenGlLibraryRaii() = default;
+
+//==================================================================================================================
+void OpenGlLibraryRaii::_checkRequiredExtensions() const
+{
+#ifdef OPENGL_USE_BINDLESS_TEXTURES
+    if (!GLAD_GL_ARB_bindless_texture)
+        throw std::runtime_error("Extension GL_ARB_bindless_texture is not supported");
+#endif
+}

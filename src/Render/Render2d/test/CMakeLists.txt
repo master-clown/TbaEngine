@@ -5,9 +5,16 @@ find_package(GTest REQUIRED)
 set(TARGET_NAME Render2dTest)
 
 set(TEST_SOURCES
+    GeometryBatchRenderingApp.cpp
+    GeometryBatchRenderingApp.h
     Simple2dSceneTest.cpp
+    TextureSamplingTest.cpp
 )
 list(TRANSFORM TEST_SOURCES PREPEND "src/")
+
+set(TEST_RESOURCES
+    container.jpg
+)
 
 add_executable(${TARGET_NAME})
 
@@ -18,7 +25,22 @@ target_link_libraries(${TARGET_NAME} PRIVATE
     Render2d
     SdlFramework
     SdlRenderContext
+    Texture
+    TextureLoader
     GTest::gtest_main)
 
+#=======================================================================================================================
+# Copy resource files
+list(TRANSFORM TEST_RESOURCES PREPEND "${CMAKE_CURRENT_SOURCE_DIR}/resources/")
+set(RESOURCES_TARGET_FOLDER "$<TARGET_FILE_DIR:${TARGET_NAME}>/resources/")
+add_custom_target(${TARGET_NAME}CopyResourceFilesTarget
+    ALL
+    COMMAND ${CMAKE_COMMAND} -E make_directory "${RESOURCES_TARGET_FOLDER}"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_newer ${TEST_RESOURCES} "${RESOURCES_TARGET_FOLDER}"
+    VERBATIM
+)
+add_dependencies(${TARGET_NAME}CopyResourceFilesTarget ${TARGET_NAME})
+
+#=======================================================================================================================
 include(GoogleTest)
 gtest_discover_tests(${TARGET_NAME} PROPERTIES LABELS "ManualGuiTests")

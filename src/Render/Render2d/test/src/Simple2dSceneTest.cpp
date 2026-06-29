@@ -1,15 +1,10 @@
 #include <Geometry2d/Line.h>
 #include <Geometry2d/Point2d.h>
 #include <Geometry2d/Triangle.h>
-#include <GuiAppTemplate/GuiAppWithRenderer.hpp>
 #include <OpenGlContext/OpenGlPreconfigOptions.h>
-#include <Render2d/GeometryBatch.h>
-#include <Render2d/GeometryBatchModifier.h>
-#include <Render2d/Renderer.h>
-#include <Renderer/Renderer.h>
-#include <SdlFramework/SdlFramework.h>
 #include <SdlRenderContext/SdlRenderPreconfigOptions.h>
-#include <Winsys/WindowMgr.h>
+
+#include "GeometryBatchRenderingApp.h"
 
 #include <gtest/gtest.h>
 
@@ -19,56 +14,7 @@
 #define TEST_SUITE_NAME Simple2dSceneTest
 #define STRINGIFY_(x) #x
 #define STRINGIFY(x) STRINGIFY_(x)
-
-//======================================================================================================================
-namespace {
-    //==================================================================================================================
-    using InitSceneGeometryBatch = std::function<void(render_2d::GeometryBatchModifier&)>;
-
-    //==================================================================================================================
-    template <class RendererPreconfigOptions>
-    class GeometryBatchRenderingApp final : public gui_app_template::GuiAppWithRenderer<RendererPreconfigOptions> {
-        using Super = gui_app_template::GuiAppWithRenderer<RendererPreconfigOptions>;
-
-    public:
-        explicit GeometryBatchRenderingApp(const String& caseDescription,
-                                           InitSceneGeometryBatch initSceneGeometryBatch)
-            : Super(winsys::WindowOptions{
-                  .wndTitle = STRINGIFY(TEST_SUITE_NAME) + String(" - ") + caseDescription,
-              })
-            , _initSceneGeometryBatch(std::move(initSceneGeometryBatch))
-        {
-        }
-
-    private:
-        void _initAppWithRenderer() override
-        {
-            auto& renderer2d = this->getRenderer().get2dRenderer();
-            _sceneGeometryBatch = renderer2d.createGeometryBatch();
-
-            _sceneGeometryBatch->modify(_initSceneGeometryBatch);
-        }
-
-        void _render() override
-        {
-            this->getRenderer().clear(content::Color::black);
-
-            auto& renderer2d = this->getRenderer().get2dRenderer();
-            renderer2d.renderGeometryBatch(*_sceneGeometryBatch);
-
-            this->getRenderer().finalizeRender();
-        }
-
-        uptr<framework::Framework> _createFramework() override
-        {
-            return makeUPtr<sdl_framework::SdlFramework>();
-        }
-
-    private:
-        uptr<render_2d::GeometryBatch> _sceneGeometryBatch;
-        InitSceneGeometryBatch _initSceneGeometryBatch;
-    };
-}
+#define MAKE_WND_TITLE(caseDesc) (STRINGIFY(TEST_SUITE_NAME) + String(" - ") + caseDesc)
 
 //======================================================================================================================
 namespace {
@@ -77,15 +23,17 @@ namespace {
     {
         {
             GeometryBatchRenderingApp<sdl_render_context::SdlRenderPreconfigOptions> app(
-                "SDL renderer. " + testDescription,
-                initSceneGeometryBatch);
+                MAKE_WND_TITLE("SDL renderer. " + testDescription),
+                initSceneGeometryBatch,
+                UseTexturing{false});
             EXPECT_NO_THROW(app.run());
         }
 
         {
             GeometryBatchRenderingApp<opengl_context::OpenGlPreconfigOptions> app(
-                "OpenGL renderer. " + testDescription,
-                initSceneGeometryBatch);
+                MAKE_WND_TITLE("OpenGL renderer. " + testDescription),
+                initSceneGeometryBatch,
+                UseTexturing{false});
             EXPECT_NO_THROW(app.run());
         }
     }
@@ -95,9 +43,9 @@ namespace {
 #define TEST_CASE(name) TEST(TEST_SUITE_NAME, name)
 
 //======================================================================================================================
-TEST_CASE(DrawSimpleGeometryIn2d)
+TEST_CASE(BlueDotRedLineGreenTriangle)
 {
-    const auto initSceneGeometryBatch = [](render_2d::GeometryBatchModifier& modifier) {
+    const auto initSceneGeometryBatch = [](render::Renderer&, render_2d::GeometryBatchModifier& modifier) {
         const auto point = render_2d::RenderableGeometry<geometry_2d::Point2d>{
             .primitive = geometry_2d::Point2d{.x = -0.9, .y = 0.9},
             .contentTraits = geometry_2d::ContentTraits<geometry_2d::Point2d>{
@@ -129,7 +77,7 @@ TEST_CASE(DrawSimpleGeometryIn2d)
         modifier.append(triangle);
     };
 
-    testAllRenderers("Check that simple 2D geometry renders correctly", initSceneGeometryBatch);
+    testAllRenderers("Blue dot, red line and green triangle", initSceneGeometryBatch);
 }
 
 //======================================================================================================================
@@ -137,7 +85,7 @@ TEST_CASE(DrawSameTriangle100000Times)
 {
     static constexpr auto trianglesCount = 100'000;
 
-    const auto initSceneGeometryBatch = [](render_2d::GeometryBatchModifier& modifier) {
+    const auto initSceneGeometryBatch = [](render::Renderer&, render_2d::GeometryBatchModifier& modifier) {
         const auto triangle = render_2d::RenderableGeometry<geometry_2d::Triangle>{
             .primitive = geometry_2d::Triangle{
                 .pt1 = {.x = 0.5, .y = -0.2},
@@ -153,6 +101,6 @@ TEST_CASE(DrawSameTriangle100000Times)
             modifier.append(triangle);
     };
 
-    testAllRenderers(strFormat("Draw of {} same triangles", trianglesCount),
+    testAllRenderers(strFormat("Draw {} identical triangles", trianglesCount),
                      initSceneGeometryBatch);
 }

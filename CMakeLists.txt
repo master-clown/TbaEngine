@@ -8,9 +8,16 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS On)
 
 set(CMAKE_COMPILE_WARNING_AS_ERROR ON)
 
-if(ENABLE_LOG)
-    add_compile_definitions(ENABLE_LOG)
-endif()
+set(AVAILABLE_COMPILE_OPTIONS
+    ENABLE_LOG
+    OPENGL_USE_BINDLESS_TEXTURES
+)
+foreach(option IN LISTS AVAILABLE_COMPILE_OPTIONS)
+    if(${${option}})
+        message(STATUS "Adding option ${option}")
+        add_compile_definitions(${option})
+    endif()
+endforeach()
 
 if(BUILD_TESTS)
     enable_testing()

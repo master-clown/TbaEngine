@@ -18,10 +18,16 @@ namespace opengl_render_2d {
 }
 
 //======================================================================================================================
+namespace texture_storage {
+    class TextureStorage;
+}
+
+//======================================================================================================================
 namespace opengl_render_2d {
     class OglGeometryBatch final : public render_2d::GeometryBatch {
     public:
-        explicit OglGeometryBatch(opengl_api::GpuOperationsCompletedEvent&);
+        OglGeometryBatch(opengl_api::GpuOperationsCompletedEvent&,
+                         const texture_storage::TextureStorage&);
         ~OglGeometryBatch();
 
         //--------------------------------------------------------------------------------------------------------------

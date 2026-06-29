@@ -2,6 +2,7 @@
 
 #include <SdlRender2d/SdlRenderer2d.h>
 #include <SdlWinsys/SdlWindow.h>
+#include <Texture/TexturingMgr.h>
 
 #include <cassert>
 
@@ -9,8 +10,12 @@
 using sdl_renderer::SdlRenderer;
 
 //==================================================================================================================
+// TODO: remove when SdlTextureMgr is impl-ed
+using UnimplementedSdlTextureMgr = texture::TexturingMgr;
+
+//==================================================================================================================
 SdlRenderer::SdlRenderer(renderer_context::RendererContextRaii rendererContext)
-    : render::Renderer(std::move(rendererContext))
+    : render::Renderer(std::move(rendererContext), uptr<UnimplementedSdlTextureMgr>{nullptr})
     , _sdlWindow([&] -> sdl_winsys::SdlWindow& {
         auto* targetWindow = getRendererContext().getTargetWindow();
         assert(targetWindow);

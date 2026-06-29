@@ -9,6 +9,7 @@ set(PUBLIC_HEADERS
     Memory.h
     NumericCast.hpp
     OverloadMultiplexor.h
+    RaiiWrapper.h
     Stl/Array.h
     Stl/Expected.h
     Stl/HashMap.h
@@ -25,6 +26,7 @@ set(SOURCES
     Memory.cpp
     NumericCast.cpp
     OverloadMultiplexor.cpp
+    RaiiWrapper.cpp
     Stl/Array.cpp
     Stl/Expected.cpp
     Stl/HashMap.cpp

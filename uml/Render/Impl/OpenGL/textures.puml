@@ -1,0 +1,62 @@
+@startuml
+
+skinparam defaultFontName monospaced
+
+'=======================================================================================================================
+package opengl_texture {
+    '===================================================================================================================
+    class OpenGlTexture {
+        + ctor(OglTextureHandles&)
+    --
+        + getOglId()
+        + getTextureHandle()
+    }
+
+    '-------------------------------------------------------------------------------------------------------------------
+    OpenGlTexture o-- OglTextureHandles
+
+    '===================================================================================================================
+    class OglTextureSampler {
+        + ctor(OglTextureHandles&)
+    }
+
+    '-------------------------------------------------------------------------------------------------------------------
+    OglTextureSampler o-- OglTextureHandles
+
+    '===================================================================================================================
+    class OglTextureHandles {
+        + addForTexture(OglTextureId)
+        + removeForTexture(OglTextureId)
+    --
+        + setSamplerForAllTextures(OglTextureSampler*)
+    --
+        + getHandle(OglTextureId)
+    }
+
+    '===================================================================================================================
+    class OglTexturingObjectsCreator  {
+        + ctor(OglTextureHandles&)
+    --
+        + createTexture()
+        + createTextureSampler()
+    }
+
+    '-------------------------------------------------------------------------------------------------------------------
+    OglTexturingObjectsCreator o-- OglTextureHandles
+
+    '===================================================================================================================
+    class OpenGlTexturingMgr  {
+        + getTexturingObjectsCreator()
+    --
+        + setCurrentTextureSampler(TextureSampler*)
+    --
+        - _textureHandles
+    }
+
+    '-------------------------------------------------------------------------------------------------------------------
+    OpenGlTexturingMgr *-- OglTextureHandles
+    OpenGlTexturingMgr *-- OglTexturingObjectsCreator
+}
+
+'=======================================================================================================================
+@enduml

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Common/Memory.h>
 #include <RendererContext/RendererContextRaii.h>
 
 //======================================================================================================================
@@ -18,11 +19,21 @@ namespace render_3d {
 }
 
 //======================================================================================================================
+namespace texture {
+    class TexturingMgr;
+}
+
+//======================================================================================================================
+namespace texture_storage {
+    class TextureStorage;
+}
+
+//======================================================================================================================
 namespace render {
     //==================================================================================================================
     class Renderer {
     public:
-        explicit Renderer(renderer_context::RendererContextRaii);
+        Renderer(renderer_context::RendererContextRaii, uptr<texture::TexturingMgr>);
         virtual ~Renderer();
 
         // TODO: to separate interface? For both 2D and 3D, and here too
@@ -37,7 +48,15 @@ namespace render {
         renderer_context::RendererContext& getRendererContext();
         const renderer_context::RendererContext& getRendererContext() const;
 
+        texture::TexturingMgr& getTexturingMgr();
+        const texture::TexturingMgr& getTexturingMgr() const;
+
+        texture_storage::TextureStorage& getTextureStorage();
+        const texture_storage::TextureStorage& getTextureStorage() const;
+
     private:
         renderer_context::RendererContextRaii _rendererContext;
+        uptr<texture::TexturingMgr> _textureMgr;
+        uptr<texture_storage::TextureStorage> _textureStorage;
     };
 }

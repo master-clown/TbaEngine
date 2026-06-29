@@ -12,5 +12,8 @@ namespace opengl_renderer {
 
         explicit OpenGlLibraryRaii(const LibraryInitOptions&);
         ~OpenGlLibraryRaii();
+
+    private:
+        void _checkRequiredExtensions() const;
     };
 }

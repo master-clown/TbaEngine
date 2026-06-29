@@ -5,6 +5,7 @@
 #include <OpenGlApi/GpuOperationsCompletedEvent.h>
 #include <OpenGlContext/OpenGlContext.h>
 #include <OpenGlRender2d/OpenGlRenderer2d.h>
+#include <OpenGlTexture/OpenGlTexturingMgr.h>
 
 #include <cassert>
 
@@ -13,7 +14,7 @@ using opengl_renderer::OpenGlRenderer;
 
 //==================================================================================================================
 OpenGlRenderer::OpenGlRenderer(renderer_context::RendererContextRaii rendererContext)
-    : render::Renderer(std::move(rendererContext))
+    : render::Renderer(std::move(rendererContext), makeUPtr<opengl_texture::OpenGlTexturingMgr>())
     , _openGlContext([&] -> opengl_context::OpenGlContext& {
         auto& context = getRendererContext();
         assert(dynamic_cast<opengl_context::OpenGlContext*>(&context));
@@ -23,7 +24,7 @@ OpenGlRenderer::OpenGlRenderer(renderer_context::RendererContextRaii rendererCon
     , _openGlLibraryRaii(makeUPtr<OpenGlLibraryRaii>(OpenGlLibraryRaii::LibraryInitOptions{
           .openGlFunctionsLoader = _openGlContext.getOpenGlFunctionsLoader(),
       }))
-    , _renderer2d(makeUPtr<opengl_render_2d::OpenGlRenderer2d>(_openGlContext))
+    , _renderer2d(makeUPtr<opengl_render_2d::OpenGlRenderer2d>(_openGlContext, getTextureStorage()))
 {
     assert(getRendererContext().getRendererType() == renderer_context::RendererType::OpenGl);
 }

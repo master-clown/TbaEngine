@@ -24,3 +24,7 @@ target_sources(${TARGET_NAME}
 target_link_libraries(${TARGET_NAME} PUBLIC
     RendererContext
 )
+target_link_libraries(${TARGET_NAME} PRIVATE
+    Texture
+    TextureStorage
+)

@@ -10,11 +10,16 @@ namespace opengl_context {
 }
 
 //======================================================================================================================
+namespace texture_storage {
+    class TextureStorage;
+}
+
+//======================================================================================================================
 namespace opengl_render_2d {
     //==================================================================================================================
     class OpenGlRenderer2d final : public render_2d::Renderer {
     public:
-        explicit OpenGlRenderer2d(opengl_context::OpenGlContext&);
+        OpenGlRenderer2d(opengl_context::OpenGlContext&, const texture_storage::TextureStorage&);
         ~OpenGlRenderer2d();
 
         void clear(const content::Color&) override;
@@ -30,6 +35,7 @@ namespace opengl_render_2d {
         struct Pimpl;
 
         opengl_context::OpenGlContext& _openGlContext;
+        const texture_storage::TextureStorage& _textureStorage;
         uptr<Pimpl> _pimpl;
     };
 }

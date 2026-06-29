@@ -1,6 +1,7 @@
 #include <OpenGlRender2d/OpenGlRenderer2d.h>
 
 #include "OglGeometryBatch.h"
+#include "OglVertexBuffer.h"
 #include "ShaderPipeline.h"
 #include "TypedOglBuffer.hpp"
 
@@ -17,50 +18,22 @@
 using namespace opengl_render_2d;
 
 //=====================================================================================================================
-static constexpr std::string_view basicVertexShader = R"(
-#version 420 core
-
-layout(location = 0) out vec4 outVertexColor;
-
-layout(location = 0) in vec2 inVertexPosition; // NDC coordinate system
-layout(location = 1) in vec4 inVertexColor;
-
-void main() 
-{
-    gl_Position = vec4(inVertexPosition, 0.0, 1.0);
-    outVertexColor = inVertexColor;
-}
-)";
-
-//=====================================================================================================================
-static constexpr std::string_view basicFragmentShader = R"(
-#version 420 core
-
-layout(location = 0) out vec4 fragmentColor;
-
-layout(location = 0) in vec4 inVertexColor;
-
-void main()
-{
-	fragmentColor = inVertexColor;
-}
-)";
-
-//=====================================================================================================================
 struct OpenGlRenderer2d::Pimpl final {
-    uptr<ShaderPipeline> colorOnlyShaderPipeline;
+    uptr<ShaderPipeline> shaderPipeline;
 
     Pimpl()
-        : colorOnlyShaderPipeline(makeUPtr<ShaderPipeline>(
-              String{basicVertexShader},
-              String{basicFragmentShader}))
+        : shaderPipeline(makeUPtr<ShaderPipeline>(
+              String{OglVertexBuffer::getVertexShaderText()},
+              String{OglVertexBuffer::getFragmentShaderText()}))
     {
     }
 };
 
 //=====================================================================================================================
-OpenGlRenderer2d::OpenGlRenderer2d(opengl_context::OpenGlContext& openGlContext)
+OpenGlRenderer2d::OpenGlRenderer2d(opengl_context::OpenGlContext& openGlContext,
+                                   const texture_storage::TextureStorage& textureStorage)
     : _openGlContext(openGlContext)
+    , _textureStorage(textureStorage)
     , _pimpl(makeUPtr<Pimpl>())
 {
 }
@@ -94,7 +67,7 @@ void OpenGlRenderer2d::setBaseRenderResolution(const uint16 width, const uint16 
 //=====================================================================================================================
 uptr<render_2d::GeometryBatch> OpenGlRenderer2d::createGeometryBatch()
 {
-    return makeUPtr<OglGeometryBatch>(_openGlContext.getGpuOperationsCompletedEvent());
+    return makeUPtr<OglGeometryBatch>(_openGlContext.getGpuOperationsCompletedEvent(), _textureStorage);
 }
 
 //=====================================================================================================================
@@ -112,7 +85,7 @@ void OpenGlRenderer2d::renderGeometryBatch(const render_2d::GeometryBatch& geome
                        0);
     };
 
-    _pimpl->colorOnlyShaderPipeline->use();
+    _pimpl->shaderPipeline->use();
     oglGeometryBatch._vao.use();
 
     renderPrimitives(oglGeometryBatch._pointIndexBuffer, GL_POINTS);

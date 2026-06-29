@@ -3,6 +3,8 @@
 #include "OglVertexInfo.h"
 #include "TypedOglBuffer.h"
 
+#include <string_view>
+
 //======================================================================================================================
 namespace opengl_render_2d {
     class OglVertexBuffer final {
@@ -16,6 +18,10 @@ namespace opengl_render_2d {
         VboRawId getVboId() const;
 
         TypedOglBuffer<OglVertexInfo>& getUnderlyingBuffer();
+
+        //--------------------------------------------------------------------------------------------------------------
+        static const std::string_view& getVertexShaderText();
+        static const std::string_view& getFragmentShaderText();
 
     private:
         void _rebindVboToVao() const;

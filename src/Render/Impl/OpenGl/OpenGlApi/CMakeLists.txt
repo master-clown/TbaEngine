@@ -29,3 +29,6 @@ target_link_libraries(${TARGET_NAME} PUBLIC
     Common
     Glad
 )
+target_link_libraries(${TARGET_NAME} PRIVATE
+    Logger
+)
