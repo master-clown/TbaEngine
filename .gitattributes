@@ -1,1 +1,2 @@
-*.c linguist-vendored
+src/Render/Impl/OpenGl/Glad/** linguist-vendored
+src/Render/Textures/TextureLoader/src/stb_image.h linguist-vendored
