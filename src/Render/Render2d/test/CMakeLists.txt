@@ -33,13 +33,13 @@ target_link_libraries(${TARGET_NAME} PRIVATE
 # Copy resource files
 list(TRANSFORM TEST_RESOURCES PREPEND "${CMAKE_CURRENT_SOURCE_DIR}/resources/")
 set(RESOURCES_TARGET_FOLDER "$<TARGET_FILE_DIR:${TARGET_NAME}>/resources/")
-add_custom_target(CopyResourceFilesTarget
+add_custom_target(${TARGET_NAME}CopyResourceFilesTarget
     ALL
     COMMAND ${CMAKE_COMMAND} -E make_directory "${RESOURCES_TARGET_FOLDER}"
     COMMAND ${CMAKE_COMMAND} -E copy_if_newer ${TEST_RESOURCES} "${RESOURCES_TARGET_FOLDER}"
     VERBATIM
 )
-add_dependencies(CopyResourceFilesTarget ${TARGET_NAME})
+add_dependencies(${TARGET_NAME}CopyResourceFilesTarget ${TARGET_NAME})
 
 #=======================================================================================================================
 include(GoogleTest)
