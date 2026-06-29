@@ -1,1 +1,1 @@
-*.c -linguist-detectable
+*.c linguist-vendored
