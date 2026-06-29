@@ -31,6 +31,8 @@ namespace texture_storage {
         using _TextureRawId = TextureId::Id;
 
         HashMap<_TextureRawId, uptr<texture::Texture>> _textures;
-        std::atomic<_TextureRawId> _nextId = 1;
+
+        //--------------------------------------------------------------------------------------------------------------
+        static std::atomic<_TextureRawId> _nextId;
     };
 }
