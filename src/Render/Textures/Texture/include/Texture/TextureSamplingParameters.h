@@ -2,11 +2,13 @@
 
 #include <Common/Integers.h>
 #include <Common/Stl/Vector.h>
+#include <Common/String.h>
 
 #include <cstddef>
 
 //======================================================================================================================
 namespace texture {
+    //==================================================================================================================
     struct TextureSamplingParameters final {
         enum class AddressMode : uint8 {
             Repeat,
@@ -26,4 +28,8 @@ namespace texture {
         Filtering magnifyNeighborFiltering = Filtering::Nearest;
         Filtering minifyMipmapFiltering = Filtering::Linear;
     };
+
+    //------------------------------------------------------------------------------------------------------------------
+    String str(TextureSamplingParameters::AddressMode);
+    String str(TextureSamplingParameters::Filtering);
 }
