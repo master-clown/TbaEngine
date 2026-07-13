@@ -27,6 +27,7 @@ target_link_libraries(${TARGET_NAME} PUBLIC
     SdlRender2d
 )
 target_link_libraries(${TARGET_NAME} PRIVATE
+    SdlTexture
     SdlWinsys
 )
 

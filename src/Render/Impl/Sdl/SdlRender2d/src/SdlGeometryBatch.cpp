@@ -10,8 +10,8 @@ using sdl_render_2d::SdlGeometryBatch;
 using sdl_render_2d::details::PrimitiveVariant;
 
 //======================================================================================================================
-SdlGeometryBatch::SdlGeometryBatch()
-    : _modifier(makeUPtr<SdlGeometryBatchModifier>(*this))
+SdlGeometryBatch::SdlGeometryBatch(const texture_storage::TextureStorage& textureStorage)
+    : _modifier(makeUPtr<SdlGeometryBatchModifier>(*this, textureStorage))
 {
 }
 

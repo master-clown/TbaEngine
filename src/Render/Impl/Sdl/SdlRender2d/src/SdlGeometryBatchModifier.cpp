@@ -3,9 +3,12 @@
 #include "Details/PrimitiveVariant.h"
 #include "SdlGeometryBatch.h"
 
+#include <Common/OverloadMultiplexor.h>
 #include <Geometry2d/Line.h>
 #include <Geometry2d/Point2d.h>
 #include <Geometry2d/Triangle.h>
+#include <SdlTexture/SdlTexture.h>
+#include <TextureStorage/TextureStorage.h>
 
 #include <cassert>
 
@@ -15,8 +18,24 @@ using sdl_render_2d::SdlGeometryBatchModifier;
 using sdl_render_2d::details::PrimitiveVariant;
 
 //======================================================================================================================
-SdlGeometryBatchModifier::SdlGeometryBatchModifier(SdlGeometryBatch& batch)
+namespace {
+    // (0,0)
+    //   . -- > U
+    //   |
+    // V v    x (1,1)
+    using SdlTextureCoords = geometry_2d::TextureCoords;
+
+    SdlTextureCoords makeSdlTextureCoords(const geometry_2d::TextureCoords& texCoords) noexcept
+    {
+        return SdlTextureCoords{.u = texCoords.u, .v = texCoords.v};
+    }
+}
+
+//======================================================================================================================
+SdlGeometryBatchModifier::SdlGeometryBatchModifier(SdlGeometryBatch& batch,
+                                                   const texture_storage::TextureStorage& texStorage)
     : _batch(batch)
+    , _textureStorage(texStorage)
 {
 }
 
@@ -30,8 +49,8 @@ void SdlGeometryBatchModifier::clear()
 void SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2d::Point2d>& point)
 {
     _batch._getPrimitives().push_back({
-        .primitiveCoordArray = {point.primitive.x, point.primitive.y},
-        .mainColor = point.contentTraits.color,
+        .primitivePoints = {point.primitive},
+        .color = point.contentTraits.color,
         .type = PrimitiveVariant::PrimitiveType::Point,
     });
 }
@@ -43,8 +62,8 @@ void SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2d::Line
     const auto& finalPt = line.primitive.finalPt;
 
     _batch._getPrimitives().push_back({
-        .primitiveCoordArray = {startPt.x, startPt.y, finalPt.x, finalPt.y},
-        .mainColor = line.contentTraits.lineColor,
+        .primitivePoints = {startPt, finalPt},
+        .color = line.contentTraits.lineColor,
         .type = PrimitiveVariant::PrimitiveType::Line,
     });
 }
@@ -55,11 +74,30 @@ void SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2d::Tria
     const auto& pt1 = triangle.primitive.pt1;
     const auto& pt2 = triangle.primitive.pt2;
     const auto& pt3 = triangle.primitive.pt3;
-    const auto& color = std::get<content::Color>(triangle.contentTraits.faceContent);
 
-    _batch._getPrimitives().push_back({
-        .primitiveCoordArray = {pt1.x, pt1.y, pt2.x, pt2.y, pt3.x, pt3.y},
-        .mainColor = color,
+    PrimitiveVariant primitive{
+        .primitivePoints = {pt1, pt2, pt3},
         .type = PrimitiveVariant::PrimitiveType::Triangle,
-    });
+    };
+
+    std::visit(
+        OverloadMultiplexor{
+            [&](const content::Color& color) mutable noexcept {
+                primitive.color = color;
+            },
+            [&](const texture_storage::TextureId& texId) mutable {
+                const auto& tex = _textureStorage.get(texId);
+                assert(dynamic_cast<const sdl_texture::SdlTexture*>(&tex));
+
+                const auto& sdlTexure = static_cast<const sdl_texture::SdlTexture&>(tex);
+                primitive.sdlTexture = &sdlTexure.getSdlTexture();
+
+                for (size_t iVertex = 0; iVertex < 3; ++iVertex)
+                    primitive.primitiveTexCoords[iVertex] =
+                        makeSdlTextureCoords(triangle.contentTraits.textureCoords[iVertex]);
+            },
+        },
+        triangle.contentTraits.faceContent);
+
+    _batch._getPrimitives().push_back(std::move(primitive));
 }

@@ -14,16 +14,33 @@ using namespace sdl_render_2d::details;
 //======================================================================================================================
 namespace {
     //==================================================================================================================
-    auto makeSdlFColor(const content::Color& color) noexcept
+    void setColorInSdlVertex(SDL_Vertex& sdlVertex,
+                             const size_t iVertex,
+                             const PrimitiveVariant& primitive) noexcept
     {
         static constexpr auto maxColorIntensity = content::Color::maxColorIntensity;
 
-        return SDL_FColor{
+        const auto& color = primitive.color;
+        sdlVertex.color = SDL_FColor{
             .r = numericCast<float>(color.r) / maxColorIntensity,
             .g = numericCast<float>(color.g) / maxColorIntensity,
             .b = numericCast<float>(color.b) / maxColorIntensity,
             .a = numericCast<float>(color.a) / maxColorIntensity,
         };
+    }
+
+    //==================================================================================================================
+    void setTextureCoordsInSdlVertex(SDL_Vertex& sdlVertex,
+                                     const size_t iVertex,
+                                     const PrimitiveVariant& primitive) noexcept
+    {
+        const auto& texCoords = primitive.primitiveTexCoords[iVertex];
+        sdlVertex.tex_coord.x = texCoords.u;
+        sdlVertex.tex_coord.y = texCoords.v;
+        sdlVertex.color.r = 1.0f;
+        sdlVertex.color.g = 1.0f;
+        sdlVertex.color.b = 1.0f;
+        sdlVertex.color.a = 1.0f;
     }
 }
 
@@ -41,21 +58,19 @@ auto SdlTriangle::convertPrimitiveVariantToSdlVertexArray(const PrimitiveVariant
 
     assert(primitive.type == PrimitiveVariant::PrimitiveType::Triangle);
 
-    const auto faceSdlFColor = makeSdlFColor(primitive.mainColor);
+    const auto& fillContentInfo = primitive.sdlTexture ? setTextureCoordsInSdlVertex : setColorInSdlVertex;
 
-    const auto makeSdlVertex = [this, &faceSdlFColor](const geometry_2d::Point2d& pt) noexcept {
-        const auto sdlPt = _transformToSdlPointFunc(pt);
-        return SDL_Vertex{
-            .position = sdlPt,
-            .color = faceSdlFColor,
-            .tex_coord = {0},
+    const auto makeSdlVertex = [&](const size_t iVertex) noexcept {
+        SDL_Vertex sdlVertex{
+            .position = _transformToSdlPointFunc(primitive.primitivePoints[iVertex]),
         };
+        fillContentInfo(sdlVertex, iVertex, primitive);
+
+        return sdlVertex;
     };
 
-    const auto& coordArray = primitive.primitiveCoordArray;
-    sdlVertexes[0] = makeSdlVertex({.x = coordArray[0], .y = coordArray[1]});
-    sdlVertexes[1] = makeSdlVertex({.x = coordArray[2], .y = coordArray[3]});
-    sdlVertexes[2] = makeSdlVertex({.x = coordArray[4], .y = coordArray[5]});
+    for (size_t iVertex = 0; iVertex < 3; ++iVertex)
+        sdlVertexes[iVertex] = makeSdlVertex(iVertex);
 
     return sdlVertexes;
 }

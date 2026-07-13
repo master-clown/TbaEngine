@@ -52,8 +52,9 @@ struct SdlRenderer2d::Pimpl final {
 };
 
 //=====================================================================================================================
-SdlRenderer2d::SdlRenderer2d(sdl_winsys::SdlWindow& sdlWindow)
-    : _pimpl(makeUPtr<Pimpl>(sdlWindow,
+SdlRenderer2d::SdlRenderer2d(sdl_winsys::SdlWindow& sdlWindow, const texture_storage::TextureStorage& texStorage)
+    : _textureStorage(texStorage)
+    , _pimpl(makeUPtr<Pimpl>(sdlWindow,
                              [this](const geometry_2d::Point2d& pt) {
                                  const auto sdlPt = _toSdlScreenPoint2d(pt);
                                  return SDL_FPoint{.x = sdlPt.x, .y = sdlPt.y};
@@ -96,7 +97,7 @@ void SdlRenderer2d::setBaseRenderResolution(const uint16 width, const uint16 hei
 //=====================================================================================================================
 uptr<render_2d::GeometryBatch> SdlRenderer2d::createGeometryBatch()
 {
-    return makeUPtr<SdlGeometryBatch>();
+    return makeUPtr<SdlGeometryBatch>(_textureStorage);
 }
 
 //=====================================================================================================================
@@ -118,15 +119,28 @@ void SdlRenderer2d::renderGeometryBatch(const render_2d::GeometryBatch& geometry
 }
 
 //=====================================================================================================================
+SDL_Renderer& SdlRenderer2d::getSdlRenderer()
+{
+    return const_cast<SDL_Renderer&>(static_cast<const SdlRenderer2d&>(*this).getSdlRenderer());
+}
+
+//=====================================================================================================================
+const SDL_Renderer& SdlRenderer2d::getSdlRenderer() const
+{
+    assert(_pimpl->renderer);
+    return *_pimpl->renderer;
+}
+
+//=====================================================================================================================
 void SdlRenderer2d::_renderAsPoint2d(const PrimitiveVariant& primitive)
 {
     assert(primitive.type == PrimitiveVariant::PrimitiveType::Point);
 
-    const auto& color = primitive.mainColor;
+    const auto& color = primitive.color;
     SDL_SetRenderDrawColor(_pimpl->renderer, color.r, color.g, color.b, color.a);
 
-    const auto& coordArray = primitive.primitiveCoordArray;
-    const auto sdlPt = _toSdlScreenPoint2d({.x = coordArray[0], .y = coordArray[1]});
+    const auto& pt = primitive.primitivePoints[0];
+    const auto sdlPt = _toSdlScreenPoint2d({.x = pt.x, .y = pt.y});
 
     SDL_RenderPoint(_pimpl->renderer, sdlPt.x, sdlPt.y);
 }
@@ -136,12 +150,12 @@ void SdlRenderer2d::_renderAsLine(const PrimitiveVariant& primitive)
 {
     assert(primitive.type == PrimitiveVariant::PrimitiveType::Line);
 
-    const auto& color = primitive.mainColor;
+    const auto& color = primitive.color;
     SDL_SetRenderDrawColor(_pimpl->renderer, color.r, color.g, color.b, color.a);
 
-    const auto& coordArray = primitive.primitiveCoordArray;
-    const auto sdlStartPt = _toSdlScreenPoint2d({.x = coordArray[0], .y = coordArray[1]});
-    const auto sdlFinalPt = _toSdlScreenPoint2d({.x = coordArray[2], .y = coordArray[3]});
+    const auto& pts = primitive.primitivePoints;
+    const auto sdlStartPt = _toSdlScreenPoint2d({.x = pts[0].x, .y = pts[0].y});
+    const auto sdlFinalPt = _toSdlScreenPoint2d({.x = pts[1].x, .y = pts[1].y});
 
     SDL_RenderLine(_pimpl->renderer, sdlStartPt.x, sdlStartPt.y, sdlFinalPt.x, sdlFinalPt.y);
 }
@@ -151,11 +165,13 @@ void SdlRenderer2d::_renderAsTriangle(const PrimitiveVariant& primitive)
 {
     auto& sdlVertexArray = _pimpl->sdlTriangle.convertPrimitiveVariantToSdlVertexArray(primitive);
 
+    using Indices = const int*;
+
     SDL_RenderGeometry(_pimpl->renderer,
-                       (SDL_Texture*)nullptr,
+                       primitive.sdlTexture,
                        &sdlVertexArray[0],
                        sdlVertexArray.size(),
-                       (int*)nullptr,
+                       (Indices) nullptr,
                        0);
 }
 

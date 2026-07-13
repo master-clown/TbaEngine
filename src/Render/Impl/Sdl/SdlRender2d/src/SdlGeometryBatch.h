@@ -16,10 +16,15 @@ namespace sdl_render_2d {
 }
 
 //======================================================================================================================
+namespace texture_storage {
+    class TextureStorage;
+}
+
+//======================================================================================================================
 namespace sdl_render_2d {
     class SdlGeometryBatch final : public render_2d::GeometryBatch {
     public:
-        SdlGeometryBatch();
+        explicit SdlGeometryBatch(const texture_storage::TextureStorage&);
         ~SdlGeometryBatch();
 
         //--------------------------------------------------------------------------------------------------------------
