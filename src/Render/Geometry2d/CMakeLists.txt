@@ -7,6 +7,7 @@ set(PUBLIC_HEADERS
     Line.h
     Point2d.h
     ScreenCoordinate.h
+    TextureCoords.h
     Triangle.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
@@ -16,6 +17,7 @@ set(SOURCES
     Line.cpp
     Point2d.cpp
     ScreenCoordinate.cpp
+    TextureCoords.cpp
     Triangle.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")

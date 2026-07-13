@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Geometry2d/Point2d.h>
+#include <Geometry2d/TextureCoords.h>
 
 #include <Common/Stl/Array.h>
 #include <Content/Content.h>
@@ -12,13 +13,6 @@ namespace geometry_2d {
         Point2d pt1;
         Point2d pt2;
         Point2d pt3;
-    };
-
-    //==================================================================================================================
-    // TODO: change this ad-hoc when the `libContent` is properly designed
-    struct TextureCoords final {
-        float u = 0.0;
-        float v = 0.0;
     };
 
     //==================================================================================================================
