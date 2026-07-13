@@ -59,7 +59,7 @@ void SdlTexture::_OnSdlTextureDestruction::operator()(SDL_Texture* sdlTexture) c
 namespace {
     constexpr SDL_PixelFormat sdlPixelFormatFromChannelCount(const uint8 channelCount) noexcept
     {
-        assert(channelCount >= 3 && "At least 3 channels are supported by SDL");
+        assert(channelCount >= 3 && "Channels fewer than 3 are not supported by SDL");
 
         switch (channelCount) {
         case 3: return SDL_PIXELFORMAT_RGB24;
