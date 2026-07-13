@@ -6,7 +6,6 @@
 #include <SDL3/SDL_render.h>
 
 #include <stdexcept>
-#include <type_traits>
 #include <utility>
 
 //======================================================================================================================
