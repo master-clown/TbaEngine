@@ -50,7 +50,7 @@ namespace {
 //======================================================================================================================
 TEST_CASE(DrawRectangleTexturedAsContainer)
 {
-    static const auto textureFile = std::filesystem::canonical(containerTextureFilePath);
+    static const auto textureFile = std::filesystem::canonical(containerTextureFilePath).string();
 
     const auto initSceneGeometryBatch = [](render::Renderer& renderer,
                                            render_2d::GeometryBatchModifier& modifier) {
@@ -87,7 +87,7 @@ namespace {
         texturingMgr.setCurrentTextureSampler(*sampler);
 
         const auto texId = [&] {
-            static const auto textureFile = std::filesystem::canonical(containerTextureFilePath);
+            static const auto textureFile = std::filesystem::canonical(containerTextureFilePath).string();
 
             const auto textureData = texture_loader::TextureLoader{}.loadFromFile(textureFile);
             return renderer.getTextureStorage().add(texturingObjectsCreator.createTexture(textureData));
@@ -158,13 +158,13 @@ namespace {
     //==================================================================================================================
     void testAllRenderers(const String& testDescription, const InitSceneGeometryBatch& initSceneGeometryBatch)
     {
-        // TODO: uncomment when SDL supports texturing
-        // {
-        //     GeometryBatchRenderingApp<sdl_render_context::SdlRenderPreconfigOptions> app(
-        //         MAKE_WND_TITLE("SDL renderer. " + testDescription),
-        //         initSceneGeometryBatch);
-        //     EXPECT_NO_THROW(app.run());
-        // }
+        {
+            GeometryBatchRenderingApp<sdl_render_context::SdlRenderPreconfigOptions> app(
+                MAKE_WND_TITLE("SDL renderer. " + testDescription),
+                initSceneGeometryBatch,
+                UseTexturing{true});
+            EXPECT_NO_THROW(app.run());
+        }
 
         {
             GeometryBatchRenderingApp<opengl_context::OpenGlPreconfigOptions> app(
