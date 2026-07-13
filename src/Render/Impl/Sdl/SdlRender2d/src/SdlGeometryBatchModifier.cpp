@@ -18,20 +18,6 @@ using sdl_render_2d::SdlGeometryBatchModifier;
 using sdl_render_2d::details::PrimitiveVariant;
 
 //======================================================================================================================
-namespace {
-    // (0,0)
-    //   . -- > U
-    //   |
-    // V v    x (1,1)
-    using SdlTextureCoords = geometry_2d::TextureCoords;
-
-    SdlTextureCoords makeSdlTextureCoords(const geometry_2d::TextureCoords& texCoords) noexcept
-    {
-        return SdlTextureCoords{.u = texCoords.u, .v = texCoords.v};
-    }
-}
-
-//======================================================================================================================
 SdlGeometryBatchModifier::SdlGeometryBatchModifier(SdlGeometryBatch& batch,
                                                    const texture_storage::TextureStorage& texStorage)
     : _batch(batch)
@@ -92,9 +78,8 @@ void SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2d::Tria
                 const auto& sdlTexure = static_cast<const sdl_texture::SdlTexture&>(tex);
                 primitive.sdlTexture = &sdlTexure.getSdlTexture();
 
-                for (size_t iVertex = 0; iVertex < 3; ++iVertex)
-                    primitive.primitiveTexCoords[iVertex] =
-                        makeSdlTextureCoords(triangle.contentTraits.textureCoords[iVertex]);
+                for (size_t iVertex = 0; iVertex < triangle.contentTraits.textureCoords.size(); ++iVertex)
+                    primitive.primitiveTexCoords[iVertex] = triangle.contentTraits.textureCoords[iVertex];
             },
         },
         triangle.contentTraits.faceContent);
