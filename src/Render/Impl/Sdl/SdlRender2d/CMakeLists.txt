@@ -37,6 +37,8 @@ target_link_libraries(${TARGET_NAME} PUBLIC
 )
 target_link_libraries(${TARGET_NAME} PRIVATE
     Content
+    SdlTexture
     SdlWinsys
+    TextureStorage
     SDL3::SDL3
 )

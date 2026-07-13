@@ -8,10 +8,15 @@ namespace sdl_render_2d {
 }
 
 //======================================================================================================================
+namespace texture_storage {
+    class TextureStorage;
+}
+
+//======================================================================================================================
 namespace sdl_render_2d {
     class SdlGeometryBatchModifier final : public render_2d::GeometryBatchModifier {
     public:
-        explicit SdlGeometryBatchModifier(SdlGeometryBatch&);
+        SdlGeometryBatchModifier(SdlGeometryBatch&, const texture_storage::TextureStorage&);
 
         //--------------------------------------------------------------------------------------------------------------
         void clear() override;
@@ -23,5 +28,6 @@ namespace sdl_render_2d {
 
     private:
         SdlGeometryBatch& _batch;
+        const texture_storage::TextureStorage& _textureStorage;
     };
 }

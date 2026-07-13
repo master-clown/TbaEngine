@@ -1,24 +1,22 @@
 cmake_minimum_required(VERSION 3.12)
 
-set(TARGET_NAME Geometry2d)
+find_package(SDL3 REQUIRED)
+
+set(TARGET_NAME SdlTexture)
 
 set(PUBLIC_HEADERS
-    ContentTraits.h
-    Line.h
-    Point2d.h
-    ScreenCoordinate.h
-    TextureCoords.h
-    Triangle.h
+    SdlTexture.h
+    SdlTexturingMgr.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
-    ContentTraits.cpp
-    Line.cpp
-    Point2d.cpp
-    ScreenCoordinate.cpp
-    TextureCoords.cpp
-    Triangle.cpp
+    SdlTextureSampling.cpp
+    SdlTextureSampling.h
+    SdlTexturingObjectsCreator.cpp
+    SdlTexturingObjectsCreator.h
+    SdlTexture.cpp
+    SdlTexturingMgr.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
@@ -32,8 +30,10 @@ target_sources(${TARGET_NAME}
     FILES
     ${PUBLIC_HEADERS})
 target_link_libraries(${TARGET_NAME} PUBLIC
-    Content
-)
-target_link_libraries(${TARGET_NAME} PRIVATE 
     Common
+    Texture
+)
+target_link_libraries(${TARGET_NAME} PRIVATE
+    Logger
+    SDL3::SDL3
 )

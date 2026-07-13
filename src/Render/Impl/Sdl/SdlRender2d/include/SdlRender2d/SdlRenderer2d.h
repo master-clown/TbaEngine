@@ -15,11 +15,19 @@ namespace sdl_winsys {
 }
 
 //======================================================================================================================
+namespace texture_storage {
+    class TextureStorage;
+}
+
+//======================================================================================================================
+struct SDL_Renderer;
+
+//======================================================================================================================
 namespace sdl_render_2d {
     //==================================================================================================================
     class SdlRenderer2d final : public render_2d::Renderer {
     public:
-        explicit SdlRenderer2d(sdl_winsys::SdlWindow&);
+        SdlRenderer2d(sdl_winsys::SdlWindow&, const texture_storage::TextureStorage&);
         ~SdlRenderer2d();
 
         void clear(const content::Color&) override;
@@ -30,6 +38,10 @@ namespace sdl_render_2d {
         //--------------------------------------------------------------------------------------------------------------
         uptr<render_2d::GeometryBatch> createGeometryBatch() override;
         void renderGeometryBatch(const render_2d::GeometryBatch&) override;
+
+        //--------------------------------------------------------------------------------------------------------------
+        SDL_Renderer& getSdlRenderer();
+        const SDL_Renderer& getSdlRenderer() const;
 
     private:
         void _renderAsPoint2d(const details::PrimitiveVariant&);
@@ -49,6 +61,8 @@ namespace sdl_render_2d {
         SdlScreenPoint2d _toSdlScreenPoint2d(const geometry_2d::Point2d&) const;
 
     private:
+        const texture_storage::TextureStorage& _textureStorage;
+
         struct Pimpl;
         uptr<Pimpl> _pimpl;
     };
