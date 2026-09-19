@@ -19,6 +19,8 @@ namespace framework {
         explicit RenderableApplication(RefreshRateOptions);
         ~RenderableApplication();
 
+        const Clock& getAppClock() const;
+
     protected:
         using ShouldQuit = bool;
 
