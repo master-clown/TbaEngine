@@ -15,6 +15,6 @@ namespace render_scene {
         virtual ~RenderableBlueprint();
 
         // TODO: make sure we extract accumulated geometry from the modifier
-        virtual uptr<Renderable> makeRenderable(TracedGeometryBatchModifier2d&) = 0;
+        virtual Renderable makeRenderable(TracedGeometryBatchModifier2d&) = 0;
     };
 }

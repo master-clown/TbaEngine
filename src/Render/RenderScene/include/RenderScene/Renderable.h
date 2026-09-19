@@ -4,16 +4,17 @@
 
 //======================================================================================================================
 namespace render_scene {
-    class Renderable {
+    // To access particular parts of the `Renderable` it is best to provide accessors in
+    // the corresponding `RenderableBlueprint` and use them here. No common interfaces are
+    // defined for now, when it is not obvious how they must look like.
+    class Renderable final {
     public:
-        explicit Renderable(Renderable2d renderable2d)
-            : _2dPart(std::move(renderable2d))
-        {
-        }
+        explicit Renderable(Renderable2d);
+        Renderable();
 
-        virtual ~Renderable() = default;
+        const Renderable2d& getRenderable2d() const noexcept;
 
-    protected:
+    private:
         Renderable2d _2dPart;
     };
 }

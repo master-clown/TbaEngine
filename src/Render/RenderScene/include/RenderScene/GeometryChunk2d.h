@@ -6,8 +6,10 @@
 //======================================================================================================================
 namespace render_scene {
     struct GeometryChunk2d final {
-        Vector<render_2d::PrimitiveId> points;
-        Vector<render_2d::PrimitiveId> lines;
-        Vector<render_2d::PrimitiveId> triangles;
+        using PrimitiveIds = Vector<render_2d::PrimitiveId>;
+
+        PrimitiveIds points;
+        PrimitiveIds lines;
+        PrimitiveIds triangles;
     };
 }

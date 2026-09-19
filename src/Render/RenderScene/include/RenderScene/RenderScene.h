@@ -30,6 +30,6 @@ namespace render_scene {
 
     private:
         uptr<render_2d::GeometryBatch> _geometryBatch2d;
-        Vector<uptr<Renderable>> _renderables;
+        Vector<Renderable> _renderables;
     };
 }

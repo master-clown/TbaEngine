@@ -34,16 +34,11 @@ Renderable& RenderScene::addRenderable(RenderableBlueprint& renderableBlueprint)
 {
     assert(_geometryBatch2d);
 
-    uptr<Renderable> renderable;
+    Renderable renderable;
     _geometryBatch2d->modify([&renderable, &renderableBlueprint](render_2d::GeometryBatchModifier& modifier) {
         TracedGeometryBatchModifier2d tracedModifier{modifier};
         renderable = renderableBlueprint.makeRenderable(tracedModifier);
     });
 
-    assert(renderable);
-
-    auto& renderableRef = *renderable;
-    _renderables.emplace_back(std::move(renderable));
-
-    return renderableRef;
+    return _renderables.emplace_back(std::move(renderable));
 }
