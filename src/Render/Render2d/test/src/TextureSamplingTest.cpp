@@ -159,19 +159,21 @@ namespace {
     void testAllRenderers(const String& testDescription, const InitSceneGeometryBatch& initSceneGeometryBatch)
     {
         {
-            GeometryBatchRenderingApp<sdl_render_context::SdlRenderPreconfigOptions> app(
-                MAKE_WND_TITLE("SDL renderer. " + testDescription),
-                initSceneGeometryBatch,
-                UseTexturing{true});
-            EXPECT_NO_THROW(app.run());
+            framework::InitializedApp<
+                GeometryBatchRenderingApp<sdl_render_context::SdlRenderPreconfigOptions>>
+                app(MAKE_WND_TITLE("SDL renderer. " + testDescription),
+                    initSceneGeometryBatch,
+                    UseTexturing{true});
+            EXPECT_NO_THROW(app->run());
         }
 
         {
-            GeometryBatchRenderingApp<opengl_context::OpenGlPreconfigOptions> app(
-                MAKE_WND_TITLE("OpenGL renderer. " + testDescription),
-                initSceneGeometryBatch,
-                UseTexturing{true});
-            EXPECT_NO_THROW(app.run());
+            framework::InitializedApp<
+                GeometryBatchRenderingApp<opengl_context::OpenGlPreconfigOptions>>
+                app(MAKE_WND_TITLE("OpenGL renderer. " + testDescription),
+                    initSceneGeometryBatch,
+                    UseTexturing{true});
+            EXPECT_NO_THROW(app->run());
         }
     }
 

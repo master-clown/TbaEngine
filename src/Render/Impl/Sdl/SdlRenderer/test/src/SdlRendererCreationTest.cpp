@@ -45,6 +45,6 @@ protected:
 //======================================================================================================================
 TEST_CASE(CreateEmptyScreen)
 {
-    BaseSdlRenderTestApp app("Just run and finish without any exceptions");
-    EXPECT_NO_THROW(app.run());
+    framework::InitializedApp<BaseSdlRenderTestApp> app("Just run and finish without any exceptions");
+    EXPECT_NO_THROW(app->run());
 }
