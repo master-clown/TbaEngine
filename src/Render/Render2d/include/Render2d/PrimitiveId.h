@@ -4,6 +4,7 @@
 
 #include <atomic>
 #include <climits>
+#include <functional>
 #include <numeric>
 
 //======================================================================================================================
@@ -17,8 +18,15 @@ namespace render_2d {
         PrimitiveId() = delete;
 
         //--------------------------------------------------------------------------------------------------------------
-        RawId getRawId() const;
-        operator RawId() const;
+        constexpr RawId getRawId() const noexcept
+        {
+            return _rawId;
+        }
+
+        constexpr operator RawId() const noexcept
+        {
+            return getRawId();
+        }
 
         //--------------------------------------------------------------------------------------------------------------
         template <class Geometry2d>
@@ -61,3 +69,12 @@ namespace render_2d {
         return lhs.getRawId() != rhs.getRawId();
     }
 }
+
+//==================================================================================================================
+template <>
+struct std::hash<render_2d::PrimitiveId> {
+    constexpr std::size_t operator()(const render_2d::PrimitiveId& primId) const noexcept
+    {
+        return std::hash<render_2d::PrimitiveId::RawId>{}(primId.getRawId());
+    }
+};
