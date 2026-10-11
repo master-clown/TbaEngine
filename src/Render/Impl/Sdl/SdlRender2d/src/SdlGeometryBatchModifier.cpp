@@ -36,8 +36,12 @@ void SdlGeometryBatchModifier::clear()
 PrimitiveId SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2d::Point2d>& point)
 {
     _batch._getPrimitives().push_back({
-        .primitivePoints = {point.primitive},
-        .color = point.contentTraits.color,
+        .primitiveVertexes = {
+            render_2d::VertexInfo{
+                .coords = point.primitive,
+                .color = point.contentTraits.color,
+            },
+        },
         .type = PrimitiveVariant::PrimitiveType::Point,
     });
 
@@ -51,8 +55,16 @@ PrimitiveId SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2
     const auto& finalPt = line.primitive.finalPt;
 
     _batch._getPrimitives().push_back({
-        .primitivePoints = {startPt, finalPt},
-        .color = line.contentTraits.lineColor,
+        .primitiveVertexes = {
+            render_2d::VertexInfo{
+                .coords = startPt,
+                .color = line.contentTraits.lineColor,
+            },
+            render_2d::VertexInfo{
+                .coords = finalPt,
+                .color = line.contentTraits.lineColor,
+            },
+        },
         .type = PrimitiveVariant::PrimitiveType::Line,
     });
 
@@ -67,14 +79,19 @@ PrimitiveId SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2
     const auto& pt3 = triangle.primitive.pt3;
 
     PrimitiveVariant primitive{
-        .primitivePoints = {pt1, pt2, pt3},
+        .primitiveVertexes = {
+            render_2d::VertexInfo{.coords = pt1},
+            render_2d::VertexInfo{.coords = pt2},
+            render_2d::VertexInfo{.coords = pt3},
+        },
         .type = PrimitiveVariant::PrimitiveType::Triangle,
     };
 
     std::visit(
         OverloadMultiplexor{
             [&](const content::Color& color) mutable noexcept {
-                primitive.color = color;
+                for (auto& vertexInfo : primitive.primitiveVertexes)
+                    vertexInfo.color = color;
             },
             [&](const texture_storage::TextureId& texId) mutable {
                 const auto& tex = _textureStorage.get(texId);
@@ -84,7 +101,8 @@ PrimitiveId SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2
                 primitive.sdlTexture = &sdlTexure.getSdlTexture();
 
                 for (size_t iVertex = 0; iVertex < triangle.contentTraits.textureCoords.size(); ++iVertex)
-                    primitive.primitiveTexCoords[iVertex] = triangle.contentTraits.textureCoords[iVertex];
+                    primitive.primitiveVertexes[iVertex].textureCoords =
+                        triangle.contentTraits.textureCoords[iVertex];
             },
         },
         triangle.contentTraits.faceContent);
