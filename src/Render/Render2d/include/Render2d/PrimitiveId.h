@@ -18,15 +18,19 @@ namespace render_2d {
         PrimitiveId() = delete;
 
         //--------------------------------------------------------------------------------------------------------------
-        constexpr RawId getRawId() const noexcept
-        {
-            return _rawId;
-        }
+        constexpr RawId getRawId() const noexcept;
+        constexpr operator RawId() const noexcept;
 
-        constexpr operator RawId() const noexcept
-        {
-            return getRawId();
-        }
+        //--------------------------------------------------------------------------------------------------------------
+        enum class PrimitiveType : RawId {
+            Point = 0,
+            Line = 1,
+            Trinangle = 2,
+        };
+        constexpr PrimitiveType getTypePart() const noexcept;
+
+        using IdPart = RawId;
+        constexpr IdPart getIdPart() const noexcept;
 
         //--------------------------------------------------------------------------------------------------------------
         template <class Geometry2d>
@@ -56,6 +60,30 @@ namespace render_2d {
         //--------------------------------------------------------------------------------------------------------------
         static std::atomic<RawId> _nextId;
     };
+
+    //==================================================================================================================
+    constexpr auto PrimitiveId::getRawId() const noexcept -> RawId
+    {
+        return _rawId;
+    }
+
+    //==================================================================================================================
+    constexpr PrimitiveId::operator RawId() const noexcept
+    {
+        return getRawId();
+    }
+
+    //==================================================================================================================
+    constexpr auto PrimitiveId::getTypePart() const noexcept -> PrimitiveType
+    {
+        return static_cast<PrimitiveType>((getRawId() & _primitiveTypeMask) >> _bitOffsetForPrimitiveType);
+    }
+
+    //==================================================================================================================
+    constexpr auto PrimitiveId::getIdPart() const noexcept -> IdPart
+    {
+        return getRawId() & _idMask;
+    }
 
     //==================================================================================================================
     constexpr bool operator==(const PrimitiveId lhs, const PrimitiveId rhs) noexcept
