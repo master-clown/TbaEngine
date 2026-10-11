@@ -27,5 +27,5 @@ private:
 
     //------------------------------------------------------------------------------------------------------------------
     uptr<render_scene::RenderScene> _renderScene;
-    OnIterate _onIterate = [] { };
+    OnIterate _onIterate;
 };

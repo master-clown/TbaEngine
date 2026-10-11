@@ -19,6 +19,12 @@ render_scene::RenderScene& TestApp::getRenderScene()
 }
 
 //======================================================================================================================
+void TestApp::onIterate(OnIterate onIterate)
+{
+    _onIterate = std::move(onIterate);
+}
+
+//======================================================================================================================
 void TestApp::_initAppWithRenderer()
 {
     auto& renderer = this->getRenderer();
@@ -30,7 +36,8 @@ void TestApp::_initAppWithRenderer()
 //======================================================================================================================
 auto TestApp::_iterate(const app_event::AppEvent& appEvent) -> ShouldQuit
 {
-    _onIterate(appEvent);
+    if (_onIterate)
+        _onIterate(appEvent);
 
     return Super::_iterate(appEvent);
 }
