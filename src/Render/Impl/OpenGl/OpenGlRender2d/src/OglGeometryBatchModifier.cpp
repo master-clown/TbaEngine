@@ -34,14 +34,24 @@ void OglGeometryBatchModifier::clear()
     _batch._pointIndexBuffer.getUnderlyingBuffer().clear();
 }
 
+namespace {
+    template <typename Geometry>
+    PrimitiveId registerNewPrimitive(auto& primIdToVertexIdxMap, const auto& newVertexIndex)
+    {
+        const auto newPrimitiveId = PrimitiveId::generate<Geometry>();
+        primIdToVertexIdxMap[newPrimitiveId] = newVertexIndex;
+
+        return newPrimitiveId;
+    }
+}
+
 //======================================================================================================================
 PrimitiveId OglGeometryBatchModifier::append(const render_2d::RenderableGeometry<geometry_2d::Point2d>& pt)
 {
     const auto newVertexIndex = _addNewVertex(pt.primitive, pt.contentTraits.color);
-
     _batch._pointIndexBuffer.getUnderlyingBuffer().append(numericCast<OglIndexBuffer::Index>(newVertexIndex));
 
-    return PrimitiveId::generate<geometry_2d::Point2d>();
+    return registerNewPrimitive<geometry_2d::Point2d>(_batch._primIdToVertexIdxMap, newVertexIndex);
 }
 
 //======================================================================================================================
@@ -54,7 +64,7 @@ PrimitiveId OglGeometryBatchModifier::append(const render_2d::RenderableGeometry
     _batch._lineIndexBuffer.getUnderlyingBuffer().append(startVertexIndex);
     _batch._lineIndexBuffer.getUnderlyingBuffer().append(finalVertexIndex);
 
-    return PrimitiveId::generate<geometry_2d::Line>();
+    return registerNewPrimitive<geometry_2d::Line>(_batch._primIdToVertexIdxMap, startVertexIndex);
 }
 
 //======================================================================================================================
@@ -70,7 +80,7 @@ PrimitiveId OglGeometryBatchModifier::append(const render_2d::RenderableGeometry
     _batch._triangleIndexBuffer.getUnderlyingBuffer().append(vertex2Index);
     _batch._triangleIndexBuffer.getUnderlyingBuffer().append(vertex3Index);
 
-    return PrimitiveId::generate<geometry_2d::Triangle>();
+    return registerNewPrimitive<geometry_2d::Triangle>(_batch._primIdToVertexIdxMap, vertex1Index);
 }
 
 //======================================================================================================================

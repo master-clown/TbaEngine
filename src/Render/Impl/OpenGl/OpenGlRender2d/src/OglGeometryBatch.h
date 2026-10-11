@@ -5,7 +5,9 @@
 #include "OglVertexBuffer.h"
 
 #include <Common/Memory.h>
+#include <Common/Stl/HashMap.h>
 #include <Render2d/GeometryBatch.h>
+#include <Render2d/PrimitiveId.h>
 
 //======================================================================================================================
 namespace opengl_api {
@@ -50,5 +52,8 @@ namespace opengl_render_2d {
         OglIndexBuffer _triangleIndexBuffer;
         OglIndexBuffer _lineIndexBuffer;
         OglIndexBuffer _pointIndexBuffer;
+
+        using _VertexIndex = OglIndexBuffer::Index;
+        HashMap<render_2d::PrimitiveId, _VertexIndex> _primIdToVertexIdxMap;
     };
 }
