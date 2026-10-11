@@ -44,7 +44,7 @@ auto PrimitiveId::_generateNewId(const RawId primitiveType) -> PrimitiveId
 template <>
 PrimitiveId PrimitiveId::generate<geometry_2d::Point2d>()
 {
-    static constexpr RawId typeIdx = 0;
+    static constexpr auto typeIdx = static_cast<std::underlying_type_t<PrimitiveType>>(PrimitiveType::Point);
     static_assert(typeIdx < _numOfAvailablePrimitiveTypes);
 
     return PrimitiveId::_generateNewId(typeIdx);
@@ -54,7 +54,7 @@ PrimitiveId PrimitiveId::generate<geometry_2d::Point2d>()
 template <>
 PrimitiveId PrimitiveId::generate<geometry_2d::Line>()
 {
-    static constexpr RawId typeIdx = 1;
+    static constexpr auto typeIdx = static_cast<std::underlying_type_t<PrimitiveType>>(PrimitiveType::Line);
     static_assert(typeIdx < _numOfAvailablePrimitiveTypes);
 
     return PrimitiveId::_generateNewId(typeIdx);
@@ -64,7 +64,7 @@ PrimitiveId PrimitiveId::generate<geometry_2d::Line>()
 template <>
 PrimitiveId PrimitiveId::generate<geometry_2d::Triangle>()
 {
-    static constexpr RawId typeIdx = 2;
+    static constexpr auto typeIdx = static_cast<std::underlying_type_t<PrimitiveType>>(PrimitiveType::Trinangle);
     static_assert(typeIdx < _numOfAvailablePrimitiveTypes);
 
     return PrimitiveId::_generateNewId(typeIdx);
