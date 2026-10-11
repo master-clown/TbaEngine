@@ -20,7 +20,7 @@ namespace {
     {
         static constexpr auto maxColorIntensity = content::Color::maxColorIntensity;
 
-        const auto& color = primitive.color;
+        const auto& color = primitive.primitiveVertexes[iVertex].color;
         sdlVertex.color = SDL_FColor{
             .r = numericCast<float>(color.r) / maxColorIntensity,
             .g = numericCast<float>(color.g) / maxColorIntensity,
@@ -34,7 +34,7 @@ namespace {
                                      const size_t iVertex,
                                      const PrimitiveVariant& primitive) noexcept
     {
-        const auto& texCoords = primitive.primitiveTexCoords[iVertex];
+        const auto& texCoords = primitive.primitiveVertexes[iVertex].textureCoords;
         sdlVertex.tex_coord.x = texCoords.u;
         sdlVertex.tex_coord.y = texCoords.v;
         sdlVertex.color.r = 1.0f;
@@ -62,7 +62,7 @@ auto SdlTriangle::convertPrimitiveVariantToSdlVertexArray(const PrimitiveVariant
 
     const auto makeSdlVertex = [&](const size_t iVertex) noexcept {
         SDL_Vertex sdlVertex{
-            .position = _transformToSdlPointFunc(primitive.primitivePoints[iVertex]),
+            .position = _transformToSdlPointFunc(primitive.primitiveVertexes[iVertex].coords),
         };
         fillContentInfo(sdlVertex, iVertex, primitive);
 

@@ -32,7 +32,12 @@ OglVertexBuffer::OglVertexBuffer(const VaoId vaoId)
     static constexpr GLuint vboBindingPoint = 0;
 
     glEnableVertexArrayAttrib(_vaoId, AttribIdx{0});
-    glVertexArrayAttribFormat(_vaoId, AttribIdx{0}, 2, GL_FLOAT, Normalization{GL_TRUE}, offsetof(OglVertexInfo, x));
+    glVertexArrayAttribFormat(_vaoId,
+                              AttribIdx{0},
+                              2,
+                              GL_FLOAT,
+                              Normalization{GL_TRUE},
+                              offsetof(OglVertexInfo, baseVertexInfo.coords.x));
     glVertexArrayAttribBinding(_vaoId, AttribIdx{0}, vboBindingPoint);
 
     glEnableVertexArrayAttrib(_vaoId, AttribIdx{1});
@@ -41,7 +46,7 @@ OglVertexBuffer::OglVertexBuffer(const VaoId vaoId)
                               4,
                               GL_UNSIGNED_BYTE,
                               Normalization{GL_TRUE},
-                              offsetof(OglVertexInfo, r));
+                              offsetof(OglVertexInfo, baseVertexInfo.color.r));
     glVertexArrayAttribBinding(_vaoId, AttribIdx{1}, vboBindingPoint);
 
     glEnableVertexArrayAttrib(_vaoId, AttribIdx{2});
@@ -49,11 +54,16 @@ OglVertexBuffer::OglVertexBuffer(const VaoId vaoId)
                                AttribIdx{2},
                                2,
                                GL_UNSIGNED_INT,
-                               offsetof(OglVertexInfo, handleLower4Bytes));
+                               offsetof(OglVertexInfo, textureHandleLower4Bytes));
     glVertexArrayAttribBinding(_vaoId, AttribIdx{2}, vboBindingPoint);
 
     glEnableVertexArrayAttrib(_vaoId, AttribIdx{3});
-    glVertexArrayAttribFormat(_vaoId, AttribIdx{3}, 2, GL_FLOAT, Normalization{GL_FALSE}, offsetof(OglVertexInfo, u));
+    glVertexArrayAttribFormat(_vaoId,
+                              AttribIdx{3},
+                              2,
+                              GL_FLOAT,
+                              Normalization{GL_FALSE},
+                              offsetof(OglVertexInfo, baseVertexInfo.textureCoords.u));
     glVertexArrayAttribBinding(_vaoId, AttribIdx{3}, vboBindingPoint);
 }
 

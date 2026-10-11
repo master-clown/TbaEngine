@@ -136,12 +136,11 @@ void SdlRenderer2d::_renderAsPoint2d(const PrimitiveVariant& primitive)
 {
     assert(primitive.type == PrimitiveVariant::PrimitiveType::Point);
 
-    const auto& color = primitive.color;
+    const auto& vertexInfo = primitive.primitiveVertexes[0];
+    const auto sdlPt = _toSdlScreenPoint2d(vertexInfo.coords);
+    const auto& color = vertexInfo.color;
+
     SDL_SetRenderDrawColor(_pimpl->renderer, color.r, color.g, color.b, color.a);
-
-    const auto& pt = primitive.primitivePoints[0];
-    const auto sdlPt = _toSdlScreenPoint2d({.x = pt.x, .y = pt.y});
-
     SDL_RenderPoint(_pimpl->renderer, sdlPt.x, sdlPt.y);
 }
 
@@ -150,13 +149,13 @@ void SdlRenderer2d::_renderAsLine(const PrimitiveVariant& primitive)
 {
     assert(primitive.type == PrimitiveVariant::PrimitiveType::Line);
 
-    const auto& color = primitive.color;
+    const auto& startVertexInfo = primitive.primitiveVertexes[0];
+    const auto& finalVertexInfo = primitive.primitiveVertexes[1];
+    const auto sdlStartPt = _toSdlScreenPoint2d(startVertexInfo.coords);
+    const auto sdlFinalPt = _toSdlScreenPoint2d(finalVertexInfo.coords);
+    const auto& color = startVertexInfo.color;
+
     SDL_SetRenderDrawColor(_pimpl->renderer, color.r, color.g, color.b, color.a);
-
-    const auto& pts = primitive.primitivePoints;
-    const auto sdlStartPt = _toSdlScreenPoint2d({.x = pts[0].x, .y = pts[0].y});
-    const auto sdlFinalPt = _toSdlScreenPoint2d({.x = pts[1].x, .y = pts[1].y});
-
     SDL_RenderLine(_pimpl->renderer, sdlStartPt.x, sdlStartPt.y, sdlFinalPt.x, sdlFinalPt.y);
 }
 

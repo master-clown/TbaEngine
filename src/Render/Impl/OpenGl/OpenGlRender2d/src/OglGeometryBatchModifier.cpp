@@ -88,12 +88,10 @@ auto OglGeometryBatchModifier::_addNewVertex(const geometry_2d::Point2d& pt,
                                              const content::Color& color) -> _VertexIndex
 {
     const auto newVertexIndex = _batch._vertexBuffer.getUnderlyingBuffer().append(OglVertexInfo{
-        .x = pt.x,
-        .y = pt.y,
-        .r = color.r,
-        .g = color.g,
-        .b = color.b,
-        .a = color.a,
+        .baseVertexInfo = {
+            .coords = pt,
+            .color = color,
+        },
     });
 
     return numericCast<_VertexIndex>(newVertexIndex);
@@ -108,12 +106,10 @@ auto OglGeometryBatchModifier::_addNewTriangleVertex(const geometry_2d::Point2d&
         OverloadMultiplexor{
             [&](const content::Color& color) -> size_t {
                 return _batch._vertexBuffer.getUnderlyingBuffer().append(OglVertexInfo{
-                    .x = pt.x,
-                    .y = pt.y,
-                    .r = color.r,
-                    .g = color.g,
-                    .b = color.b,
-                    .a = color.a,
+                    .baseVertexInfo = {
+                        .coords = pt,
+                        .color = color,
+                    },
                 });
             },
             [&](const texture_storage::TextureId& texId) -> size_t {
@@ -123,12 +119,12 @@ auto OglGeometryBatchModifier::_addNewTriangleVertex(const geometry_2d::Point2d&
                 const auto& oglTex = static_cast<const opengl_texture::OpenGlTexture&>(tex);
                 const auto handleAsUint64 = oglTex.getOpenGlTextureHandle();
                 return _batch._vertexBuffer.getUnderlyingBuffer().append(OglVertexInfo{
-                    .x = pt.x,
-                    .y = pt.y,
-                    .handleLower4Bytes = numericCast<uint32>(handleAsUint64 & 0xFFFFFFFF),
-                    .handleUpper4Bytes = numericCast<uint32>((handleAsUint64 >> 32) & 0xFFFFFFFF),
-                    .u = texCoords.u,
-                    .v = texCoords.v,
+                    .baseVertexInfo = {
+                        .coords = pt,
+                        .textureCoords = texCoords,
+                    },
+                    .textureHandleLower4Bytes = numericCast<uint32>(handleAsUint64 & 0xFFFFFFFF),
+                    .textureHandleUpper4Bytes = numericCast<uint32>((handleAsUint64 >> 32) & 0xFFFFFFFF),
                 });
             },
         },
