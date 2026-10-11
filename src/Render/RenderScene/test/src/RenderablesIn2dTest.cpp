@@ -54,7 +54,7 @@ TEST_CASE(DrawHouseMovingAlongScreenBorder)
     HouseBlueprint houseBlueprint;
     auto& houseRenderable = app->getRenderScene().addRenderable(houseBlueprint);
 
-    app->onIterate([&] {
+    app->onIterate([&](const app_event::AppEvent&) {
 
     });
 

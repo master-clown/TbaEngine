@@ -8,6 +8,7 @@ set(PUBLIC_HEADERS
     PrimitiveId.h
     RenderableGeometry.h
     Renderer.h
+    VertexInfo.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
@@ -17,6 +18,7 @@ set(SOURCES
     PrimitiveId.cpp
     RenderableGeometry.cpp
     Renderer.cpp
+    VertexInfo.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 
