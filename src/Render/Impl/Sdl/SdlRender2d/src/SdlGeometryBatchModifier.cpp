@@ -33,9 +33,22 @@ void SdlGeometryBatchModifier::clear()
 }
 
 //======================================================================================================================
+namespace {
+    template <typename Geometry>
+    PrimitiveId registerNewPrimitive(auto& primIdToIdxMap, const auto& primIdx)
+    {
+        const auto newPrimitiveId = PrimitiveId::generate<Geometry>();
+        primIdToIdxMap[newPrimitiveId] = numericCast<sdl_render_2d::SdlGeometryBatch::_PrimitiveIdx>(primIdx);
+
+        return newPrimitiveId;
+    }
+}
+
+//======================================================================================================================
 PrimitiveId SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2d::Point2d>& point)
 {
-    _batch._getPrimitives().push_back({
+    auto& primitives = _batch._getPrimitives();
+    primitives.push_back({
         .primitiveVertexes = {
             render_2d::VertexInfo{
                 .coords = point.primitive,
@@ -45,7 +58,7 @@ PrimitiveId SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2
         .type = PrimitiveVariant::PrimitiveType::Point,
     });
 
-    return PrimitiveId::generate<geometry_2d::Point2d>();
+    return registerNewPrimitive<geometry_2d::Point2d>(_batch._getPrimIdToIdxMap(), primitives.size() - 1);
 }
 
 //======================================================================================================================
@@ -54,7 +67,8 @@ PrimitiveId SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2
     const auto& startPt = line.primitive.startPt;
     const auto& finalPt = line.primitive.finalPt;
 
-    _batch._getPrimitives().push_back({
+    auto& primitives = _batch._getPrimitives();
+    primitives.push_back({
         .primitiveVertexes = {
             render_2d::VertexInfo{
                 .coords = startPt,
@@ -68,7 +82,7 @@ PrimitiveId SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2
         .type = PrimitiveVariant::PrimitiveType::Line,
     });
 
-    return PrimitiveId::generate<geometry_2d::Line>();
+    return registerNewPrimitive<geometry_2d::Line>(_batch._getPrimIdToIdxMap(), primitives.size() - 1);
 }
 
 //======================================================================================================================
@@ -107,7 +121,20 @@ PrimitiveId SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2
         },
         triangle.contentTraits.faceContent);
 
-    _batch._getPrimitives().push_back(std::move(primitive));
+    auto& primitives = _batch._getPrimitives();
+    primitives.push_back(std::move(primitive));
 
-    return PrimitiveId::generate<geometry_2d::Triangle>();
+    return registerNewPrimitive<geometry_2d::Triangle>(_batch._getPrimIdToIdxMap(), primitives.size() - 1);
+}
+
+//======================================================================================================================
+void SdlGeometryBatchModifier::forEachPrimitiveVertex(const PrimitiveId primId,
+                                                      const PrimitiveVertexAction& action)
+{
+    const auto primIdx = _batch._getPrimIdToIdxMap()[primId];
+    auto& primitive = _batch._getPrimitives()[primIdx];
+
+    const auto vertexCount = details::getVertexCountForPrimitiveType(primitive.type);
+    for (uint8 iVertex = 0; iVertex < vertexCount; ++iVertex)
+        action(iVertex, primitive.primitiveVertexes[iVertex]);
 }

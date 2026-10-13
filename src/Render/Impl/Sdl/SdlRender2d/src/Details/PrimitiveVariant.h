@@ -16,13 +16,19 @@ namespace sdl_render_2d::details {
         using PrimitiveVertexes = Array<render_2d::VertexInfo, maxVertexes>;
 
         enum class PrimitiveType : uint8 {
-            Point,
-            Line,
-            Triangle,
+            Point = 1,
+            Line = 2,
+            Triangle = 3,
         };
 
         PrimitiveVertexes primitiveVertexes;
         SDL_Texture* sdlTexture = nullptr;
         PrimitiveType type;
     };
+
+    //------------------------------------------------------------------------------------------------------------------
+    constexpr uint8 getVertexCountForPrimitiveType(const PrimitiveVariant::PrimitiveType primType) noexcept
+    {
+        return static_cast<uint8>(primType);
+    }
 }

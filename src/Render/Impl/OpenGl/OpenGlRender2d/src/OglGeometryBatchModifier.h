@@ -49,6 +49,8 @@ namespace opengl_render_2d {
                                            const content::Content&,
                                            const geometry_2d::TextureCoords&);
 
+        static void _checkStaticAsserts();
+
     private:
         OglGeometryBatch& _batch;
         const texture_storage::TextureStorage& _textureStorage;

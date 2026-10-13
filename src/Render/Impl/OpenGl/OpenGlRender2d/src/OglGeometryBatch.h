@@ -34,6 +34,7 @@ namespace opengl_render_2d {
 
         //--------------------------------------------------------------------------------------------------------------
         void modify(const std::function<void(render_2d::GeometryBatchModifier&)>&) override;
+        void forEachPrimitiveVertex(PrimitiveId, const PrimitiveVertexAction&) override;
 
     private:
         // TODO: engage depth test in draw ordering
@@ -53,7 +54,7 @@ namespace opengl_render_2d {
         OglIndexBuffer _lineIndexBuffer;
         OglIndexBuffer _pointIndexBuffer;
 
-        using _VertexIndex = OglIndexBuffer::Index;
-        HashMap<render_2d::PrimitiveId, _VertexIndex> _primIdToVertexIdxMap;
+        using _FirstVertexIndex = OglIndexBuffer::Index;
+        HashMap<render_2d::PrimitiveId, _FirstVertexIndex> _primIdToVertexIdxMap;
     };
 }

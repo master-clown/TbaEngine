@@ -26,6 +26,13 @@ void SdlGeometryBatch::modify(const std::function<void(render_2d::GeometryBatchM
 }
 
 //======================================================================================================================
+void SdlGeometryBatch::forEachPrimitiveVertex(const PrimitiveId primId, const PrimitiveVertexAction& action)
+{
+    assert(_modifier);
+    modify(*_modifier);
+}
+
+//======================================================================================================================
 auto SdlGeometryBatch::_getPrimitives() const -> const Vector<PrimitiveVariant>&
 {
     return _primitives;
@@ -35,4 +42,10 @@ auto SdlGeometryBatch::_getPrimitives() const -> const Vector<PrimitiveVariant>&
 auto SdlGeometryBatch::_getPrimitives() -> Vector<PrimitiveVariant>&
 {
     return _primitives;
+}
+
+//======================================================================================================================
+auto SdlGeometryBatch::_getPrimIdToIdxMap() -> PrimIdToIdxMap&
+{
+    return _primIdToIdxMap;
 }

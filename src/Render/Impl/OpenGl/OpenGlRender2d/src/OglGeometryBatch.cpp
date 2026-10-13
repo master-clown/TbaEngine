@@ -34,3 +34,10 @@ void OglGeometryBatch::modify(const std::function<void(render_2d::GeometryBatchM
 
     modify(*_modifier);
 }
+
+//======================================================================================================================
+void OglGeometryBatch::forEachPrimitiveVertex(const PrimitiveId primId,
+                                              const PrimitiveVertexAction& action)
+{
+    // TODO: continie impl
+}

@@ -22,7 +22,7 @@ class TbaEngineRecipe(ConanFile):
     generators = "CMakeDeps"
 
     def requirements(self):
-        self.requires("sdl/3.4.8", options={"shared": False})
+        self.requires("sdl/3.4.8", options={"shared": True})
         # as single .h file: self.requires("stb_image/2.30")
         return
 

@@ -17,6 +17,12 @@ using namespace opengl_render_2d;
 using render_2d::PrimitiveId;
 
 //======================================================================================================================
+void OglGeometryBatchModifier::_checkStaticAsserts()
+{
+    static_assert(std::is_same_v<_VertexIndex, OglGeometryBatch::_FirstVertexIndex>);
+}
+
+//======================================================================================================================
 OglGeometryBatchModifier::OglGeometryBatchModifier(OglGeometryBatch& batch,
                                                    const texture_storage::TextureStorage& textureStorage)
     : _batch(batch)
@@ -34,6 +40,7 @@ void OglGeometryBatchModifier::clear()
     _batch._pointIndexBuffer.getUnderlyingBuffer().clear();
 }
 
+//======================================================================================================================
 namespace {
     template <typename Geometry>
     PrimitiveId registerNewPrimitive(auto& primIdToVertexIdxMap, const auto& newVertexIndex)

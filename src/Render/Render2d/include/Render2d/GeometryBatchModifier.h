@@ -3,6 +3,13 @@
 #include <Render2d/PrimitiveId.h>
 #include <Render2d/RenderableGeometry.h>
 
+#include <functional>
+
+//======================================================================================================================
+namespace render_2d {
+    struct VertexInfo;
+}
+
 //======================================================================================================================
 namespace geometry_2d {
     struct Point2d;
@@ -24,5 +31,10 @@ namespace render_2d {
         virtual PrimitiveId append(const RenderableGeometry<geometry_2d::Point2d>&) = 0;
         virtual PrimitiveId append(const RenderableGeometry<geometry_2d::Line>&) = 0;
         virtual PrimitiveId append(const RenderableGeometry<geometry_2d::Triangle>&) = 0;
+
+        //--------------------------------------------------------------------------------------------------------------
+        // TODO: improve efficiency (e.g. iterator?). Functor is overkill here (is it?)
+        using PrimitiveVertexAction = std::function<void(uint8 iVertex, VertexInfo&)>;
+        virtual void forEachPrimitiveVertex(PrimitiveId, const PrimitiveVertexAction&) = 0;
     };
 }
