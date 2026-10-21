@@ -106,7 +106,7 @@ void SdlRenderer2d::renderGeometryBatch(const render_2d::GeometryBatch& geometry
     assert(dynamic_cast<const SdlGeometryBatch*>(&geometryBatch));
     const auto& sdlGeometryBatch = static_cast<const SdlGeometryBatch&>(geometryBatch);
 
-    using PrimitiveType = PrimitiveVariant::PrimitiveType;
+    using PrimitiveType = render_2d::PrimitiveType;
 
     for (const auto& primitive : sdlGeometryBatch._getPrimitives()) {
         if (primitive.type == PrimitiveType::Point)
@@ -134,7 +134,7 @@ const SDL_Renderer& SdlRenderer2d::getSdlRenderer() const
 //=====================================================================================================================
 void SdlRenderer2d::_renderAsPoint2d(const PrimitiveVariant& primitive)
 {
-    assert(primitive.type == PrimitiveVariant::PrimitiveType::Point);
+    assert(primitive.type == render_2d::PrimitiveType::Point);
 
     const auto& vertexInfo = primitive.primitiveVertexes[0];
     const auto sdlPt = _toSdlScreenPoint2d(vertexInfo.coords);
@@ -147,7 +147,7 @@ void SdlRenderer2d::_renderAsPoint2d(const PrimitiveVariant& primitive)
 //=====================================================================================================================
 void SdlRenderer2d::_renderAsLine(const PrimitiveVariant& primitive)
 {
-    assert(primitive.type == PrimitiveVariant::PrimitiveType::Line);
+    assert(primitive.type == render_2d::PrimitiveType::Line);
 
     const auto& startVertexInfo = primitive.primitiveVertexes[0];
     const auto& finalVertexInfo = primitive.primitiveVertexes[1];

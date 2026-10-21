@@ -36,3 +36,9 @@ auto SdlGeometryBatch::_getPrimitives() -> Vector<PrimitiveVariant>&
 {
     return _primitives;
 }
+
+//======================================================================================================================
+auto SdlGeometryBatch::_getPrimIdToIdxMap() -> PrimIdToIdxMap&
+{
+    return _primIdToIdxMap;
+}

@@ -26,6 +26,9 @@ namespace sdl_render_2d {
         render_2d::PrimitiveId append(const render_2d::RenderableGeometry<geometry_2d::Line>&) override;
         render_2d::PrimitiveId append(const render_2d::RenderableGeometry<geometry_2d::Triangle>&) override;
 
+        //--------------------------------------------------------------------------------------------------------------
+        void forEachPrimitiveVertex(render_2d::PrimitiveId, const PrimitiveVertexAction&) override;
+
     private:
         SdlGeometryBatch& _batch;
         const texture_storage::TextureStorage& _textureStorage;

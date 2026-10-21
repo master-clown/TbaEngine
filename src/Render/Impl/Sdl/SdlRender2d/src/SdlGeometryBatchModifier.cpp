@@ -3,6 +3,7 @@
 #include "Details/PrimitiveVariant.h"
 #include "SdlGeometryBatch.h"
 
+#include <Common/NumericCast.hpp>
 #include <Common/OverloadMultiplexor.h>
 #include <Geometry2d/Line.h>
 #include <Geometry2d/Point2d.h>
@@ -14,6 +15,7 @@
 
 //======================================================================================================================
 using render_2d::PrimitiveId;
+using render_2d::PrimitiveType;
 using render_2d::RenderableGeometry;
 using sdl_render_2d::SdlGeometryBatchModifier;
 using sdl_render_2d::details::PrimitiveVariant;
@@ -33,19 +35,34 @@ void SdlGeometryBatchModifier::clear()
 }
 
 //======================================================================================================================
+namespace {
+    template <typename Geometry>
+    PrimitiveId registerNewPrimitive(auto& primIdToIdxMap, const auto& primIdx)
+    {
+        using MapValueType = std::remove_cvref_t<decltype(primIdToIdxMap)>::mapped_type;
+
+        const auto newPrimitiveId = PrimitiveId::generate<Geometry>();
+        primIdToIdxMap[newPrimitiveId] = numericCast<MapValueType>(primIdx);
+
+        return newPrimitiveId;
+    }
+}
+
+//======================================================================================================================
 PrimitiveId SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2d::Point2d>& point)
 {
-    _batch._getPrimitives().push_back({
+    auto& primitives = _batch._getPrimitives();
+    primitives.push_back({
         .primitiveVertexes = {
             render_2d::VertexInfo{
                 .coords = point.primitive,
                 .color = point.contentTraits.color,
             },
         },
-        .type = PrimitiveVariant::PrimitiveType::Point,
+        .type = PrimitiveType::Point,
     });
 
-    return PrimitiveId::generate<geometry_2d::Point2d>();
+    return registerNewPrimitive<geometry_2d::Point2d>(_batch._getPrimIdToIdxMap(), primitives.size() - 1);
 }
 
 //======================================================================================================================
@@ -54,7 +71,8 @@ PrimitiveId SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2
     const auto& startPt = line.primitive.startPt;
     const auto& finalPt = line.primitive.finalPt;
 
-    _batch._getPrimitives().push_back({
+    auto& primitives = _batch._getPrimitives();
+    primitives.push_back({
         .primitiveVertexes = {
             render_2d::VertexInfo{
                 .coords = startPt,
@@ -65,10 +83,10 @@ PrimitiveId SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2
                 .color = line.contentTraits.lineColor,
             },
         },
-        .type = PrimitiveVariant::PrimitiveType::Line,
+        .type = PrimitiveType::Line,
     });
 
-    return PrimitiveId::generate<geometry_2d::Line>();
+    return registerNewPrimitive<geometry_2d::Line>(_batch._getPrimIdToIdxMap(), primitives.size() - 1);
 }
 
 //======================================================================================================================
@@ -84,7 +102,7 @@ PrimitiveId SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2
             render_2d::VertexInfo{.coords = pt2},
             render_2d::VertexInfo{.coords = pt3},
         },
-        .type = PrimitiveVariant::PrimitiveType::Triangle,
+        .type = PrimitiveType::Triangle,
     };
 
     std::visit(
@@ -107,7 +125,20 @@ PrimitiveId SdlGeometryBatchModifier::append(const RenderableGeometry<geometry_2
         },
         triangle.contentTraits.faceContent);
 
-    _batch._getPrimitives().push_back(std::move(primitive));
+    auto& primitives = _batch._getPrimitives();
+    primitives.push_back(std::move(primitive));
 
-    return PrimitiveId::generate<geometry_2d::Triangle>();
+    return registerNewPrimitive<geometry_2d::Triangle>(_batch._getPrimIdToIdxMap(), primitives.size() - 1);
+}
+
+//======================================================================================================================
+void SdlGeometryBatchModifier::forEachPrimitiveVertex(const render_2d::PrimitiveId primId,
+                                                      const PrimitiveVertexAction& action)
+{
+    const auto primIdx = _batch._getPrimIdToIdxMap()[primId];
+    auto& primitive = _batch._getPrimitives()[primIdx];
+
+    const auto vertexCount = render_2d::vertexCountForPrimitiveType(primId.getTypePart());
+    for (uint8 iVertex = 0; iVertex < vertexCount; ++iVertex)
+        action(iVertex, primitive.primitiveVertexes[iVertex]);
 }

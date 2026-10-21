@@ -64,7 +64,7 @@ PrimitiveId PrimitiveId::generate<geometry_2d::Line>()
 template <>
 PrimitiveId PrimitiveId::generate<geometry_2d::Triangle>()
 {
-    static constexpr auto typeIdx = static_cast<std::underlying_type_t<PrimitiveType>>(PrimitiveType::Trinangle);
+    static constexpr auto typeIdx = static_cast<std::underlying_type_t<PrimitiveType>>(PrimitiveType::Triangle);
     static_assert(typeIdx < _numOfAvailablePrimitiveTypes);
 
     return PrimitiveId::_generateNewId(typeIdx);

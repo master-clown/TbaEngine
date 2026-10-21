@@ -40,6 +40,9 @@ namespace opengl_render_2d {
         render_2d::PrimitiveId append(const render_2d::RenderableGeometry<geometry_2d::Line>&) override;
         render_2d::PrimitiveId append(const render_2d::RenderableGeometry<geometry_2d::Triangle>&) override;
 
+        //--------------------------------------------------------------------------------------------------------------
+        void forEachPrimitiveVertex(render_2d::PrimitiveId, const PrimitiveVertexAction&) override;
+
     private:
         using _VertexIndex = OglIndexBuffer::Index;
         _VertexIndex _addNewVertex(const geometry_2d::Point2d&, const content::Color&);
@@ -48,6 +51,8 @@ namespace opengl_render_2d {
         _VertexIndex _addNewTriangleVertex(const geometry_2d::Point2d&,
                                            const content::Content&,
                                            const geometry_2d::TextureCoords&);
+
+        static void _checkStaticClassInvariants();
 
     private:
         OglGeometryBatch& _batch;
