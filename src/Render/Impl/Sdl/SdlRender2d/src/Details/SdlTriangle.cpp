@@ -56,7 +56,7 @@ auto SdlTriangle::convertPrimitiveVariantToSdlVertexArray(const PrimitiveVariant
 {
     thread_local SdlVertexArray sdlVertexes;
 
-    assert(primitive.type == PrimitiveVariant::PrimitiveType::Triangle);
+    assert(primitive.type == render_2d::PrimitiveType::Triangle);
 
     const auto& fillContentInfo = primitive.sdlTexture ? setTextureCoordsInSdlVertex : setColorInSdlVertex;
 

@@ -17,6 +17,12 @@ using namespace opengl_render_2d;
 using render_2d::PrimitiveId;
 
 //======================================================================================================================
+void OglGeometryBatchModifier::_checkStaticClassInvariants()
+{
+    static_assert(std::is_same_v<_VertexIndex, OglGeometryBatch::_FirstVertexIndex>);
+}
+
+//======================================================================================================================
 OglGeometryBatchModifier::OglGeometryBatchModifier(OglGeometryBatch& batch,
                                                    const texture_storage::TextureStorage& textureStorage)
     : _batch(batch)
@@ -34,6 +40,7 @@ void OglGeometryBatchModifier::clear()
     _batch._pointIndexBuffer.getUnderlyingBuffer().clear();
 }
 
+//======================================================================================================================
 namespace {
     template <typename Geometry>
     PrimitiveId registerNewPrimitive(auto& primIdToVertexIdxMap, const auto& newVertexIndex)
@@ -81,6 +88,23 @@ PrimitiveId OglGeometryBatchModifier::append(const render_2d::RenderableGeometry
     _batch._triangleIndexBuffer.getUnderlyingBuffer().append(vertex3Index);
 
     return registerNewPrimitive<geometry_2d::Triangle>(_batch._primIdToVertexIdxMap, vertex1Index);
+}
+
+//======================================================================================================================
+void OglGeometryBatchModifier::forEachPrimitiveVertex(const PrimitiveId primId,
+                                                      const PrimitiveVertexAction& action)
+{
+    auto& oglVertexBuffer = _batch._vertexBuffer.getUnderlyingBuffer();
+    using OglVertexInfoUnsafePtr = std::remove_cvref_t<decltype(oglVertexBuffer)>::ItemUnsafePtr;
+
+    const auto firstVertexIdx = _batch._primIdToVertexIdxMap[primId];
+    const auto vertexCount = render_2d::vertexCountForPrimitiveType(primId.getTypePart());
+    for (size_t iVertex = 0; iVertex < vertexCount; ++iVertex) {
+        const auto vertexIdxInOglVertexBuffer = firstVertexIdx + iVertex;
+        oglVertexBuffer.modify(vertexIdxInOglVertexBuffer, [&](const OglVertexInfoUnsafePtr ptr) {
+            action(iVertex, ptr.ptr->baseVertexInfo);
+        });
+    }
 }
 
 //======================================================================================================================

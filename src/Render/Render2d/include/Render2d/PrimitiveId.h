@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Render2d/PrimitiveType.h>
+
 #include <Common/Integers.h>
 
 #include <atomic>
@@ -22,12 +24,8 @@ namespace render_2d {
         constexpr operator RawId() const noexcept;
 
         //--------------------------------------------------------------------------------------------------------------
-        enum class PrimitiveType : RawId {
-            Point = 0,
-            Line = 1,
-            Trinangle = 2,
-        };
         constexpr PrimitiveType getTypePart() const noexcept;
+        constexpr operator PrimitiveType() const noexcept;
 
         using IdPart = RawId;
         constexpr IdPart getIdPart() const noexcept;
@@ -77,6 +75,12 @@ namespace render_2d {
     constexpr auto PrimitiveId::getTypePart() const noexcept -> PrimitiveType
     {
         return static_cast<PrimitiveType>((getRawId() & _primitiveTypeMask) >> _bitOffsetForPrimitiveType);
+    }
+
+    //==================================================================================================================
+    constexpr PrimitiveId::operator PrimitiveType() const noexcept
+    {
+        return getTypePart();
     }
 
     //==================================================================================================================

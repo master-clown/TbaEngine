@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Common/Stl/Array.h>
+#include <Render2d/PrimitiveType.h>
 #include <Render2d/VertexInfo.h>
 
 //======================================================================================================================
@@ -15,14 +16,8 @@ namespace sdl_render_2d::details {
         static constexpr std::size_t maxVertexes = 3;
         using PrimitiveVertexes = Array<render_2d::VertexInfo, maxVertexes>;
 
-        enum class PrimitiveType : uint8 {
-            Point,
-            Line,
-            Triangle,
-        };
-
         PrimitiveVertexes primitiveVertexes;
         SDL_Texture* sdlTexture = nullptr;
-        PrimitiveType type;
+        render_2d::PrimitiveType type;
     };
 }
