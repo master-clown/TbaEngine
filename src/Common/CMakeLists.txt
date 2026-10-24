@@ -15,6 +15,7 @@ set(PUBLIC_HEADERS
     Stl/HashMap.h
     Stl/Optional.h
     Stl/Queue.h
+    Stl/RefWrap.h
     Stl/Vector.h
     String.h
 )
@@ -32,6 +33,7 @@ set(SOURCES
     Stl/HashMap.cpp
     Stl/Optional.cpp
     Stl/Queue.cpp
+    Stl/RefWrap.cpp
     Stl/Vector.cpp
     String.cpp
 )
