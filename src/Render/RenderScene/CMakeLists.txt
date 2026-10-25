@@ -6,6 +6,7 @@ set(PUBLIC_HEADERS
     GeometryChunk2d.h
     RenderScene.h
     Renderable.h
+    RenderableModifier.h
     Renderable2d.h
     RenderableBlueprint.h
     TracedGeometryBatchModifier2d.h
@@ -16,6 +17,7 @@ set(SOURCES
     GeometryChunk2d.cpp
     RenderScene.cpp
     Renderable.cpp
+    RenderableModifier.cpp
     Renderable2d.cpp
     RenderableBlueprint.cpp
     TracedGeometryBatchModifier2d.cpp
