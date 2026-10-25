@@ -24,6 +24,7 @@ namespace render_scene {
         explicit RenderScene(render_2d::Renderer&);
         ~RenderScene();
 
+        render_2d::GeometryBatch& getGeometryBatch2d();
         const render_2d::GeometryBatch& getGeometryBatch2d() const;
 
         Renderable& addRenderable(RenderableBlueprint&);

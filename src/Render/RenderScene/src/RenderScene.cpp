@@ -22,6 +22,12 @@ RenderScene::RenderScene(render_2d::Renderer& renderer2d)
 RenderScene::~RenderScene() = default;
 
 //======================================================================================================================
+render_2d::GeometryBatch& RenderScene::getGeometryBatch2d()
+{
+    return const_cast<render_2d::GeometryBatch&>(static_cast<const RenderScene&>(*this).getGeometryBatch2d());
+}
+
+//======================================================================================================================
 const render_2d::GeometryBatch& RenderScene::getGeometryBatch2d() const
 {
     assert(_geometryBatch2d);
