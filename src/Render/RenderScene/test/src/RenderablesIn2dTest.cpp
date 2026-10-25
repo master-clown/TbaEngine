@@ -6,6 +6,7 @@
 #include <RenderScene/Renderable.h>
 #include <RenderScene/Renderable2d.h>
 #include <RenderScene/RenderableBlueprint.h>
+#include <RenderScene/RenderableModifier.h>
 #include <RenderScene/TracedGeometryBatchModifier2d.h>
 
 #include "TestApp.h"
@@ -27,6 +28,7 @@ using namespace render_scene;
 
 //======================================================================================================================
 namespace {
+    //==================================================================================================================
     class HouseBlueprint final : public render_scene::RenderableBlueprint {
     public:
         Renderable makeRenderable(TracedGeometryBatchModifier2d&) override;
@@ -46,16 +48,36 @@ TEST_CASE(DrawStaticHouse)
 }
 
 //======================================================================================================================
-TEST_CASE(DrawHouseMovingAlongScreenBorder)
+TEST_CASE(MoveHouseWithWasd)
 {
-    framework::InitializedApp<TestApp> app(MAKE_WND_TITLE("the house moving along the screen border"));
+    framework::InitializedApp<TestApp> app(MAKE_WND_TITLE("use WASD to move the house"));
+
     const auto& appClock = app->getAppClock();
+    const auto& keyboardState = app->getKeyboardState();
+    const auto isKeyPressed = [&keyboardState](const keyboard::KeyScancode key) {
+        return keyboardState.getKeyState(key) == input::KeyboardState::KeyState::Pressed;
+    };
 
     HouseBlueprint houseBlueprint;
     auto& houseRenderable = app->getRenderScene().addRenderable(houseBlueprint);
 
     app->onIterate([&](const app_event::AppEvent&) {
+        constexpr ScreenCoordinate moveSpeed = 0.3;
+        const auto floatDeltaInSeconds = static_cast<float>(appClock.getDeltaSinceLastUpdateInSeconds().count());
+        const auto moveStep = moveSpeed * floatDeltaInSeconds;
 
+        RenderableModifier renderableMod(houseRenderable, app->getRenderScene().getGeometryBatch2d());
+
+        using Vec = RenderableModifier::ScreenOffsetVec;
+        using Key = keyboard::KeyScancode;
+        if (isKeyPressed(Key::W))
+            renderableMod.move(Vec{.x = 0, .y = moveStep});
+        if (isKeyPressed(Key::S))
+            renderableMod.move(Vec{.x = 0, .y = -moveStep});
+        if (isKeyPressed(Key::A))
+            renderableMod.move(Vec{.x = -moveStep, .y = 0});
+        if (isKeyPressed(Key::D))
+            renderableMod.move(Vec{.x = moveStep, .y = 0});
     });
 
     EXPECT_NO_THROW(app->run());
