@@ -1,6 +1,7 @@
 #pragma once
 
 #include <GuiAppTemplate/GuiAppWithRenderer.hpp>
+#include <Input/KeyboardState.h>
 #include <OpenGlContext/OpenGlPreconfigOptions.h>
 #include <RenderScene/RenderScene.h>
 
@@ -15,6 +16,7 @@ public:
     explicit TestApp(const String& wndTitle);
 
     render_scene::RenderScene& getRenderScene();
+    const input::KeyboardState& getKeyboardState(); // TODO: mark as const
 
     using OnIterate = std::function<void(const app_event::AppEvent&)>;
     void onIterate(OnIterate);

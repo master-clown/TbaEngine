@@ -1,6 +1,8 @@
 #include "TestApp.h"
 
 #include <Content/Color.h>
+#include <Input/DeviceMgr.h>
+#include <Input/Keyboard.h>
 #include <SdlFramework/SdlFramework.h>
 #include <Winsys/WindowOptions.h>
 
@@ -16,6 +18,12 @@ TestApp::TestApp(const String& wndTitle)
 render_scene::RenderScene& TestApp::getRenderScene()
 {
     return *_renderScene;
+}
+
+//======================================================================================================================
+const input::KeyboardState& TestApp::getKeyboardState()
+{
+    return getFramework().getDeviceMgr().getKeyboard().getKeyboardState();
 }
 
 //======================================================================================================================
@@ -36,6 +44,8 @@ void TestApp::_initAppWithRenderer()
 //======================================================================================================================
 auto TestApp::_iterate(const app_event::AppEvent& appEvent) -> ShouldQuit
 {
+    getFramework().getDeviceMgr().update();
+
     if (_onIterate)
         _onIterate(appEvent);
 
