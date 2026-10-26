@@ -17,6 +17,10 @@ namespace render_2d {
         using RawId = uint32;
 
         //--------------------------------------------------------------------------------------------------------------
+        template <class Geometry2d>
+        static PrimitiveId generate();
+
+        //--------------------------------------------------------------------------------------------------------------
         PrimitiveId() = delete;
 
         //--------------------------------------------------------------------------------------------------------------
@@ -29,10 +33,6 @@ namespace render_2d {
 
         using IdPart = RawId;
         constexpr IdPart getIdPart() const noexcept;
-
-        //--------------------------------------------------------------------------------------------------------------
-        template <class Geometry2d>
-        static PrimitiveId generate();
 
     private:
         RawId _rawId = 0;
