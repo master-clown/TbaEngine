@@ -2,26 +2,30 @@
 
 #include <RenderScene/GeometryChunk2d.h>
 
-#include <Render2d/GeometryBatchModifier.h>
+#include <Render2d/RenderableGeometry.h>
+
+//======================================================================================================================
+namespace render_2d {
+    class GeometryBatchModifier;
+}
 
 //======================================================================================================================
 namespace render_scene {
-    class TracedGeometryBatchModifier2d final : public render_2d::GeometryBatchModifier {
+    // TODO: rename to `GeometryChunk2dBuilder`
+    class TracedGeometryBatchModifier2d final {
     public:
         using WrappedBatchModifier = render_2d::GeometryBatchModifier;
         explicit TracedGeometryBatchModifier2d(WrappedBatchModifier&);
 
-        GeometryChunk2d&& getAccumulatedGeometry();
+        GeometryChunk2d&& build();
 
         //--------------------------------------------------------------------------------------------------------------
-        void clear() override;
-        render_2d::PrimitiveId append(const render_2d::RenderableGeometry<geometry_2d::Point2d>&) override;
-        render_2d::PrimitiveId append(const render_2d::RenderableGeometry<geometry_2d::Line>&) override;
-        render_2d::PrimitiveId append(const render_2d::RenderableGeometry<geometry_2d::Triangle>&) override;
+        template <typename Geometry>
+        void add(const render_2d::RenderableGeometry<Geometry>&);
 
     private:
         WrappedBatchModifier& _wrappedBatchModifier;
-        GeometryChunk2d _accumulatedGeometry;
+        GeometryChunk2d _geometryChunk;
     };
 }
 

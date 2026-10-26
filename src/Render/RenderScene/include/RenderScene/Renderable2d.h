@@ -6,15 +6,10 @@
 namespace render_scene {
     class Renderable2d final {
     public:
-        explicit Renderable2d(GeometryChunk2d chunk)
-            : _geometry(std::move(chunk))
-        {
-        }
+        explicit Renderable2d(GeometryChunk2d);
+        Renderable2d();
 
-        const GeometryChunk2d& getGeometry() const
-        {
-            return _geometry;
-        }
+        const GeometryChunk2d& getGeometry() const;
 
     private:
         GeometryChunk2d _geometry;
