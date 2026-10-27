@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Common/Integers.h>
 #include <Content/Color.h>
 #include <Geometry2d/Point2d.h>
 #include <Geometry2d/TextureCoords.h>
