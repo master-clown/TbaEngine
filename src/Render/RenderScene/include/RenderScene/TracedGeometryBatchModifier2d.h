@@ -11,7 +11,6 @@ namespace render_2d {
 
 //======================================================================================================================
 namespace render_scene {
-    // TODO: rename to `GeometryChunk2dBuilder`
     class TracedGeometryBatchModifier2d final {
     public:
         using WrappedBatchModifier = render_2d::GeometryBatchModifier;
