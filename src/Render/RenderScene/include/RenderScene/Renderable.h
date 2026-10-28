@@ -4,9 +4,6 @@
 
 //======================================================================================================================
 namespace render_scene {
-    // To access particular parts of the `Renderable` it is best to provide accessors in
-    // the corresponding `RenderableBlueprint` and use them here. No common interfaces are
-    // defined for now, when it is not obvious how they must look like.
     class Renderable final {
     public:
         explicit Renderable(Renderable2d);
