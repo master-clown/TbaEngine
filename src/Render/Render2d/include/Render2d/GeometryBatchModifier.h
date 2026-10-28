@@ -1,6 +1,14 @@
 #pragma once
 
+#include <Render2d/PrimitiveId.h>
 #include <Render2d/RenderableGeometry.h>
+
+#include <functional>
+
+//======================================================================================================================
+namespace render_2d {
+    struct VertexInfo;
+}
 
 //======================================================================================================================
 namespace geometry_2d {
@@ -20,8 +28,14 @@ namespace render_2d {
 
         //--------------------------------------------------------------------------------------------------------------
         // TODO: add bulk operations (to allocate the memory only once)
-        virtual void append(const RenderableGeometry<geometry_2d::Point2d>&) = 0;
-        virtual void append(const RenderableGeometry<geometry_2d::Line>&) = 0;
-        virtual void append(const RenderableGeometry<geometry_2d::Triangle>&) = 0;
+        virtual PrimitiveId append(const RenderableGeometry<geometry_2d::Point2d>&) = 0;
+        virtual PrimitiveId append(const RenderableGeometry<geometry_2d::Line>&) = 0;
+        virtual PrimitiveId append(const RenderableGeometry<geometry_2d::Triangle>&) = 0;
+
+        //--------------------------------------------------------------------------------------------------------------
+        // TODO: improve efficiency (e.g. iterator?). Functor is overkill here (is it?)
+        using VertexIdx = uint8;
+        using PrimitiveVertexAction = std::function<void(VertexIdx, VertexInfo&)>;
+        virtual void forEachPrimitiveVertex(PrimitiveId, const PrimitiveVertexAction&) = 0;
     };
 }

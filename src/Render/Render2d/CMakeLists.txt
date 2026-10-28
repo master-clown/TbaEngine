@@ -5,16 +5,20 @@ set(TARGET_NAME Render2d)
 set(PUBLIC_HEADERS
     GeometryBatch.h
     GeometryBatchModifier.h
+    PrimitiveId.h
     RenderableGeometry.h
     Renderer.h
+    VertexInfo.h
 )
 list(TRANSFORM PUBLIC_HEADERS PREPEND "include/${TARGET_NAME}/")
 
 set(SOURCES
     GeometryBatch.cpp
     GeometryBatchModifier.cpp
+    PrimitiveId.cpp
     RenderableGeometry.cpp
     Renderer.cpp
+    VertexInfo.cpp
 )
 list(TRANSFORM SOURCES PREPEND "src/")
 

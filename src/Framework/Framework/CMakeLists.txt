@@ -6,6 +6,8 @@ set(PUBLIC_HEADERS
     Application.h
     Clock.h
     Framework.h
+    InitializedApp.h
+    InitializedApp.hpp
     RefreshRateLimiter.h
     RefreshRateOptions.h
     RenderableApplication.h
@@ -16,6 +18,7 @@ set(SOURCES
     Application.cpp  
     Clock.cpp
     Framework.cpp    
+    InitializedApp.cpp
     RefreshRateLimiter.cpp
     RefreshRateOptions.cpp
     RenderableApplication.cpp

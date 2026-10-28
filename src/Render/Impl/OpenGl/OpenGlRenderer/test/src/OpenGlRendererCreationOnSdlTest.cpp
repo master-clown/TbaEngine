@@ -45,6 +45,6 @@ protected:
 //======================================================================================================================
 TEST_CASE(CreateEmptyScreen)
 {
-    BaseOpenGlOnSdlTestApp app("Just run and finish without any exceptions");
-    EXPECT_NO_THROW(app.run());
+    framework::InitializedApp<BaseOpenGlOnSdlTestApp> app("Just run and finish without any exceptions");
+    EXPECT_NO_THROW(app->run());
 }

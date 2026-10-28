@@ -1,9 +1,10 @@
 #pragma once
 
-#include <Render2d/GeometryBatch.h>
-
 #include <Common/Memory.h>
+#include <Common/Stl/HashMap.h>
 #include <Common/Stl/Vector.h>
+#include <Render2d/GeometryBatch.h>
+#include <Render2d/PrimitiveId.h>
 
 //======================================================================================================================
 namespace sdl_render_2d::details {
@@ -38,8 +39,13 @@ namespace sdl_render_2d {
         friend class SdlGeometryBatchModifier;
         Vector<details::PrimitiveVariant>& _getPrimitives();
 
+        using _PrimitiveIdx = uint32;
+        using PrimIdToIdxMap = HashMap<render_2d::PrimitiveId, _PrimitiveIdx>;
+        PrimIdToIdxMap& _getPrimIdToIdxMap();
+
     private:
         uptr<render_2d::GeometryBatchModifier> _modifier;
         Vector<details::PrimitiveVariant> _primitives;
+        PrimIdToIdxMap _primIdToIdxMap;
     };
 }
