@@ -31,7 +31,7 @@ namespace {
     //==================================================================================================================
     class HouseBlueprint final : public render_scene::RenderableBlueprint {
     public:
-        Renderable makeRenderable(TracedGeometryBatchModifier2d&) override;
+        void _constructRenderableOnBatch(TracedGeometryBatchModifier2d&) override;
     };
 
 }
@@ -84,7 +84,7 @@ TEST_CASE(MoveHouseWithWasd)
 }
 
 //======================================================================================================================
-Renderable HouseBlueprint::makeRenderable(TracedGeometryBatchModifier2d& batch2d)
+void HouseBlueprint::_constructRenderableOnBatch(TracedGeometryBatchModifier2d& batch2d)
 {
     batch2d.add(render_2d::RenderableGeometry<Triangle>{
         .primitive = Triangle{
@@ -124,6 +124,4 @@ Renderable HouseBlueprint::makeRenderable(TracedGeometryBatchModifier2d& batch2d
             .lineColor = content::Color{0, 0, 128},
         },
     });
-
-    return Renderable(Renderable2d{batch2d.build()});
 }
