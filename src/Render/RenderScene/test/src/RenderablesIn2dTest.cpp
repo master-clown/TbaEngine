@@ -1,3 +1,5 @@
+// TODO: test for all renderers
+
 #include <Framework/Clock.h>
 #include <Geometry2d/Line.h>
 #include <Geometry2d/Point2d.h>
