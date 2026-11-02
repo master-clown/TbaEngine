@@ -27,6 +27,7 @@ void RenderableModifier::move(const ScreenOffsetVec& offset)
     };
 
     // TODO: reuse when new operations supported
+    // TODO: paralellize?
     const auto& renderableChunk2d = _renderable.getRenderable2d().getGeometry();
     _batch2d.modify([&renderableChunk2d, &moveVertex](render_2d::GeometryBatchModifier& batchMod) {
         for (const auto& primId : renderableChunk2d.triangles)
