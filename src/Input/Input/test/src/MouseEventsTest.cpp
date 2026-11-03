@@ -51,6 +51,6 @@ TEST_CASE(SdlMouse)
         }
     };
 
-    SdlApp app;
-    EXPECT_NO_THROW(app.run());
+    framework::InitializedApp<SdlApp> app;
+    EXPECT_NO_THROW(app->run());
 }

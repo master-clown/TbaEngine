@@ -1,0 +1,34 @@
+@startuml
+
+top to bottom direction
+skinparam defaultFontName monospaced
+
+'=======================================================================================================================
+package render_2d {
+    class GeometryBatchModifier
+}
+
+'=======================================================================================================================
+package render_scene {
+    class GeometryChunk2d {
+        - _triangles
+        - _lines
+        - _points
+    }
+
+    '===================================================================================================================
+    class TracedGeometryBatchModifier2d implements render_2d.GeometryBatchModifier {
+        + ctor(render_2d.GeometryBatchModifier&)
+        + getAccumulatedGeometry()
+    }
+
+    '-------------------------------------------------------------------------------------------------------------------
+    TracedGeometryBatchModifier2d o-- render_2d.GeometryBatchModifier
+    TracedGeometryBatchModifier2d *-- GeometryChunk2d
+
+    '===================================================================================================================
+    Renderable2d *-- GeometryChunk2d
+}
+
+'=======================================================================================================================
+@enduml

@@ -18,6 +18,12 @@ RenderableApplication::RenderableApplication(RefreshRateOptions refreshRateOpts)
 RenderableApplication::~RenderableApplication() = default;
 
 //======================================================================================================================
+auto RenderableApplication::getAppClock() const -> const Clock&
+{
+    return _clock;
+}
+
+//======================================================================================================================
 void RenderableApplication::_run()
 {
     auto& eventMgr = getFramework().getEventMgr();
