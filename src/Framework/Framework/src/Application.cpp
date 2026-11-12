@@ -9,11 +9,16 @@ using namespace framework;
 Application::~Application() = default;
 
 //======================================================================================================================
-void Application::run()
+void Application::init()
 {
     _framework = _createFramework();
 
     _init();
+}
+
+//======================================================================================================================
+void Application::run()
+{
     _run();
 }
 

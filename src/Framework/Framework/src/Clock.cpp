@@ -19,13 +19,28 @@ auto Clock::getRealTicksSinceStart() const -> Nanoseconds
 }
 
 //======================================================================================================================
-auto Clock::getCurrentRefreshTicks() const -> Nanoseconds
+auto Clock::getCurrentRefreshTicks() const noexcept -> Nanoseconds
 {
     return _currentRefreshTicks;
 }
 
 //======================================================================================================================
+auto Clock::getDeltaSinceLastUpdate() const noexcept -> Nanoseconds
+{
+    return _lastDelta;
+}
+
+//======================================================================================================================
+auto Clock::getDeltaSinceLastUpdateInSeconds() const noexcept -> Seconds
+{
+    return _lastDeltaInSeconds;
+}
+
+//======================================================================================================================
 void Clock::_updateCurrentRefreshTicks()
 {
+    _prevRefreshTicks = _currentRefreshTicks;
     _currentRefreshTicks = getRealTicksSinceStart();
+    _lastDelta = _currentRefreshTicks - _prevRefreshTicks;
+    _lastDeltaInSeconds = std::chrono::duration_cast<Seconds>(_lastDelta);
 }

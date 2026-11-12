@@ -12,8 +12,11 @@ namespace framework {
         ~Clock();
 
         using Nanoseconds = std::chrono::duration<uint64, std::nano>;
+        using Seconds = std::chrono::duration<double, std::ratio<1, 1>>;
         Nanoseconds getRealTicksSinceStart() const;
-        Nanoseconds getCurrentRefreshTicks() const;
+        Nanoseconds getCurrentRefreshTicks() const noexcept;
+        Nanoseconds getDeltaSinceLastUpdate() const noexcept;
+        Seconds getDeltaSinceLastUpdateInSeconds() const noexcept;
 
     private:
         friend class RenderableApplication;
@@ -25,5 +28,8 @@ namespace framework {
 
         TimeMoment _startTime;
         Nanoseconds _currentRefreshTicks{};
+        Nanoseconds _prevRefreshTicks{};
+        Nanoseconds _lastDelta{};
+        Seconds _lastDeltaInSeconds{};
     };
 }

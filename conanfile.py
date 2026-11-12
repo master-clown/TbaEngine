@@ -22,7 +22,8 @@ class TbaEngineRecipe(ConanFile):
     generators = "CMakeDeps"
 
     def requirements(self):
-        self.requires("sdl/3.4.8", options={"shared": False})
+        dynamicLinkForSdl = (self.settings.os == "Linux") # TODO: why static does not work?
+        self.requires("sdl/3.4.8", options={"shared": dynamicLinkForSdl})
         # as single .h file: self.requires("stb_image/2.30")
         return
 

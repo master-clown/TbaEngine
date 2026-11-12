@@ -1,0 +1,48 @@
+@startuml
+
+top to bottom direction
+skinparam defaultFontName monospaced
+
+'=======================================================================================================================
+package render_2d {
+    class GeometryBatch
+}
+
+'=======================================================================================================================
+package render_scene {
+    class Renderable2d
+
+    note left: "RenderableOnBatch2d/3d?"
+
+    abstract class Renderable
+
+    Renderable *-- Renderable2d
+
+    abstract class RenderableBlueprint {
+        + {abstract} makeRenderable(TracedGeometryBatchModifier2d&, 3d)
+    }
+
+    class RenderScene {
+        + ctor(render_2d.GeometryBatch, 3d)
+    --
+        + add(RenderableBlueprint&) -> Renderable&
+    }
+
+    RenderableBlueprint --> Renderable : factory for
+
+    RenderScene *-- Renderable : container of
+
+    '===================================================================================================================
+    class RenderableModifier
+    RenderableModifier o-- render_2d.GeometryBatch
+    RenderableModifier o-- Renderable
+}
+
+'=======================================================================================================================
+render_scene.RenderScene *-up- render_2d.GeometryBatch
+
+'=======================================================================================================================
+class SomeLogicObjectWhichShouldBeRendered implements render_scene.RenderableBlueprint
+
+'=======================================================================================================================
+@enduml

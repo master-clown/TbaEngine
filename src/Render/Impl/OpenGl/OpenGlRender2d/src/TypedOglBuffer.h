@@ -28,6 +28,9 @@ namespace opengl_render_2d {
             BufferItem* ptr;
         };
 
+        // TODO: catastrophically unefficient.
+        // 1. Range access
+        // 2. Lock-based access to the whole buffer (if stage-based buffer mod-n is to be considered)
         void modify(const size_t itemIndex,
                     const std::function<void(const ItemUnsafePtr)>& modifyItem);
 
