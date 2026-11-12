@@ -3,6 +3,7 @@
 #include <Content/Color.h>
 #include <Input/DeviceMgr.h>
 #include <Input/Keyboard.h>
+#include <Render2d/GeometryBatch.h>
 #include <SdlFramework/SdlFramework.h>
 #include <Winsys/WindowOptions.h>
 
@@ -38,7 +39,7 @@ void TestApp::_initAppWithRenderer()
     auto& renderer = this->getRenderer();
 
     auto& renderer2d = renderer.get2dRenderer();
-    _renderScene = std::make_unique<render_scene::RenderScene>(renderer2d);
+    _renderScene = std::make_unique<render_scene::RenderScene>(renderer2d.createGeometryBatch());
 }
 
 //======================================================================================================================

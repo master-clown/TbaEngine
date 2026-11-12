@@ -23,7 +23,7 @@ package render_scene {
     }
 
     class RenderScene {
-        + ctor(Renderer2d, 3d)
+        + ctor(render_2d.GeometryBatch, 3d)
     --
         + add(RenderableBlueprint&) -> Renderable&
     }

@@ -5,7 +5,6 @@
 #include <RenderScene/TracedGeometryBatchModifier2d.h>
 
 #include <Render2d/GeometryBatch.h>
-#include <Render2d/Renderer.h>
 
 #include <cassert>
 
@@ -13,9 +12,10 @@
 using namespace render_scene;
 
 //======================================================================================================================
-RenderScene::RenderScene(render_2d::Renderer& renderer2d)
-    : _geometryBatch2d(renderer2d.createGeometryBatch())
+RenderScene::RenderScene(uptr<render_2d::GeometryBatch> batch2d)
+    : _geometryBatch2d(std::move(batch2d))
 {
+    assert(_geometryBatch2d);
 }
 
 //======================================================================================================================

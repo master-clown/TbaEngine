@@ -8,7 +8,6 @@
 //======================================================================================================================
 namespace render_2d {
     class GeometryBatch;
-    class Renderer;
 }
 
 //======================================================================================================================
@@ -21,7 +20,7 @@ namespace render_scene {
 namespace render_scene {
     class RenderScene final {
     public:
-        explicit RenderScene(render_2d::Renderer&);
+        explicit RenderScene(uptr<render_2d::GeometryBatch>);
         ~RenderScene();
 
         render_2d::GeometryBatch& getGeometryBatch2d();
