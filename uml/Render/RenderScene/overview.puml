@@ -5,27 +5,18 @@ skinparam defaultFontName monospaced
 
 '=======================================================================================================================
 package render_2d {
-    class Renderer
-    class GeometryBatch
-}
-
-'=======================================================================================================================
-package render_3d {
-    class Renderer
     class GeometryBatch
 }
 
 '=======================================================================================================================
 package render_scene {
     class Renderable2d
-    class Renderable3d
 
     note left: "RenderableOnBatch2d/3d?"
 
     abstract class Renderable
 
     Renderable *-- Renderable2d
-    Renderable *-- Renderable3d
 
     abstract class RenderableBlueprint {
         + {abstract} makeRenderable(TracedGeometryBatchModifier2d&, 3d)
@@ -40,11 +31,15 @@ package render_scene {
     RenderableBlueprint --> Renderable : factory for
 
     RenderScene *-- Renderable : container of
+
+    '===================================================================================================================
+    class RenderableModifier
+    RenderableModifier o-- render_2d.GeometryBatch
+    RenderableModifier o-- Renderable
 }
 
 '=======================================================================================================================
 render_scene.RenderScene *-up- render_2d.GeometryBatch
-render_scene.RenderScene *-up- render_3d.GeometryBatch
 
 '=======================================================================================================================
 class SomeLogicObjectWhichShouldBeRendered implements render_scene.RenderableBlueprint

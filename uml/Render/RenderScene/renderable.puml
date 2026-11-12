@@ -19,7 +19,9 @@ package render_scene {
     '===================================================================================================================
     class TracedGeometryBatchModifier2d implements render_2d.GeometryBatchModifier {
         + ctor(render_2d.GeometryBatchModifier&)
-        + getAccumulatedGeometry()
+        --
+        + add<Geometry2d>()
+        + build() -> GeometryChunk2d
     }
 
     '-------------------------------------------------------------------------------------------------------------------
